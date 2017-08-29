@@ -4,6 +4,7 @@
 #include "Parse_PMT.h"
 #include "Parse_Descriptor.h"
 #include "Get_Section.h"
+#include "Parse_DesciptorStream.h"
 
 #define PMT_TABLE_ID 0x02
 #define INITIAL_VERSION 0xff
@@ -140,18 +141,6 @@ void GetPMT_Info(TS_PMT_T *pstTS_PMT, int iStreamCount, PMT_INFO_T *pstPMT_Info,
 void PrintPMT(TS_PMT_T *pstTS_PMT, int iStreamCount)
 {
 	char acOutputPrefix[OUTPUT_PREFIX_SIZE] = { 0 };
-	MAXIMUM_BITRATE_DESCRIPTOR_T stMaximumBitrateDescriptor = { 0 };
-	STREAM_IDENTIFIER_DESCRIPTOR_T stStreamIndentifierDescriptor = { 0 };
-	VIDEO_STREAM_DESCRIPTOR_T stVideoStreamDescriptor = { 0 };
-	DATA_STREAM_ALIGNMENT_DESCRIPTOR_T stDataStreamAlignmentDescriptor = { 0 };
-	ISO_639_LANGUAGE_DESCRIPTOR_T stISO_639_LanguageDescriptor = { 0 };
-	AUDIO_STREAM_DESCRIPTOR_T stAudioStreamDescriptor = { 0 };
-	CA_DESCRIPTOR_T stCA_Descriptor = { 0 };
-	SYSTEM_CLOCK_DESCRIPTOR_T stSystemClockDescriptor = { 0 };
-	TELETEXT_DESCRIPTOR_T stTeletextDescriptor = { 0 };
-	SUBTITLING_DESCRIPTOR_T stSubtitlingDescriptor = { 0 };
-
-	int iDescriptorPosition = 0;
 	
 	printf("\n-------------PMT info start-------------\n");
 	printf("PMT->Table_id : 0x%02x \n", pstTS_PMT->uiTable_id);
@@ -175,31 +164,7 @@ void PrintPMT(TS_PMT_T *pstTS_PMT, int iStreamCount)
 	{
 		memset(acOutputPrefix, 0, OUTPUT_PREFIX_SIZE);
 		sprintf(acOutputPrefix, "PMT->ProgramDescriptor.");
-
-		if (-1 != GetMaximumBitrateDescriptor(&stMaximumBitrateDescriptor, pstTS_PMT->aucProgramDescriptor, pstTS_PMT->uiProgram_info_length))
-		{
-			Print_MaximumBitrateDescriptor(&stMaximumBitrateDescriptor, acOutputPrefix);
-		}
-		
-		if (-1 != GetSystemClockDescriptor(&stSystemClockDescriptor, pstTS_PMT->aucProgramDescriptor, pstTS_PMT->uiProgram_info_length))
-		{
-			Print_SystemClockDescriptor(&stSystemClockDescriptor, acOutputPrefix);
-		}
-		
-		iDescriptorPosition = 0;
-		while (iDescriptorPosition < pstTS_PMT->uiProgram_info_length)
-		{
-			iDescriptorPosition = GetCA_Descriptor(&stCA_Descriptor, pstTS_PMT->aucProgramDescriptor, pstTS_PMT->uiProgram_info_length, iDescriptorPosition);
-			if (-1 != iDescriptorPosition)
-			{
-				Print_CA_Descriptor(&stCA_Descriptor, acOutputPrefix);
-				iDescriptorPosition += pstTS_PMT->aucProgramDescriptor[1 + iDescriptorPosition] + 2;
-			}
-			else
-			{
-				break;
-			}
-		}
+		ParseDescriptor(pstTS_PMT->aucProgramDescriptor, pstTS_PMT->uiProgram_info_length, acOutputPrefix);
 	}
 	
 	int iLoopTime = 0;
@@ -215,55 +180,7 @@ void PrintPMT(TS_PMT_T *pstTS_PMT, int iStreamCount)
 		{
 			memset(acOutputPrefix, 0, OUTPUT_PREFIX_SIZE);
 			sprintf(acOutputPrefix, "PMT->PMT_Stream[%d].", iLoopTime);
-			if (-1 != GetMaximumBitrateDescriptor(&stMaximumBitrateDescriptor, pstTS_PMT->stPMT_Stream[iLoopTime].aucDescriptor, pstTS_PMT->stPMT_Stream[iLoopTime].uiES_info_length))
-			{
-				Print_MaximumBitrateDescriptor(&stMaximumBitrateDescriptor, acOutputPrefix);
-			}
-
-			if (-1 != GetStreamIndentifierDescriptor(&stStreamIndentifierDescriptor, pstTS_PMT->stPMT_Stream[iLoopTime].aucDescriptor, pstTS_PMT->stPMT_Stream[iLoopTime].uiES_info_length))
-			{
-				Print_StreamIndentifierDescriptor(&stStreamIndentifierDescriptor, acOutputPrefix);
-			}
-
-			if (-1 != GetVideoStreamDescriptor(&stVideoStreamDescriptor, pstTS_PMT->stPMT_Stream[iLoopTime].aucDescriptor, pstTS_PMT->stPMT_Stream[iLoopTime].uiES_info_length))
-			{
-				Print_VideoStreamDescriptor(&stVideoStreamDescriptor, acOutputPrefix);
-			}
-
-			if (-1 != GetDataStreamAlignmentDescriptor(&stDataStreamAlignmentDescriptor, pstTS_PMT->stPMT_Stream[iLoopTime].aucDescriptor, pstTS_PMT->stPMT_Stream[iLoopTime].uiES_info_length))
-			{
-				Print_DataStreamAlignmentDescriptor(&stDataStreamAlignmentDescriptor, acOutputPrefix);
-			}
-
-			if (-1 != GetISO_639_Language_Descriptor(&stISO_639_LanguageDescriptor, pstTS_PMT->stPMT_Stream[iLoopTime].aucDescriptor, pstTS_PMT->stPMT_Stream[iLoopTime].uiES_info_length))
-			{
-				Print_ISO_639_LANGUAGE_DESCRIPTOR(&stISO_639_LanguageDescriptor, acOutputPrefix);
-			}
-
-			if (-1 != GetTeletextDescriptor(&stTeletextDescriptor, pstTS_PMT->stPMT_Stream[iLoopTime].aucDescriptor, pstTS_PMT->stPMT_Stream[iLoopTime].uiES_info_length))
-			{
-				Print_TeletextDescriptor(&stTeletextDescriptor, acOutputPrefix);
-			}
-
-			if (-1 != GetSubtitlingDescriptor(&stSubtitlingDescriptor, pstTS_PMT->stPMT_Stream[iLoopTime].aucDescriptor, pstTS_PMT->stPMT_Stream[iLoopTime].uiES_info_length))
-			{
-				Print_SubtitlingDescriptor(&stSubtitlingDescriptor, acOutputPrefix);
-			}
-			
-			iDescriptorPosition = 0;
-			while (iDescriptorPosition < pstTS_PMT->stPMT_Stream[iLoopTime].uiES_info_length)
-			{
-				iDescriptorPosition = GetAudioStreamDescriptor(&stAudioStreamDescriptor, pstTS_PMT->stPMT_Stream[iLoopTime].aucDescriptor, pstTS_PMT->stPMT_Stream[iLoopTime].uiES_info_length, iDescriptorPosition);
-				if (-1 != iDescriptorPosition)
-				{
-					Print_AudioStreamDescriptor(&stAudioStreamDescriptor, acOutputPrefix);
-					iDescriptorPosition += pstTS_PMT->stPMT_Stream[iLoopTime].aucDescriptor[1 + iDescriptorPosition] + 2;
-				}
-				else
-				{
-					break;
-				}
-			}
+			ParseDescriptor(pstTS_PMT->stPMT_Stream[iLoopTime].aucDescriptor, pstTS_PMT->stPMT_Stream[iLoopTime].uiES_info_length, acOutputPrefix);
 		}
 	}
 	printf("-------------PMT info end-------------\n\n");

@@ -3,6 +3,8 @@
 
 #include "Parse_NIT.h"
 #include "Parse_Descriptor.h"
+#include "Get_Section.h"
+#include "Parse_DesciptorStream.h"
 
 #define NIT_PID 0x0010
 #define NIT_TABLE_ID 0x40
@@ -53,7 +55,6 @@ int ParseNIT_Section(TS_NIT_T * pstTS_NIT, unsigned char *pucSectionBuffer)
 	int iNIT_Length = 0;
 	int iTransportStreamPostion = 0;
 	int iTransportStreamCount = 0;
-	SERVICE_LIST_DESCRIPTOR_T stServiceListDescriptor = { 0 };
 	memset(pstTS_NIT, 0, sizeof(TS_NIT_T));
 
 	ParseNIT_SectionHead(pstTS_NIT, pucSectionBuffer);

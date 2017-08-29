@@ -5,6 +5,8 @@
 #include "Parse_Descriptor.h"
 #include "FormatUtils.h"
 #include "Parse_DesciptorStream.h"
+#include "Get_Section.h"
+
 
 #define EIT_PID 0x0012
 #define INITIAL_VERSION 0xff

@@ -4,6 +4,7 @@
 #include "Parse_CAT.h"
 #include "Parse_Descriptor.h"
 #include "Parse_DesciptorStream.h"
+#include "Get_Section.h"
 
 #define CAT_PID 0x0001
 #define CAT_TABLE_ID 0x01
@@ -72,7 +73,6 @@ void ParseCAT_Section(TS_CAT_T *pstTS_CAT, unsigned char *pucSectionBuffer)
  ******************************************/
 void PrintCAT(TS_CAT_T *pstTS_CAT)
 {
-	CA_DESCRIPTOR_T stCA_Descriptor = { 0 };
 	char acOutputPrefix[OUTPUT_PREFIX_SIZE] = { 0 };
 	printf("\n-------------CAT info start-------------\n");
 	printf("CAT->Table_id: 0x%02x\n", pstTS_CAT->uiTable_id);
@@ -124,10 +124,9 @@ int ParseCAT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength, CAT_INFO_T *p
 {
 	printf("\n\n=================================ParseCAT_Table Start================================= \n");
 	int iTemp = 0;
-	int iCAT_length = 0;
 	TS_CAT_T stTS_CAT = { 0 };
 	int iInfoCount = 0;
-	int iCA_systemCount = 0;
+//	int iCA_systemCount = 0;
 	unsigned int uiVersion = INITIAL_VERSION;
 	unsigned int uiRecordSectionNumber[SECTION_COUNT_256] = { 0 };
 	unsigned char ucSectionBuffer[SECTION_MAX_LENGTH_4096] = { 0 };

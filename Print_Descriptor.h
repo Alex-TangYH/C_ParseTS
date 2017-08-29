@@ -1,13 +1,20 @@
 #ifndef _Print_Descriptor_
 #define _Print_Descriptor_
 
+
+void Print_ExtendedEventDescriptor(EXTENDED_EVENT_DESCRIPTOR_T *pstExtendedEventDescriptor, char *pacOutputPrefix);
+void Print_ShortEventDescriptor(SHORT_EVENT_DESCRIPTOR_T *pstShortEventDescriptor, char *pacOutputPrefix);
+void Print_LinkageDescriptor(LINKAGE_DESCRIPTOR_T *pstLinkageDescriptor, char *pacOutputPrefix);
+void Print_ServiceDescriptor(SERVICE_DESCRIPTOR_T *pstServiceDescriptor, char *pacOutputPrefix);
+void Print_BouquetNameDescriptor(BOUQUET_NAME_DESCRIPTOR_T *pstBouquetNameDescriptor, char *pacOutputPrefix);
+void Print_CableDeliverySystemDescriptor(CABLE_DELIVERY_SYSTEM_DESCRIPTOR_T *pstCableDeliverySystemDescriptor, char *pacOutputPrefix);
+void Print_SatelliteDeliverySystemDescriptor(SATELLITE_DELIVERY_SYSTEM_DESCRIPTOR_T *pstSatelliteDeliverySystemDescriptor, char *pacOutputPrefix);
+void Print_ServiceListDescriptor(SERVICE_LIST_DESCRIPTOR_T *pstServiceListDescriptor, char *pacOutputPrefix);
+void Print_NetworkNameDescriptor(NETWORK_NAME_DESCRIPTOR_T *pstNetworkNameDescriptor, char *pacOutputPrefix);
 void Print_MaximumBitrateDescriptor(MAXIMUM_BITRATE_DESCRIPTOR_T *pstMaximumBitrateDescriptor, char *pacOutputPrefix);
-void Print_StreamIndentifierDescriptor(STREAM_IDENTIFIER_DESCRIPTOR_T *pstStreamIndentifierDescriptor, char *pacOutputPrefix);
 void Print_VideoStreamDescriptor(VIDEO_STREAM_DESCRIPTOR_T *pstVideoStreamDescriptor, char *pacOutputPrefix);
 void Print_DataStreamAlignmentDescriptor(DATA_STREAM_ALIGNMENT_DESCRIPTOR_T *pstDataStreamAlignmentDescriptor, char *pacOutputPrefix);
 void Print_ISO_639_LANGUAGE_DESCRIPTOR(ISO_639_LANGUAGE_DESCRIPTOR_T *pstISO_639_LanguageDescriptor, char *pacOutputPrefix);
-void Print_TeletextDescriptor(TELETEXT_DESCRIPTOR_T *pstTeletextDescriptor, char *pacOutputPrefix);
-void Print_SubtitlingDescriptor(SUBTITLING_DESCRIPTOR_T *pstSubtitlingDescriptor, char *pacOutputPrefix);
 void Print_AudioStreamDescriptor(AUDIO_STREAM_DESCRIPTOR_T *pstAudioStreamDescriptor, char *pacOutputPrefix);
 void Print_MaximumBitrateDescriptor(MAXIMUM_BITRATE_DESCRIPTOR_T *pstMaximumBitrateDescriptor, char *pacOutputPrefix);
 void Print_SystemClockDescriptor(SYSTEM_CLOCK_DESCRIPTOR_T *pstSystemClockDescriptor, char *pacOutputPrefix);
@@ -19,5 +26,6 @@ void Print_ISO_639_LANGUAGE_DESCRIPTOR(ISO_639_LANGUAGE_DESCRIPTOR_T *pstISO_639
 void Print_TeletextDescriptor(TELETEXT_DESCRIPTOR_T *pstTeletextDescriptor, char *pacOutputPrefix);
 void Print_SubtitlingDescriptor(SUBTITLING_DESCRIPTOR_T *pstSubtitlingDescriptor, char *pacOutputPrefix);
 void Print_AudioStreamDescriptor(AUDIO_STREAM_DESCRIPTOR_T *pstAudioStreamDescriptor, char *pacOutputPrefix);
-
+void Print_TerrestrialDeliverySystemDescriptor(TERRESTRIAL_DELIVERY_SYSTEM_DESCRIPTOR_T *pstTerrestrialDeliverySystemDescriptor, char *pacOutputPrefix);
+void Print_FrequencyListDescriptor(FREQUENCY_LIST_DESCRIPTOR_T *pstFrequencyListDescriptor, char *pacOutputPrefix);
 #endif

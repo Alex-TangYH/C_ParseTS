@@ -305,14 +305,25 @@ typedef struct FREQUENCY_LIST_DESCRIPTOR_T
 	FREQUENCY_LIST_INFO_T astCentre_frequency[FREQUENCY_LIST_DESCRIPTOR_INFO_MAX];
 } FREQUENCY_LIST_DESCRIPTOR_T;
 
-int GetMaximumBitrateDescriptor(MAXIMUM_BITRATE_DESCRIPTOR_T *pstMaximumBitrateDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength);
-int GetSystemClockDescriptor(SYSTEM_CLOCK_DESCRIPTOR_T *pstSystemClockDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength);
+int GetFrequencyListDescriptor(FREQUENCY_LIST_DESCRIPTOR_T *pstFrequencyListDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition);
+int GetTerrestrialDeliverySystemDescriptor(TERRESTRIAL_DELIVERY_SYSTEM_DESCRIPTOR_T *pstTerrestrialDeliverySystemDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition);
+int GetExtendedEventDescriptor(EXTENDED_EVENT_DESCRIPTOR_T *pstExtendedEventDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition);
+int GetShortEventDescriptor(SHORT_EVENT_DESCRIPTOR_T *pstShortEventDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition);
+int GetLinkageDescriptor(LINKAGE_DESCRIPTOR_T *pstLinkageDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition);
+int GetServiceDescriptor(SERVICE_DESCRIPTOR_T *pstServiceDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition);
+int GetBouquetNameDescriptor(BOUQUET_NAME_DESCRIPTOR_T *pstBouquetNameDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition);
+int GetCableDeliverySystemDescriptor(CABLE_DELIVERY_SYSTEM_DESCRIPTOR_T *pstCableDeliverySystemDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition);
+int GetSatelliteDeliverySystemDescriptor(SATELLITE_DELIVERY_SYSTEM_DESCRIPTOR_T *pstSatelliteDeliverySystemDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition);
+int GetServiceListDescriptor(SERVICE_LIST_DESCRIPTOR_T *pstServiceListDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition);
+int GetNetworkNameDescriptor(NETWORK_NAME_DESCRIPTOR_T *pstNetworkNameDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition);
+int GetMaximumBitrateDescriptor(MAXIMUM_BITRATE_DESCRIPTOR_T *pstMaximumBitrateDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition);
+int GetSystemClockDescriptor(SYSTEM_CLOCK_DESCRIPTOR_T *pstSystemClockDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition);
 int GetCA_Descriptor(CA_DESCRIPTOR_T *pstCA_Descriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition);
-int GetStreamIndentifierDescriptor(STREAM_IDENTIFIER_DESCRIPTOR_T *pstStreamIndentifierDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength);
-int GetVideoStreamDescriptor(VIDEO_STREAM_DESCRIPTOR_T *pstVideoStreamDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength);
-int GetDataStreamAlignmentDescriptor(DATA_STREAM_ALIGNMENT_DESCRIPTOR_T *pstDataStreamAlignmentDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength);
-int GetISO_639_Language_Descriptor(ISO_639_LANGUAGE_DESCRIPTOR_T *pstISO_639_LanguageDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength);
-int GetTeletextDescriptor(TELETEXT_DESCRIPTOR_T *pstTeletextDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength);
-int GetSubtitlingDescriptor(SUBTITLING_DESCRIPTOR_T *pstSubtitlingDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength);
+int GetStreamIndentifierDescriptor(STREAM_IDENTIFIER_DESCRIPTOR_T *pstStreamIndentifierDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition);
+int GetVideoStreamDescriptor(VIDEO_STREAM_DESCRIPTOR_T *pstVideoStreamDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition);
+int GetDataStreamAlignmentDescriptor(DATA_STREAM_ALIGNMENT_DESCRIPTOR_T *pstDataStreamAlignmentDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition);
+int GetISO_639_Language_Descriptor(ISO_639_LANGUAGE_DESCRIPTOR_T *pstISO_639_LanguageDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition);
+int GetTeletextDescriptor(TELETEXT_DESCRIPTOR_T *pstTeletextDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition);
+int GetSubtitlingDescriptor(SUBTITLING_DESCRIPTOR_T *pstSubtitlingDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition);
 int GetAudioStreamDescriptor(AUDIO_STREAM_DESCRIPTOR_T *pstAudioStreamDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition);
 #endif
