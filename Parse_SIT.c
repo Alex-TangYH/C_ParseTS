@@ -2,16 +2,21 @@
 #include <string.h>
 
 #include "Parse_SIT.h"
+#include "Parse_DesciptorStream.h"
+#include "Get_Section.h"
+
 
 #define SIT_PID 0x001E
 #define SIT_TABLE_ID 0x7E
 #define INITIAL_VERSION 0xff
 #define SECTION_COUNT_256 256
 #define SECTION_MAX_LENGTH_4 4
+#define OUTPUT_PREFIX_SIZE 256
+
 
 /******************************************
  *
- *解析SIT段信息
+ * 解析SIT段信息
  *
  ******************************************/
 
@@ -46,6 +51,7 @@ void ParseSIT_Section(TS_SIT_T *pstTS_SIT, unsigned char *pucSectionBuffer)
  ******************************************/
 void PrintSIT(TS_SIT_T *pstTS_SIT)
 {
+	char acOutputPrefix[OUTPUT_PREFIX_SIZE] = { 0 };
 	printf("\n-------------SIT info SITart-------------\n");
 
 	printf("SIT->table_id: %02x\n", pstTS_SIT->uitable_id);
@@ -63,7 +69,9 @@ void PrintSIT(TS_SIT_T *pstTS_SIT)
 	printf("SIT->Transmission_info_loop_length: %02x\n", pstTS_SIT->uiTransmission_info_loop_length);
 	if (pstTS_SIT->uiTransmission_info_loop_length > 0)
 	{
-		printf("SIT->Section_length: %s\n", pstTS_SIT->aucSIT_info_descriptor);
+		memset(acOutputPrefix, 0, OUTPUT_PREFIX_SIZE);
+		sprintf(acOutputPrefix, "SIT->.");
+		ParseDescriptor(pstTS_SIT->aucSIT_info_descriptor, pstTS_SIT->uiTransmission_info_loop_length, acOutputPrefix);
 	}
 	printf("SIT->CRC32: %02x\n", pstTS_SIT->uiCRC32);
 	printf("\n-------------SIT info end-------------\n");
@@ -79,7 +87,6 @@ int ParseSIT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength)
 {
 	printf("\n\n=================================ParseSIT_Table SITart================================= \n");
 	int iTemp = 0;
-	int iSIT_LoopCount = 0;
 	TS_SIT_T stTS_SIT = { 0 };
 	unsigned int uiVersion = INITIAL_VERSION;
 	unsigned char ucSectionBuffer[SECTION_MAX_LENGTH_4] = { 0 };

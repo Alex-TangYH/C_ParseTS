@@ -3,6 +3,8 @@
 
 #include "Parse_EIT.h"
 #include "Parse_Descriptor.h"
+#include "FormatUtils.h"
+#include "Parse_DesciptorStream.h"
 
 #define EIT_PID 0x0012
 #define INITIAL_VERSION 0xff
@@ -88,8 +90,6 @@ int ParseEIT_Section(TS_EIT_T *pstTS_EIT, unsigned char *pucSectionBuffer)
 void PrintEIT(TS_EIT_T *pstTS_EIT, int iEIT_InfoCount)
 {
 	int iLoopTime = 0;
-	SHORT_EVENT_DESCRIPTOR_T stShortEventDescriptor = { 0 };
-	EXTENDED_EVENT_DESCRIPTOR_T stExtended_event_descriptor = { 0 };
 	char acOutputPrefix[OUTPUT_PREFIX_SIZE] = { 0 };
 	
 	printf("\n-------------EIT info start-------------\n");
@@ -124,14 +124,7 @@ void PrintEIT(TS_EIT_T *pstTS_EIT, int iEIT_InfoCount)
 		{
 			memset(acOutputPrefix, 0, OUTPUT_PREFIX_SIZE);
 			sprintf(acOutputPrefix, "EIT->EIT_info[%d].", iLoopTime);
-			if (-1 != GetShortEventDescriptor(&stShortEventDescriptor, pstTS_EIT->astEIT_info[iLoopTime].aucDescriptor, pstTS_EIT->astEIT_info[iLoopTime].uiDescriptors_loop_length))
-			{
-				Print_ShortEventDescriptor(&stShortEventDescriptor, acOutputPrefix);
-			}
-			if (-1 != GetExtendedEventDescriptor(&stExtended_event_descriptor, pstTS_EIT->astEIT_info[iLoopTime].aucDescriptor, pstTS_EIT->astEIT_info[iLoopTime].uiDescriptors_loop_length))
-			{
-				Print_ExtendedEventDescriptor(&stExtended_event_descriptor, acOutputPrefix);
-			}
+			ParseDescriptor(pstTS_EIT->astEIT_info[iLoopTime].aucDescriptor, pstTS_EIT->astEIT_info[iLoopTime].uiDescriptors_loop_length, acOutputPrefix);
 		}
 	}
 	printf("\n-------------EIT info end-------------\n");
@@ -211,11 +204,7 @@ int ParseEIT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength, int iEIT_tabl
 					PrintEIT(&stTS_EIT, iEIT_InfoCount);
 				}
 			}
-			/*if (1 == IsAllSectionOver(ucSectionBuffer, uiRecordGetSection))
-			 {
-			 printf("\n=================================ParseEIT_Table END=================================== \n\n");
-			 return 1;
-			 }*/
+			//TODO 增加提前停止解析条件
 		}
 		if (-1 == iTemp)
 		{

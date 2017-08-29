@@ -1,20 +1,19 @@
 /****************************************************************
-*
-* FLIENAME: TsParser.c
-*
-* DESCRIPTION: Parse TS
-*
-* AUTHOR: tangyh
-*
-* DATE : 04/08/2002
-*
-* HISTORY //not need if controlled by ClearCase
-*
-*    Date	 Rev.	    Who	       Details
-*  ==========	=======   =========   =========
-*  03/08/2017     0.01     Tangyh    First Release
-*****************************************************************/
-
+ *
+ * FLIENAME: TsParser.c
+ *
+ * DESCRIPTION: Parse TS
+ *
+ * AUTHOR: tangyh
+ *
+ * DATE : 04/08/2002
+ *
+ * HISTORY //not need if controlled by ClearCase
+ *
+ *    Date	 Rev.	    Who	       Details
+ *  ==========	=======   =========   =========
+ *  03/08/2017     0.01     Tangyh    First Release
+ *****************************************************************/
 
 #include <stdio.h>
 
@@ -27,6 +26,10 @@
 #include "Parse_SDT.h"
 #include "Parse_BAT.h"
 #include "Parse_EIT.h"
+#include "Parse_NIT.h"
+#include "Parse_TDT.h"
+#include "Parse_TOT.h"
+
 
 
 #define PROGRAM_MAX 128
@@ -36,20 +39,17 @@
 #define EIT_EIT_SCHEDULE_TABLE_ID_ONE 0x50
 #define EIT_EIT_SCHEDULE_TABLE_ID_TWO 0x51
 
-
-
 /******************************************
-*
-*获取所有PMT信息
-*
-******************************************/
+ *
+ *获取所有PMT信息
+ *
+ ******************************************/
 
-int ParseAllProgramPMT(FILE *pfTsFile, int iTsPosition, int iTsLength, PAT_INFO_T *pstPAT_Info,
-		int iProgramCount, PMT_INFO_T *pstPMT_Info)
+int ParseAllProgramPMT(FILE *pfTsFile, int iTsPosition, int iTsLength, PAT_INFO_T *pstPAT_Info, int iProgramCount, PMT_INFO_T *pstPMT_Info)
 {
 	int iProgramIndex = 0;
 	unsigned int uiPMT_PID = 0;
-	PMT_INFO_T stOnePMT_Info = {0};
+	PMT_INFO_T stOnePMT_Info = { 0 };
 	printf("ParseAllProgramPMT\nProgramCount：%d\n", iProgramCount);
 
 	for (iProgramIndex = 0; iProgramIndex < iProgramCount; iProgramIndex++)
@@ -65,15 +65,13 @@ int ParseAllProgramPMT(FILE *pfTsFile, int iTsPosition, int iTsLength, PAT_INFO_
 	return 0;
 }
 
-
-
 /******************************************
-*
-* 获取所有EIT信息
-*
-******************************************/
+ *
+ * 获取所有EIT信息
+ *
+ ******************************************/
 
-int ParseALLEIT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength)
+int ParseAllEIT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength)
 {
 	ParseEIT_Table(pfTsFile, iTsPosition, iTsLength, EIT_PF_ACTUAL_TABLE_ID);
 //	ParseEIT_Table(pfTsFile, iTsPosition, iTsLength, EIT_EIT_SCHEDULE_TABLE_ID_ONE);
@@ -82,17 +80,13 @@ int ParseALLEIT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength)
 	return 0;
 }
 
-
-
-
-
 /****************************************************************
-* funtion: ParseTransportStream
-* param: 
-*	 FILE *pfTsFile		pointer of transport stream
-* feature: Parse transport stream
-*
-****************************************************************/
+ * funtion: ParseTransportStream
+ * param:
+ *	 FILE *pfTsFile		pointer of transport stream
+ * feature: Parse transport stream
+ *
+ ****************************************************************/
 int ParseTransportStream(FILE *pfTsFile)
 {
 	int iTsPosition = 0;
@@ -101,9 +95,9 @@ int ParseTransportStream(FILE *pfTsFile)
 	int iEmmPosition = 0;
 	int iEmmCount = 0;
 
-	PAT_INFO_T stPAT_Info[PROGRAM_MAX] = {0};
-	PMT_INFO_T stPMT_Info[PROGRAM_MAX] = {0};
-	CAT_INFO_T stCAT_Info[CA_SYSTEM_MAX] = {0};
+	PAT_INFO_T stPAT_Info[PROGRAM_MAX] = { 0 };
+	PMT_INFO_T stPMT_Info[PROGRAM_MAX] = { 0 };
+	CAT_INFO_T stCAT_Info[CA_SYSTEM_MAX] = { 0 };
 
 	iTsLength = ParseTsLength(pfTsFile, &iTsPosition);
 	if (-1 == iTsLength)
@@ -112,8 +106,7 @@ int ParseTransportStream(FILE *pfTsFile)
 		return -1;
 	}
 	printf("The position is %d\n", iTsPosition);
-	printf("The package length is %d\n",iTsLength);
-
+	printf("The package length is %d\n", iTsLength);
 
 	iEmmCount = ParseCAT_Table(pfTsFile, iTsPosition, iTsLength, stCAT_Info);
 	if (-1 == iEmmCount)
@@ -132,93 +125,92 @@ int ParseTransportStream(FILE *pfTsFile)
 			if (-1 == ParseEMM_Table(pfTsFile, iTsPosition, iTsLength, &stCAT_Info[iEmmPosition]))
 			{
 				return -1;
-			}else
+			}
+			else
 			{
 				/*TODO: ParseECM  */
 			}
 		}
 	}
 
+	iProgramCount = ParsePAT_Table(pfTsFile, iTsPosition, iTsLength, stPAT_Info);
+	if (iProgramCount <= 0)
+	{
+		return -1;
+	}
 
-//	iProgramCount = ParsePAT_Table(pfTsFile, iTsPosition, iTsLength, stPAT_Info);
-//	if (iProgramCount <= 0)
-//	{
-//		return -1;
-//	}
-//
-//	if (-1 == ParseSDT_Table(pfTsFile, iTsPosition, iTsLength))
-//	{
-//		return -1;
-//	}
-//
-//	if (-1 == ParseAllProgramPMT(pfTsFile, iTsPosition, iTsLength, stPAT_Info, iProgramCount, stPMT_Info))
-//	{
-//		return -1;
-//	}
+	if (-1 == ParseSDT_Table(pfTsFile, iTsPosition, iTsLength))
+	{
+		return -1;
+	}
 
-//	if (-1 == ParseNIT_Table(pfTsFile, iTsPosition, iTsLength))
-//	{
-//		return -1;
-//	}
-//
-//	if (-1 == ParseTDT_Table(pfTsFile, iTsPosition, iTsLength))
-//	{
-//		return -1;
-//	}
-//
-//	if (-1 == ParseTOT_Table(pfTsFile, iTsPosition, iTsLength))
-//	{
-//		return -1;
-//	}
-//
-//
-//	if (-1 == ParseBAT_Table(pfTsFile, iTsPosition, iTsLength))
-//	{
-//		return -1;
-//	}
-//
-//	if (-1 == ParseALLEIT_Table(pfTsFile, iTsPosition, iTsLength))
-//	{
-//		//return -1;
-//	}
-//
-//	if (-1 == ParseRST_Table(pfTsFile, iTsPosition, iTsLength))
-//	{
-//		//return -1;
-//	}
-//
-//	if (-1 == ParseST_Table(pfTsFile, iTsPosition, iTsLength))
-//	{
-//		//return -1;
-//	}
-//
-//	if (-1 == ParseDIT_Table(pfTsFile, iTsPosition, iTsLength))
-//	{
-//		//return -1;
-//	}
-//
-//	if (-1 == ParseSIT_Table(pfTsFile, iTsPosition, iTsLength))
-//	{
-//		//return -1;
-//	}
+	if (-1 == ParseAllProgramPMT(pfTsFile, iTsPosition, iTsLength, stPAT_Info, iProgramCount, stPMT_Info))
+	{
+		return -1;
+	}
+
+	if (-1 == ParseNIT_Table(pfTsFile, iTsPosition, iTsLength))
+	{
+		return -1;
+	}
+
+	if (-1 == ParseTDT_Table(pfTsFile, iTsPosition, iTsLength))
+	{
+		return -1;
+	}
+
+	if (-1 == ParseTOT_Table(pfTsFile, iTsPosition, iTsLength))
+	{
+		return -1;
+	}
+
+	if (-1 == ParseBAT_Table(pfTsFile, iTsPosition, iTsLength))
+	{
+		return -1;
+	}
+
+	if (-1 == ParseAllEIT_Table(pfTsFile, iTsPosition, iTsLength))
+	{
+		//return -1;
+	}
+
+	if (-1 == ParseRST_Table(pfTsFile, iTsPosition, iTsLength))
+	{
+		//return -1;
+	}
+
+	if (-1 == ParseST_Table(pfTsFile, iTsPosition, iTsLength))
+	{
+		//return -1;
+	}
+
+	if (-1 == ParseDIT_Table(pfTsFile, iTsPosition, iTsLength))
+	{
+		//return -1;
+	}
+
+	if (-1 == ParseSIT_Table(pfTsFile, iTsPosition, iTsLength))
+	{
+		//return -1;
+	}
 
 	return 0;
 }
 
 /****************************************************************
-* funtion: main()
-* param:
-* feature: Parse transport stream
-*
-****************************************************************/
+ * funtion: main()
+ * param:
+ * feature: Parse transport stream
+ *
+ ****************************************************************/
 int main()
 {
 	FILE *pfTsFile = NULL;
 	
-	pfTsFile = fopen("test.ts","rb");
+	pfTsFile = fopen("test.ts", "rb");
 	if (NULL == pfTsFile)
 	{
-		pfTsFile = fopen("test.TS","rb");
+		pfTsFile = fopen("test.TS", "rb");
 		if (NULL == pfTsFile)
 		{
 			printf("file does not exist \n");

@@ -3,6 +3,8 @@
 
 #include "Parse_BAT.h"
 #include "Parse_Descriptor.h"
+#include "Parse_DesciptorStream.h"
+#include "Get_Section.h"
 
 #define BAT_PID 0x0011
 #define BAT_TABLE_ID 0x4A
@@ -56,7 +58,6 @@ int ParseBAT_Section(TS_BAT_T *pstTS_BAT, unsigned char *pucSectionBuffer)
 	int iLoopPosition = 0;
 	int iLoopCount = 0;
 	
-	BAT_INFO_T stBAT_Info = { 0 };
 	ParseBAT_SectionHead(pstTS_BAT, pucSectionBuffer);
 	iBAT_SectionLength = 3 + pstTS_BAT->uiSection_length;
 
@@ -85,8 +86,6 @@ int ParseBAT_Section(TS_BAT_T *pstTS_BAT, unsigned char *pucSectionBuffer)
 void PrintBAT(TS_BAT_T *pstTS_BAT, int iBAT_InfoCount)
 {
 	int iLoopTime = 0;
-	SERVICE_LIST_DESCRIPTOR_T stServiceListDescriptor = { 0 };
-	BOUQUET_NAME_DESCRIPTOR_T stBouquetNameDescriptor = { 0 };
 	char acOutputPrefix[OUTPUT_PREFIX_SIZE] = { 0 };
 	
 	printf("\n-------------BAT info start-------------\n");
@@ -107,12 +106,9 @@ void PrintBAT(TS_BAT_T *pstTS_BAT, int iBAT_InfoCount)
 	
 	if (pstTS_BAT->uiBoquet_descriptor_length > 0)
 	{
-		if (-1 != GetBouquetNameDescriptor(&stBouquetNameDescriptor, pstTS_BAT->aucDescriptor, pstTS_BAT->uiBoquet_descriptor_length))
-		{
-			memset(acOutputPrefix, 0, OUTPUT_PREFIX_SIZE);
-			sprintf(acOutputPrefix, "BAT->");
-			Print_BouquetNameDescriptor(&stBouquetNameDescriptor, acOutputPrefix);
-		}
+		memset(acOutputPrefix, 0, OUTPUT_PREFIX_SIZE);
+		sprintf(acOutputPrefix, "BAT->");
+		ParseDescriptor(pstTS_BAT->aucDescriptor, pstTS_BAT->uiBoquet_descriptor_length, acOutputPrefix);
 	}
 	
 	printf("BAT->Reserved_future_use_second: 0x%02x\n", pstTS_BAT->uiReserved_future_use_second);
@@ -128,12 +124,9 @@ void PrintBAT(TS_BAT_T *pstTS_BAT, int iBAT_InfoCount)
 		
 		if (pstTS_BAT->uiBoquet_descriptor_length > 0)
 		{
-			if (-1 != GetServiceListDescriptor(&stServiceListDescriptor, pstTS_BAT->stBAT_info[iLoopTime].aucDescriptor, pstTS_BAT->stBAT_info[iLoopTime].uiTransport_descriptor_length))
-			{
-				memset(acOutputPrefix, 0, OUTPUT_PREFIX_SIZE);
-				sprintf(acOutputPrefix, "BAT->BAT_info[%d].", iLoopTime);
-				Print_ServiceListDescriptor(&stServiceListDescriptor, acOutputPrefix);
-			}
+			memset(acOutputPrefix, 0, OUTPUT_PREFIX_SIZE);
+			sprintf(acOutputPrefix, "BAT->BAT_info[%d].", iLoopTime);
+			ParseDescriptor(pstTS_BAT->stBAT_info[iLoopTime].aucDescriptor, pstTS_BAT->stBAT_info[iLoopTime].uiTransport_descriptor_length, acOutputPrefix);
 		}
 	}
 	printf("\n-------------BAT info end-------------\n");

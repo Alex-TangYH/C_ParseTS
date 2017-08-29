@@ -25,33 +25,7 @@ void ParseTDT_Section(TS_TDT_T *pstTS_TDT, unsigned char *pucSectionBuffer)
 
 /******************************************
  *
- *将MJD时间iMJD转换为UTC时间
- *
- ******************************************/
-void MJDtoUTC(char *pcUTC_time, int iMJD)
-{
-	int k = -1;
-	int iYear = (int) (((float) iMJD - 15078.2) / 365.25);
-	int iMomth = (int) (((float) iMJD - 14956.1 - (int) (iYear * 365.25)) / 30.6001);
-	int iDay = (int) (iMJD - 14956 - (int) (iYear * 365.25) - (int) (iMomth * 30.6001));
-	if (iMomth == 14 || iMomth == 15)
-	{
-		k = 1;
-	}
-	else
-	{
-		k = 0;
-	}
-
-	iYear += k;
-	iMomth = iMomth - 1 - k * 12;
-
-	sprintf(pcUTC_time, "%04d/%02d/%02d", iYear + 1900, iMomth, iDay);
-}
-
-/******************************************
- *
- *输出TDT信息
+ * 输出TDT信息
  *
  ******************************************/
 void PrintTDT(TS_TDT_T *pstTS_TDT)

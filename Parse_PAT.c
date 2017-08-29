@@ -151,8 +151,6 @@ int ParsePAT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength, PAT_INFO_T *p
 	unsigned int uiRecordSectionNumber[SECTION_COUNT_256] = { 0 };
 	unsigned char ucSectionBuffer[SECTION_MAX_LENGTH_4096] = { 0 };
 
-	unsigned long ulCRC32 = 0;
-	
 	if (-1 == fseek(pfTsFile, iTsPosition, SEEK_SET))
 	{
 		printf("Parse table error\n");

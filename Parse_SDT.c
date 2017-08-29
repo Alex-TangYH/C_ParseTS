@@ -3,6 +3,8 @@
 
 #include "Parse_SDT.h"
 #include "Parse_Descriptor.h"
+#include "Parse_DesciptorStream.h"
+#include "Get_Section.h"
 
 #define SECTION_MAX_LENGTH_4096 1024*4
 #define INITIAL_VERSION 0xff
@@ -84,7 +86,6 @@ int ParseSDT_Section(TS_SDT_T *pstTS_SDT, unsigned char *pucSectionBuffer)
 void PrintSDT(TS_SDT_T *pstTS_SDT, int iServiceCount)
 {
 	int iServiceLoopTime = 0;
-	SERVICE_DESCRIPTOR_T stServiceDescriptor = { 0 };
 	char acOutputPrefix[OUTPUT_PREFIX_SIZE] = { 0 };
 	
 	printf("SDT.Table_id: 0x%02x\n", pstTS_SDT->uiTable_id);
@@ -114,12 +115,9 @@ void PrintSDT(TS_SDT_T *pstTS_SDT, int iServiceCount)
 
 		if (pstTS_SDT->stSDT_info[iServiceLoopTime].uiDescriptor_loop_length > 0)
 		{
-			if (-1 != GetServiceDescriptor(&stServiceDescriptor, pstTS_SDT->stSDT_info[iServiceLoopTime].aucDescriptor, pstTS_SDT->stSDT_info[iServiceLoopTime].uiDescriptor_loop_length))
-			{
-				memset(acOutputPrefix, 0, OUTPUT_PREFIX_SIZE);
-				sprintf(acOutputPrefix, "SDT.SDT_info[%d].", iServiceLoopTime);
-				Print_ServiceDescriptor(&stServiceDescriptor, acOutputPrefix);
-			}
+			memset(acOutputPrefix, 0, OUTPUT_PREFIX_SIZE);
+			sprintf(acOutputPrefix, "SDT.SDT_info[%d].", iServiceLoopTime);
+			ParseDescriptor(pstTS_SDT->stSDT_info[iServiceLoopTime].aucDescriptor, pstTS_SDT->stSDT_info[iServiceLoopTime].uiDescriptor_loop_length, acOutputPrefix);
 		}
 	}
 }

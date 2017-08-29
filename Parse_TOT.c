@@ -2,42 +2,16 @@
 #include <string.h>
 
 #include "Parse_TOT.h"
+#include "Get_Section.h"
+#include "FormatUtils.h"
+
 
 #define TOT_PID 0x0014
 #define TOT_TABLE_ID 0x73
 #define INITIAL_VERSION 0xff
 #define SECTION_COUNT_256 256
 #define SECTION_MAX_LENGTH_4092 1024 * 4
-/***************************************
- *
- * 将UTC_TIME[5] MJD转换为UTC并格式化
- *
- ***************************************/
-void FormatUTC_TimeFormMJD(char *pacUTC_time, unsigned int *puiUTC_time)
-{
-	
-	char acTemp[20] = { 0 };
-	int iMJD = puiUTC_time[0] * 16 * 16 + puiUTC_time[1];
-	MJDtoUTC(acTemp, iMJD);
-	sprintf(pacUTC_time, "%s %02x:%02x:%02x", acTemp, puiUTC_time[2], puiUTC_time[3], puiUTC_time[4]);
-	int i = 0;
-	for (i = 0; i < 5; i++)
-	{
-		if (i == 0)
-		{
-			sprintf(acTemp, "[原始数据：%02x, ", puiUTC_time[i]);
-		}
-		else if (i < 5 - 1)
-		{
-			sprintf(acTemp, "%02x, ", puiUTC_time[i]);
-		}
-		else
-		{
-			sprintf(acTemp, "%02x]", puiUTC_time[i]);
-		}
-		strcat(pacUTC_time, acTemp);
-	}
-}
+
 
 void ParseTOT_Section(TS_TOT_T *pstTS_TOT, unsigned char *pucSectionBuffer)
 {

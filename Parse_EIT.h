@@ -45,5 +45,7 @@ typedef struct TS_EIT_T
 	unsigned int uiCRC_32 :32;
 } TS_EIT_T;
 
+int ParseEIT_Section(TS_EIT_T *pstTS_EIT, unsigned char *pucSectionBuffer);
+int ParseEIT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength, int iEIT_table_id);
 #endif
 
