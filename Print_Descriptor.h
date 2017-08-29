@@ -1,0 +1,23 @@
+#ifndef _Print_Descriptor_
+#define _Print_Descriptor_
+
+void Print_MaximumBitrateDescriptor(MAXIMUM_BITRATE_DESCRIPTOR_T *pstMaximumBitrateDescriptor, char *pacOutputPrefix);
+void Print_StreamIndentifierDescriptor(STREAM_IDENTIFIER_DESCRIPTOR_T *pstStreamIndentifierDescriptor, char *pacOutputPrefix);
+void Print_VideoStreamDescriptor(VIDEO_STREAM_DESCRIPTOR_T *pstVideoStreamDescriptor, char *pacOutputPrefix);
+void Print_DataStreamAlignmentDescriptor(DATA_STREAM_ALIGNMENT_DESCRIPTOR_T *pstDataStreamAlignmentDescriptor, char *pacOutputPrefix);
+void Print_ISO_639_LANGUAGE_DESCRIPTOR(ISO_639_LANGUAGE_DESCRIPTOR_T *pstISO_639_LanguageDescriptor, char *pacOutputPrefix);
+void Print_TeletextDescriptor(TELETEXT_DESCRIPTOR_T *pstTeletextDescriptor, char *pacOutputPrefix);
+void Print_SubtitlingDescriptor(SUBTITLING_DESCRIPTOR_T *pstSubtitlingDescriptor, char *pacOutputPrefix);
+void Print_AudioStreamDescriptor(AUDIO_STREAM_DESCRIPTOR_T *pstAudioStreamDescriptor, char *pacOutputPrefix);
+void Print_MaximumBitrateDescriptor(MAXIMUM_BITRATE_DESCRIPTOR_T *pstMaximumBitrateDescriptor, char *pacOutputPrefix);
+void Print_SystemClockDescriptor(SYSTEM_CLOCK_DESCRIPTOR_T *pstSystemClockDescriptor, char *pacOutputPrefix);
+void Print_CA_Descriptor(CA_DESCRIPTOR_T *pstCA_Descriptor, char *pacOutputPrefix);
+void Print_StreamIndentifierDescriptor(STREAM_IDENTIFIER_DESCRIPTOR_T *pstStreamIndentifierDescriptor, char *pacOutputPrefix);
+void Print_VideoStreamDescriptor(VIDEO_STREAM_DESCRIPTOR_T *pstVideoStreamDescriptor, char *pacOutputPrefix);
+void Print_DataStreamAlignmentDescriptor(DATA_STREAM_ALIGNMENT_DESCRIPTOR_T *pstDataStreamAlignmentDescriptor, char *pacOutputPrefix);
+void Print_ISO_639_LANGUAGE_DESCRIPTOR(ISO_639_LANGUAGE_DESCRIPTOR_T *pstISO_639_LanguageDescriptor, char *pacOutputPrefix);
+void Print_TeletextDescriptor(TELETEXT_DESCRIPTOR_T *pstTeletextDescriptor, char *pacOutputPrefix);
+void Print_SubtitlingDescriptor(SUBTITLING_DESCRIPTOR_T *pstSubtitlingDescriptor, char *pacOutputPrefix);
+void Print_AudioStreamDescriptor(AUDIO_STREAM_DESCRIPTOR_T *pstAudioStreamDescriptor, char *pacOutputPrefix);
+
+#endif

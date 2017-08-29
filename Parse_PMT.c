@@ -1,0 +1,360 @@
+#include <stdio.h>
+#include <string.h>
+
+#include "Parse_PMT.h"
+#include "Parse_Descriptor.h"
+#include "Get_Section.h"
+
+#define PMT_TABLE_ID 0x02
+#define INITIAL_VERSION 0xff
+#define SECTION_COUNT_256 256
+#define SECTION_MAX_LENGTH_4096 1024*4
+#define OUTPUT_PREFIX_SIZE 256
+
+#define PRINTFPMT_INFO 1
+
+/******************************************
+ *
+ *重置PMT的section信息
+ *
+ ******************************************/
+void CleanPMT_Info(PMT_INFO_T *pstPMT_Info, int *piAudioCount)
+{
+	(*piAudioCount) = 0;
+	memset(pstPMT_Info, 0, sizeof(TS_PMT_STREAM_T));
+}
+
+/******************************************
+ *
+ *解析PMT的section头部数据
+ *
+ ******************************************/
+void ParsePMT_SectionHead(TS_PMT_T *pstTS_PMT, unsigned char *pucSectionBuffer, int *piCA_DescriptorCount)
+{
+	int iPMT_Length = 0;
+	
+	pstTS_PMT->uiTable_id = pucSectionBuffer[0];
+	pstTS_PMT->uiSection_syntax_indicator = pucSectionBuffer[1] >> 7;
+	pstTS_PMT->uiZero = (pucSectionBuffer[1] >> 6) & 0x01;
+	pstTS_PMT->uiReserved_first = (pucSectionBuffer[1] >> 4) & 0x03;
+	pstTS_PMT->uiSection_length = ((pucSectionBuffer[1] & 0x0f) << 8) | pucSectionBuffer[2];
+	pstTS_PMT->uiProgram_number = (pucSectionBuffer[3] << 8) | pucSectionBuffer[4];
+	pstTS_PMT->uiReserved_second = pucSectionBuffer[5] >> 6;
+	pstTS_PMT->uiVersion_number = (pucSectionBuffer[5] >> 1) & 0x1f;
+	pstTS_PMT->uiCurrent_next_indicator = (pucSectionBuffer[5] << 7) >> 7;
+	pstTS_PMT->uiSection_number = pucSectionBuffer[6];
+	pstTS_PMT->uiLast_section_number = pucSectionBuffer[7];
+	pstTS_PMT->uiReserved_third = pucSectionBuffer[8] >> 5;
+	pstTS_PMT->uiPCR_PID = ((pucSectionBuffer[8] & 0x1f) << 8) | pucSectionBuffer[9];
+	pstTS_PMT->uiReserved_fourth = pucSectionBuffer[10] >> 4;
+	pstTS_PMT->uiProgram_info_length = ((pucSectionBuffer[10] & 0x0f) << 8) | pucSectionBuffer[11];
+	if (pstTS_PMT->uiProgram_info_length > 0)
+	{
+		memcpy(pstTS_PMT->aucProgramDescriptor, pucSectionBuffer + 12, pstTS_PMT->uiProgram_info_length);
+	}
+	iPMT_Length = pstTS_PMT->uiSection_length + 3;
+	pstTS_PMT->uiCRC_32 = (pucSectionBuffer[iPMT_Length - 4] << 24) | (pucSectionBuffer[iPMT_Length - 3] << 16) | (pucSectionBuffer[iPMT_Length - 2] << 8) | (pucSectionBuffer[iPMT_Length - 1]);
+}
+
+/******************************************
+ *
+ * 读取所需要的CAT数据
+ *
+ ******************************************/
+void GetPMT_CAT_Info(CA_DESCRIPTOR_T *pstCA_Descriptor, int iCA_DescriptorCount, PMT_CAT_INFO_T *pstCAT_Info)
+{
+	pstCAT_Info[iCA_DescriptorCount].uiPMT_CA_PID = pstCA_Descriptor->uiCA_PID;
+	pstCAT_Info[iCA_DescriptorCount].uiPMT_CA_system_id = pstCA_Descriptor->uiCA_system_ID;
+}
+
+/******************************************
+ *
+ * 解析PMT的section数据
+ *
+ ******************************************/
+int ParsePMT_Section(TS_PMT_T *pstTS_PMT, unsigned char *pucSectionBuffer, PMT_CAT_INFO_T *pstPMT_CAT_Info)
+{
+	int iStreamPosition = 12;
+	int iPMT_Length = 0;
+	int iStreamCount = 0;
+	int iCA_DescriptorCount = 0;
+	
+	ParsePMT_SectionHead(pstTS_PMT, pucSectionBuffer, &iCA_DescriptorCount);
+
+	iPMT_Length = 3 + pstTS_PMT->uiSection_length;
+	for (iStreamPosition += pstTS_PMT->uiProgram_info_length; iStreamPosition < iPMT_Length - 4; iStreamPosition += 5)
+	{
+		pstTS_PMT->stPMT_Stream[iStreamCount].uiStream_type = pucSectionBuffer[iStreamPosition];
+		pstTS_PMT->stPMT_Stream[iStreamCount].uiReserved_fifth = pucSectionBuffer[1 + iStreamPosition] >> 5;
+		pstTS_PMT->stPMT_Stream[iStreamCount].uiElementary_PID = ((pucSectionBuffer[1 + iStreamPosition] & 0x1f) << 8) | pucSectionBuffer[2 + iStreamPosition];
+		pstTS_PMT->stPMT_Stream[iStreamCount].uiReserved_sixth = pucSectionBuffer[3 + iStreamPosition] >> 4;
+		pstTS_PMT->stPMT_Stream[iStreamCount].uiES_info_length = ((pucSectionBuffer[3 + iStreamPosition] & 0x0f) << 8) | pucSectionBuffer[4 + iStreamPosition];
+		if (0 != pstTS_PMT->stPMT_Stream[iStreamCount].uiES_info_length)
+		{
+			memcpy(pstTS_PMT->stPMT_Stream[iStreamCount].aucDescriptor, pucSectionBuffer + 5 + iStreamPosition, pstTS_PMT->stPMT_Stream[iStreamCount].uiES_info_length);
+			iStreamPosition += pstTS_PMT->stPMT_Stream[iStreamCount].uiES_info_length;
+		}
+		iStreamCount++;
+	}
+	
+	return iStreamCount;
+}
+
+/******************************************
+ *
+ *提取需要的PMT信息，存到目标参数中
+ *
+ ******************************************/
+void GetPMT_Info(TS_PMT_T *pstTS_PMT, int iStreamCount, PMT_INFO_T *pstPMT_Info, int *iVideoCount)
+{
+	int iLoopTime = 0;
+	unsigned int uiStreamType = 0;
+	unsigned int uiElementrayPID = 0;
+
+	pstPMT_Info->uiProgramNumber = pstTS_PMT->uiProgram_number;
+	for (iLoopTime = 0; iLoopTime < iStreamCount; ++iLoopTime)
+	{
+		uiStreamType = pstTS_PMT->stPMT_Stream[iLoopTime].uiStream_type;
+		uiElementrayPID = pstTS_PMT->stPMT_Stream[iLoopTime].uiElementary_PID;
+		/* get audio */
+		if ((0x04 == uiStreamType) || (0x03 == uiStreamType) || (0x0f == uiStreamType) || (0x11 == uiStreamType))
+		{
+			printf("Enter get audio\n");
+			pstPMT_Info->uiAudioPID[*iVideoCount] = uiElementrayPID;
+			(*iVideoCount)++;
+		}
+
+		/* get video */
+		if ((0x01 == uiStreamType) || (0x02 == uiStreamType) || (0x1b == uiStreamType) || (0x11 == uiStreamType))
+		{
+			pstPMT_Info->uiVideoPID = uiElementrayPID;
+		}
+	}
+}
+
+/******************************************
+ *
+ *打印一个PMT信息
+ *
+ ******************************************/
+void PrintPMT(TS_PMT_T *pstTS_PMT, int iStreamCount)
+{
+	char acOutputPrefix[OUTPUT_PREFIX_SIZE] = { 0 };
+	MAXIMUM_BITRATE_DESCRIPTOR_T stMaximumBitrateDescriptor = { 0 };
+	STREAM_IDENTIFIER_DESCRIPTOR_T stStreamIndentifierDescriptor = { 0 };
+	VIDEO_STREAM_DESCRIPTOR_T stVideoStreamDescriptor = { 0 };
+	DATA_STREAM_ALIGNMENT_DESCRIPTOR_T stDataStreamAlignmentDescriptor = { 0 };
+	ISO_639_LANGUAGE_DESCRIPTOR_T stISO_639_LanguageDescriptor = { 0 };
+	AUDIO_STREAM_DESCRIPTOR_T stAudioStreamDescriptor = { 0 };
+	CA_DESCRIPTOR_T stCA_Descriptor = { 0 };
+	SYSTEM_CLOCK_DESCRIPTOR_T stSystemClockDescriptor = { 0 };
+	TELETEXT_DESCRIPTOR_T stTeletextDescriptor = { 0 };
+	SUBTITLING_DESCRIPTOR_T stSubtitlingDescriptor = { 0 };
+
+	int iDescriptorPosition = 0;
+	
+	printf("\n-------------PMT info start-------------\n");
+	printf("PMT->Table_id : 0x%02x \n", pstTS_PMT->uiTable_id);
+	printf("PMT->Section_syntax_indicator : 0x%02x \n", pstTS_PMT->uiSection_syntax_indicator);
+	printf("PMT->Zero : 0x%02x \n", pstTS_PMT->uiZero);
+	printf("PMT->Reserved_first : 0x%02x \n", pstTS_PMT->uiReserved_first);
+	printf("PMT->Section_length : 0x%02x \n", pstTS_PMT->uiSection_length);
+	printf("PMT->Program_number : 0x%02x \n", pstTS_PMT->uiProgram_number);
+	printf("PMT->Reserved_second : 0x%02x \n", pstTS_PMT->uiReserved_second);
+	printf("PMT->Version_number : 0x%02x \n", pstTS_PMT->uiVersion_number);
+	printf("PMT->Current_next_indicator : 0x%02x \n", pstTS_PMT->uiCurrent_next_indicator);
+	printf("PMT->Section_number : 0x%02x \n", pstTS_PMT->uiSection_number);
+	printf("PMT->Last_section_number : 0x%02x \n", pstTS_PMT->uiLast_section_number);
+	printf("PMT->Reserved_third : 0x%02x \n", pstTS_PMT->uiReserved_third);
+	printf("PMT->PCR_PID : 0x%02x \n", pstTS_PMT->uiPCR_PID);
+	printf("PMT->Reserved_fourth : 0x%02x \n", pstTS_PMT->uiReserved_fourth);
+	printf("PMT->Program_info_length : 0x%02x \n", pstTS_PMT->uiProgram_info_length);
+	printf("PMT->CRC_32 : 0x%02x \n", pstTS_PMT->uiCRC_32);
+
+	if (pstTS_PMT->uiProgram_info_length > 0)
+	{
+		memset(acOutputPrefix, 0, OUTPUT_PREFIX_SIZE);
+		sprintf(acOutputPrefix, "PMT->ProgramDescriptor.");
+
+		if (-1 != GetMaximumBitrateDescriptor(&stMaximumBitrateDescriptor, pstTS_PMT->aucProgramDescriptor, pstTS_PMT->uiProgram_info_length))
+		{
+			Print_MaximumBitrateDescriptor(&stMaximumBitrateDescriptor, acOutputPrefix);
+		}
+		
+		if (-1 != GetSystemClockDescriptor(&stSystemClockDescriptor, pstTS_PMT->aucProgramDescriptor, pstTS_PMT->uiProgram_info_length))
+		{
+			Print_SystemClockDescriptor(&stSystemClockDescriptor, acOutputPrefix);
+		}
+		
+		iDescriptorPosition = 0;
+		while (iDescriptorPosition < pstTS_PMT->uiProgram_info_length)
+		{
+			iDescriptorPosition = GetCA_Descriptor(&stCA_Descriptor, pstTS_PMT->aucProgramDescriptor, pstTS_PMT->uiProgram_info_length, iDescriptorPosition);
+			if (-1 != iDescriptorPosition)
+			{
+				Print_CA_Descriptor(&stCA_Descriptor, acOutputPrefix);
+				iDescriptorPosition += pstTS_PMT->aucProgramDescriptor[1 + iDescriptorPosition] + 2;
+			}
+			else
+			{
+				break;
+			}
+		}
+	}
+	
+	int iLoopTime = 0;
+	
+	for (iLoopTime = 0; iLoopTime < iStreamCount; ++iLoopTime)
+	{
+		printf("PMT->PMT_Stream[%d].Stream_type : 0x%02x \n", iLoopTime, pstTS_PMT->stPMT_Stream[iLoopTime].uiStream_type);
+		printf("PMT->PMT_Stream[%d].Reserved_fifth : 0x%02x \n", iLoopTime, pstTS_PMT->stPMT_Stream[iLoopTime].uiReserved_fifth);
+		printf("PMT->PMT_Stream[%d].Elementary_PID : 0x%02x \n", iLoopTime, pstTS_PMT->stPMT_Stream[iLoopTime].uiElementary_PID);
+		printf("PMT->PMT_Stream[%d].Reserved_sixth : 0x%02x \n", iLoopTime, pstTS_PMT->stPMT_Stream[iLoopTime].uiReserved_sixth);
+		printf("PMT->PMT_Stream[%d].ES_info_length : 0x%02x \n", iLoopTime, pstTS_PMT->stPMT_Stream[iLoopTime].uiES_info_length);
+		if (0 != pstTS_PMT->stPMT_Stream[iLoopTime].uiES_info_length)
+		{
+			memset(acOutputPrefix, 0, OUTPUT_PREFIX_SIZE);
+			sprintf(acOutputPrefix, "PMT->PMT_Stream[%d].", iLoopTime);
+			if (-1 != GetMaximumBitrateDescriptor(&stMaximumBitrateDescriptor, pstTS_PMT->stPMT_Stream[iLoopTime].aucDescriptor, pstTS_PMT->stPMT_Stream[iLoopTime].uiES_info_length))
+			{
+				Print_MaximumBitrateDescriptor(&stMaximumBitrateDescriptor, acOutputPrefix);
+			}
+
+			if (-1 != GetStreamIndentifierDescriptor(&stStreamIndentifierDescriptor, pstTS_PMT->stPMT_Stream[iLoopTime].aucDescriptor, pstTS_PMT->stPMT_Stream[iLoopTime].uiES_info_length))
+			{
+				Print_StreamIndentifierDescriptor(&stStreamIndentifierDescriptor, acOutputPrefix);
+			}
+
+			if (-1 != GetVideoStreamDescriptor(&stVideoStreamDescriptor, pstTS_PMT->stPMT_Stream[iLoopTime].aucDescriptor, pstTS_PMT->stPMT_Stream[iLoopTime].uiES_info_length))
+			{
+				Print_VideoStreamDescriptor(&stVideoStreamDescriptor, acOutputPrefix);
+			}
+
+			if (-1 != GetDataStreamAlignmentDescriptor(&stDataStreamAlignmentDescriptor, pstTS_PMT->stPMT_Stream[iLoopTime].aucDescriptor, pstTS_PMT->stPMT_Stream[iLoopTime].uiES_info_length))
+			{
+				Print_DataStreamAlignmentDescriptor(&stDataStreamAlignmentDescriptor, acOutputPrefix);
+			}
+
+			if (-1 != GetISO_639_Language_Descriptor(&stISO_639_LanguageDescriptor, pstTS_PMT->stPMT_Stream[iLoopTime].aucDescriptor, pstTS_PMT->stPMT_Stream[iLoopTime].uiES_info_length))
+			{
+				Print_ISO_639_LANGUAGE_DESCRIPTOR(&stISO_639_LanguageDescriptor, acOutputPrefix);
+			}
+
+			if (-1 != GetTeletextDescriptor(&stTeletextDescriptor, pstTS_PMT->stPMT_Stream[iLoopTime].aucDescriptor, pstTS_PMT->stPMT_Stream[iLoopTime].uiES_info_length))
+			{
+				Print_TeletextDescriptor(&stTeletextDescriptor, acOutputPrefix);
+			}
+
+			if (-1 != GetSubtitlingDescriptor(&stSubtitlingDescriptor, pstTS_PMT->stPMT_Stream[iLoopTime].aucDescriptor, pstTS_PMT->stPMT_Stream[iLoopTime].uiES_info_length))
+			{
+				Print_SubtitlingDescriptor(&stSubtitlingDescriptor, acOutputPrefix);
+			}
+			
+			iDescriptorPosition = 0;
+			while (iDescriptorPosition < pstTS_PMT->stPMT_Stream[iLoopTime].uiES_info_length)
+			{
+				iDescriptorPosition = GetAudioStreamDescriptor(&stAudioStreamDescriptor, pstTS_PMT->stPMT_Stream[iLoopTime].aucDescriptor, pstTS_PMT->stPMT_Stream[iLoopTime].uiES_info_length, iDescriptorPosition);
+				if (-1 != iDescriptorPosition)
+				{
+					Print_AudioStreamDescriptor(&stAudioStreamDescriptor, acOutputPrefix);
+					iDescriptorPosition += pstTS_PMT->stPMT_Stream[iLoopTime].aucDescriptor[1 + iDescriptorPosition] + 2;
+				}
+				else
+				{
+					break;
+				}
+			}
+		}
+	}
+	printf("-------------PMT info end-------------\n\n");
+}
+
+/******************************************
+ *
+ *解析ECM信息
+ *
+ ******************************************/
+int ParseECM(FILE *pfTsFile, int iTsLength, unsigned char *pucSectionBuffer, unsigned int uiPID, unsigned int *puiVersion)
+{
+	int iTemp = 0;
+	
+	iTemp = GetOneSectionByPID(pfTsFile, iTsLength, pucSectionBuffer, uiPID, puiVersion);
+	printf("========================ParseECM iTemp = %d========================\n", iTemp);
+	return 1;
+}
+
+/******************************************
+ *
+ *解析单个PMT信息
+ *
+ ******************************************/
+int ParsePMT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength, unsigned int uiPMTPid, PMT_INFO_T *pstPMT_Info)
+{
+	printf("\n\n=================================ParsePMT_Table Start================================= \n");
+	int iTemp = 0;
+	int iAudioCount = 0;
+	int iStreamCount = 0;
+	TS_PMT_T stTS_PMT = { 0 };
+	unsigned int uiVersion = INITIAL_VERSION;
+	unsigned int uiRecordSectionNumber[SECTION_COUNT_256] = { 0 };
+	unsigned char ucSectionBuffer[SECTION_MAX_LENGTH_4096] = { 0 };
+	
+	PMT_CAT_INFO_T stPMT_CAT_Info[2] = { 0 };
+	
+	memset(pstPMT_Info, 0, sizeof(PMT_INFO_T));
+	if (-1 == fseek(pfTsFile, iTsPosition, SEEK_SET))
+	{
+		printf("Parse one PMT error, error PID is %d\n", uiPMTPid);
+		return -1;
+	}
+
+	while (!feof(pfTsFile))
+	{
+		iTemp = GetOneSection(pfTsFile, iTsLength, ucSectionBuffer, uiPMTPid, PMT_TABLE_ID, &uiVersion);
+
+		if (0 == iTemp)
+		{
+			//printf("Enter if (0 == iTemp) in PARSE_PMT\n");
+			uiVersion = INITIAL_VERSION;
+			memset(uiRecordSectionNumber, 0, sizeof(char) * SECTION_COUNT_256);
+			fseek(pfTsFile, 0 - iTsLength, SEEK_CUR);
+			CleanPMT_Info(pstPMT_Info, &iAudioCount);
+		}
+		if (1 == iTemp)
+		{
+			if (0 == IsSectionGetBefore(ucSectionBuffer, uiRecordSectionNumber))
+			{
+				printf("Enter if (0 == IsSectionGetBefore) in PARSE_PMT\n");
+				iStreamCount = ParsePMT_Section(&stTS_PMT, ucSectionBuffer, stPMT_CAT_Info);
+				GetPMT_Info(&stTS_PMT, iStreamCount, pstPMT_Info, &iAudioCount);
+				//GetPMT_CAT_Info(pstTS_PMT, iCA_DescriptorCount, pstPMT_CAT_Info);
+				if (1 == PRINTFPMT_INFO)
+				{
+					PrintPMT(&stTS_PMT, iStreamCount);
+				}
+
+				//解析ECM
+				ParseECM(pfTsFile, iTsLength, ucSectionBuffer, stPMT_CAT_Info[0].uiPMT_CA_PID, &uiVersion);
+			}
+			if (1 == IsAllSectionOver(ucSectionBuffer, uiRecordSectionNumber))
+			{
+				printf("Enter if (1 == IsAllSectionOver) in PARSE_PMT\n");
+				printf("return iAudioCount, iAudioCount is: %d\n", iAudioCount);
+				printf("\n=================================ParsePMT_Table END=================================== \n\n");
+				return iAudioCount;
+			}
+		}
+		if (-1 == iTemp)
+		{
+			printf("Enter if (-1 == iTemp) in PARSE_PMT\n");
+			printf("PMTPid %x is not a PMT table \n", uiPMTPid);
+			printf("return 0\n");
+			printf("\n=================================ParsePMT_Table END=================================== \n\n");
+			return 0;
+		}
+	}
+	printf("return 0\n");
+	printf("\n=================================ParsePMT_Table END=================================== \n\n");
+	return 0;
+}
+
