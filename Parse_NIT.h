@@ -32,7 +32,7 @@ typedef struct TS_NIT_T
 	unsigned int uiReserved_future_use_third :4;
 	unsigned int uiTransport_stream_loop_Length :12;
 	TS_NIT_STREAM_T stNIT_stream[NIT_STREAM_MAX];
-	unsigned int uiCRC_32 :32;
+	unsigned long uiCRC_32 :32;
 } TS_NIT_T;
 
 int ParseNIT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength);

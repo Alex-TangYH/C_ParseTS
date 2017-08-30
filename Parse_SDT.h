@@ -41,7 +41,7 @@ typedef struct TS_SDT_T
 	unsigned int uiOriginal_network_id :16;
 	unsigned int uiReserved_future_use_second :8;
 	SDT_INFO_T stSDT_info[SDT_INFO_COUNT_MAX];
-	unsigned int uiCRC_32 :32;
+	unsigned long uiCRC_32 :32;
 } TS_SDT_T;
 
 int ParseSDT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength);

@@ -13,7 +13,6 @@
 #define SECTION_MAX_LENGTH_4 4
 #define OUTPUT_PREFIX_SIZE 256
 
-
 /******************************************
  *
  * 解析SIT段信息
@@ -73,7 +72,7 @@ void PrintSIT(TS_SIT_T *pstTS_SIT)
 		sprintf(acOutputPrefix, "SIT->.");
 		ParseDescriptor(pstTS_SIT->aucSIT_info_descriptor, pstTS_SIT->uiTransmission_info_loop_length, acOutputPrefix);
 	}
-	DUBUGPRINTF("SIT->CRC32: %02x\n", pstTS_SIT->uiCRC32);
+	DUBUGPRINTF("SIT->CRC32: 0x%08lx\n", pstTS_SIT->uiCRC32);
 	DUBUGPRINTF("\n-------------SIT info end-------------\n");
 
 }
@@ -101,35 +100,36 @@ int ParseSIT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength)
 	while (!feof(pfTsFile))
 	{
 		iTemp = GetOneSection(pfTsFile, iTsLength, ucSectionBuffer, SIT_PID, SIT_TABLE_ID, &uiVersion);
-
-		if (0 == iTemp)
+		switch (iTemp)
 		{
-			uiVersion = INITIAL_VERSION;
-			memset(uiRecordGetSection, 0, sizeof(char) * SECTION_COUNT_256);
-			fseek(pfTsFile, 0 - iTsLength, SEEK_CUR);
-		}
-
-		if (1 == iTemp)
-		{
-			if (0 == IsSectionGetBefore(ucSectionBuffer, uiRecordGetSection))
-			{
-				ParseSIT_Section(&stTS_SIT, ucSectionBuffer);
-				PrintSIT(&stTS_SIT);
-			}
-			if (1 == IsAllSectionOver(ucSectionBuffer, uiRecordGetSection))
-			{
-				DUBUGPRINTF("\n=================================ParseSIT_Table END=================================== \n\n");
+			case 0:
+				uiVersion = INITIAL_VERSION;
+				memset(uiRecordGetSection, 0, sizeof(char) * SECTION_COUNT_256);
+				fseek(pfTsFile, 0 - iTsLength, SEEK_CUR);
+				break;
+			case 1:
+				if (0 == IsSectionGetBefore(ucSectionBuffer, uiRecordGetSection))
+				{
+					ParseSIT_Section(&stTS_SIT, ucSectionBuffer);
+					PrintSIT(&stTS_SIT);
+				}
+				if (1 == IsAllSectionOver(ucSectionBuffer, uiRecordGetSection))
+				{
+					DUBUGPRINTF("\n=================================ParseSIT_Table END=================================== \n\n");
+					return 1;
+				}
+				break;
+			case 2:
+				break;
+			case -1:
+				DUBUGPRINTF("\n\n=================================ParseSIT_Table End================================= \n");
 				return 1;
-			}
-		}
-		
-		if (-1 == iTemp)
-		{
-			DUBUGPRINTF("\n\n=================================ParseSIT_Table End================================= \n");
-			return 1;
+				break;
+			default:
+				LOG("ParseSIT_Table switch (iTemp) default\n");
+				break;
 		}
 	}
-
 	DUBUGPRINTF("\n\n=================================ParseSIT_Table End================================= \n");
 	return -1;
 }

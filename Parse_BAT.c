@@ -7,7 +7,6 @@
 #include "Get_Section.h"
 #include "TsParser.h"
 
-
 #define BAT_PID 0x0011
 #define BAT_TABLE_ID 0x4A
 #define INITIAL_VERSION 0xff
@@ -115,7 +114,7 @@ void PrintBAT(TS_BAT_T *pstTS_BAT, int iBAT_InfoCount)
 	
 	DUBUGPRINTF("BAT->Reserved_future_use_second: 0x%02x\n", pstTS_BAT->uiReserved_future_use_second);
 	DUBUGPRINTF("BAT->Transport_stream_loop_lenth: 0x%02x\n", pstTS_BAT->uiTransport_stream_loop_lenth);
-	DUBUGPRINTF("BAT->CRC_32: 0x%02x\n", pstTS_BAT->uiCRC_32);
+	DUBUGPRINTF("BAT->CRC_32: 0x%08lx\n", pstTS_BAT->uiCRC_32);
 
 	for (iLoopTime = 0; iLoopTime < iBAT_InfoCount; iLoopTime++)
 	{
@@ -158,32 +157,34 @@ int ParseBAT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength)
 	while (!feof(pfTsFile))
 	{
 		iTemp = GetOneSection(pfTsFile, iTsLength, ucSectionBuffer, BAT_PID, BAT_TABLE_ID, &uiVersion);
-
-		if (0 == iTemp)
+		switch (iTemp)
 		{
-			uiVersion = INITIAL_VERSION;
-			memset(uiRecordGetSection, 0, sizeof(char) * SECTION_COUNT_256);
-			fseek(pfTsFile, 0 - iTsLength, SEEK_CUR);
-		}
-
-		if (1 == iTemp)
-		{
-			if (0 == IsSectionGetBefore(ucSectionBuffer, uiRecordGetSection))
-			{
-				iBAT_InfoCount = ParseBAT_Section(&stTS_BAT, ucSectionBuffer);
-				PrintBAT(&stTS_BAT, iBAT_InfoCount);
-			}
-			if (1 == IsAllSectionOver(ucSectionBuffer, uiRecordGetSection))
-			{
+			case 0:
+				uiVersion = INITIAL_VERSION;
+				memset(uiRecordGetSection, 0, sizeof(char) * SECTION_COUNT_256);
+				fseek(pfTsFile, 0 - iTsLength, SEEK_CUR);
+				break;
+			case 1:
+				if (0 == IsSectionGetBefore(ucSectionBuffer, uiRecordGetSection))
+				{
+					iBAT_InfoCount = ParseBAT_Section(&stTS_BAT, ucSectionBuffer);
+					PrintBAT(&stTS_BAT, iBAT_InfoCount);
+				}
+				if (1 == IsAllSectionOver(ucSectionBuffer, uiRecordGetSection))
+				{
+					DUBUGPRINTF("\n=================================ParseBAT_Table END=================================== \n\n");
+					return 1;
+				}
+				break;
+			case 2:
+				break;
+			case -1:
 				DUBUGPRINTF("\n=================================ParseBAT_Table END=================================== \n\n");
 				return 1;
-			}
-		}
-		
-		if (-1 == iTemp)
-		{
-			DUBUGPRINTF("\n=================================ParseBAT_Table END=================================== \n\n");
-			return 1;
+				break;
+			default:
+				LOG("ParseBAT_Table switch (iTemp) default\n");
+				break;
 		}
 	}
 

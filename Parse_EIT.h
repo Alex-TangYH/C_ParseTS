@@ -42,7 +42,7 @@ typedef struct TS_EIT_T
 	unsigned int uiSegment_last_section_number :8;
 	unsigned int uiLast_table_id :8;
 	EIT_INFO_T astEIT_info[EIT_INFO_MAX];
-	unsigned int uiCRC_32 :32;
+	unsigned long uiCRC_32 :32;
 } TS_EIT_T;
 
 int ParseEIT_Section(TS_EIT_T *pstTS_EIT, unsigned char *pucSectionBuffer);

@@ -3,6 +3,7 @@
 
 #include "Get_Section.h"
 #include "TsParser.h"
+#include "DVB_CRC32.h"
 
 #define PACKAGE_MAX_LENGTH_204 204
 #define PRINTFTS_HEAD 0
@@ -10,6 +11,17 @@
 #define INITIAL_VERSION 0xff
 #define DEFAULT_TABLE_ID 0x80
 
+#define BAT_TABLE_ID 0x4A
+#define PAT_TABLE_ID 0x00
+#define PMT_TABLE_ID 0x02
+#define NIT_TABLE_ID 0x40
+#define SDT_TABLE_ID 0x42
+#define TOT_TABLE_ID 0x73
+#define SIT_TABLE_ID 0x7E
+#define CAT_TABLE_ID 0x01
+#define EIT_PF_TABLE_ID 0x4e
+#define EIT_SCHEDULE50_TABLE_ID 0x50
+#define EIT_SCHEDULE51_TABLE_ID 0x51
 /******************************************
  *
  * 判断是否已获取
@@ -175,7 +187,7 @@ static int CheckIndicateOfPackageHead(TS_PACKAGE_HEAD_T stTS_PackageHead)
 /*********************************************
  * 输出TS_HEAD信息
  *********************************************/
-static void PrintTS_HEAD(TS_PACKAGE_HEAD_T stTS_PackageHead)
+static void PrintTS_PES_HEAD(TS_PACKAGE_HEAD_T stTS_PackageHead)
 {
 	DUBUGPRINTF("TS_PackageHead.Sync_byte: 0x%02x\n", stTS_PackageHead.uiSync_byte);
 	DUBUGPRINTF("TS_PackageHead.Transport_error_indicator: 0x%02x\n", stTS_PackageHead.uiTransport_error_indicator);
@@ -211,7 +223,33 @@ void ParsePATSectionHeader(SECTION_HEAD_T *pstSectionHead, unsigned char *pucPac
 
 /*********************************************
  *
+ * 判断TableId是否是属于有CRC32校验码的表
+ *
+ *********************************************/
+int isHasCRC32_TableId(unsigned int uiTableId)
+{
+	int iIndex = 0;
+	unsigned int auiHasCRC32_TableId[11] = { BAT_TABLE_ID, PAT_TABLE_ID, PMT_TABLE_ID, SDT_TABLE_ID, SIT_TABLE_ID, CAT_TABLE_ID, NIT_TABLE_ID, TOT_TABLE_ID, EIT_PF_TABLE_ID, EIT_SCHEDULE50_TABLE_ID, EIT_SCHEDULE51_TABLE_ID };
+	for (iIndex = 0; iIndex < 11; iIndex++)
+	{
+		if (uiTableId == auiHasCRC32_TableId[iIndex])
+		{
+			return 1;
+		}
+		else
+		{
+		}
+	}
+	return 0;
+}
+
+/*********************************************
+ *
  * 解析TS的一个Section
+ * -1：缓存流中没有Section
+ * 0：版本变化了
+ * 1：获取到正确的Section
+ * 2:数据是错误的Section
  *
  *********************************************/
 int GetOneSection(FILE *pfTsFile, int iTsLength, unsigned char *pucSectionBuffer, unsigned int uiPID, unsigned int uiTableId, unsigned int *puiVersion)
@@ -235,7 +273,7 @@ int GetOneSection(FILE *pfTsFile, int iTsLength, unsigned char *pucSectionBuffer
 		//输出TS_HEAD信息
 		if (1 == PRINTFTS_HEAD)
 		{
-			PrintTS_HEAD(stTS_PackageHead);
+			PrintTS_PES_HEAD(stTS_PackageHead);
 		}
 
 		//检查head标志
@@ -285,6 +323,23 @@ int GetOneSection(FILE *pfTsFile, int iTsLength, unsigned char *pucSectionBuffer
 			if (1 == IsOneSectionOver(stSectionHead, iAlreadyAddSection))
 			{
 				return 1;
+
+				if (1 == isHasCRC32_TableId(uiTableId))	// 如果属于需要CRC32校验的表格 先进行CRC32校验 通过TABLEID判断
+				{
+					if (1 == Verify_CRC_32(pucSectionBuffer))
+					{
+						return 1;
+					}
+					else
+					{
+						LOG("Verify_CRC_32 a CRC error \n");
+						return 2;
+					}
+				}
+				else
+				{
+					return 1;
+				}
 			}
 		}
 	}

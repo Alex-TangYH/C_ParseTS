@@ -102,7 +102,7 @@ void PrintSDT(TS_SDT_T *pstTS_SDT, int iServiceCount)
 	DUBUGPRINTF("SDT.Last_section_number: 0x%02x\n", pstTS_SDT->uiLast_section_number);
 	DUBUGPRINTF("SDT.Original_network_id: 0x%02x\n", pstTS_SDT->uiOriginal_network_id);
 	DUBUGPRINTF("SDT.Reserved_future_use_second: 0x%02x\n", pstTS_SDT->uiReserved_future_use_second);
-	DUBUGPRINTF("SDT.CRC_32: 0x%02x\n", pstTS_SDT->uiCRC_32);
+	DUBUGPRINTF("SDT.CRC_32: 0x%08lx\n", pstTS_SDT->uiCRC_32);
 	
 	for (iServiceLoopTime = 0; iServiceLoopTime < iServiceCount; iServiceLoopTime++)
 	{
@@ -182,25 +182,28 @@ int ParseSDT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength)
 	while (!feof(pfTsFile))
 	{
 		iTemp = GetOneSection(pfTsFile, iTsLength, ucSectionBuffer, SDT_PID, SDT_TABLE_ID, &uiVersion);
-
-		if (0 == iTemp)
+		switch (iTemp)
 		{
-			uiVersion = INITIAL_VERSION;
-			fseek(pfTsFile, 0 - iTsLength, SEEK_CUR);
+			case 0:
+				uiVersion = INITIAL_VERSION;
+				fseek(pfTsFile, 0 - iTsLength, SEEK_CUR);
+				break;
+			case 1:
+				if (0 == IsSDTSectionGetBefore(ucSectionBuffer, ast_SDT_identification, &iSDTCount, &stTS_SDT))
+				{
+					iServiceCount = ParseSDT_Section(&stTS_SDT, ucSectionBuffer);
+					PrintSDT(&stTS_SDT, iServiceCount);
+				}
+				break;
+			case 2:
+				break;
+			case -1:
+				return 1;
+				break;
+			default:
+				LOG("ParseSDT_Table switch (iTemp) default\n");
+				break;
 		}
-		if (1 == iTemp)
-		{
-			if (0 == IsSDTSectionGetBefore(ucSectionBuffer, ast_SDT_identification, &iSDTCount, &stTS_SDT))
-			{
-				iServiceCount = ParseSDT_Section(&stTS_SDT, ucSectionBuffer);
-				PrintSDT(&stTS_SDT, iServiceCount);
-			}
-		}
-		if (-1 == iTemp)
-		{
-			return 1;
-		}
-		
 	}
 	DUBUGPRINTF("\n\n=================================ParseSDT_Table end================================= \n");
 	return 0;

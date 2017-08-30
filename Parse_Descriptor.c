@@ -356,10 +356,16 @@ int GetShortEventDescriptor(SHORT_EVENT_DESCRIPTOR_T *pstShortEventDescriptor, u
 	{
 		memcpy(pstShortEventDescriptor->aucEvent_name_char, pucDescriptorBuffer + 6, pstShortEventDescriptor->uiEvent_name_length);
 	}
+	else
+	{
+	}
 	pstShortEventDescriptor->uiText_length = pucDescriptorBuffer[6 + iDescriptorPosition + pstShortEventDescriptor->uiEvent_name_length];
 	if (pstShortEventDescriptor->uiText_length > 0)
 	{
 		memcpy(pstShortEventDescriptor->aucEvent_name_char, pucDescriptorBuffer + 7 + pstShortEventDescriptor->uiEvent_name_length, pstShortEventDescriptor->uiText_length);
+	}
+	else
+	{
 	}
 	return iDescriptorPosition;
 }
@@ -391,12 +397,18 @@ int GetExtendedEventDescriptor(EXTENDED_EVENT_DESCRIPTOR_T *pstExtendedEventDesc
 			{
 				memcpy(pstExtendedEventDescriptor->astExtended_event_info[iLoopCount].aucItem_descriptor_char, pucDescriptorBuffer + 8, pstExtendedEventDescriptor->astExtended_event_info[iLoopCount].uiItem_descriptor_length);
 			}
+			else
+			{
+			}
 			iDescriptorInfoPostion += pstExtendedEventDescriptor->astExtended_event_info[iLoopCount].uiItem_descriptor_length;
 
 			pstExtendedEventDescriptor->astExtended_event_info[iLoopCount].uiItem_length = pucDescriptorBuffer[8 + iDescriptorPosition];
 			if (pstExtendedEventDescriptor->astExtended_event_info[iLoopCount].uiItem_length > 0)
 			{
 				memcpy(pstExtendedEventDescriptor->astExtended_event_info[iLoopCount].aucItem_descriptor_char, pucDescriptorBuffer + 9 + iDescriptorInfoPostion, pstExtendedEventDescriptor->astExtended_event_info[iLoopCount].uiItem_length);
+			}
+			else
+			{
 			}
 			iDescriptorInfoPostion += pstExtendedEventDescriptor->astExtended_event_info[iLoopCount].uiItem_length;
 			iLoopCount++;

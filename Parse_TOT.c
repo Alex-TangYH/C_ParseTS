@@ -12,7 +12,6 @@
 #define SECTION_COUNT_256 256
 #define SECTION_MAX_LENGTH_4092 1024 * 4
 
-
 void ParseTOT_Section(TS_TOT_T *pstTS_TOT, unsigned char *pucSectionBuffer)
 {
 	int iTOT_length = 0;
@@ -50,7 +49,7 @@ void PrintTOT(TS_TOT_T *pstTS_TOT)
 	DUBUGPRINTF("TOT->Reserved_second: 0x%02x\n", pstTS_TOT->uiReserved_second);
 	DUBUGPRINTF("TOT->Descriptors_loop_length: 0x%02x\n", pstTS_TOT->uiDescriptors_loop_length);
 	// TODO: DUBUGPRINTF("TOT->Descriptor: %s\n", pstTS_TOT->ucDescriptor);
-	DUBUGPRINTF("TOT->CRC_32: 0x%02x\n", pstTS_TOT->uiCRC_32);
+	DUBUGPRINTF("TOT->CRC_32: 0x%08lx\n", pstTS_TOT->uiCRC_32);
 	DUBUGPRINTF("\n-------------TOT info end-------------\n");
 }
 
@@ -72,32 +71,33 @@ int ParseTOT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength)
 	while (!feof(pfTsFile))
 	{
 		iTemp = GetOneSection(pfTsFile, iTsLength, ucSectionBuffer, TOT_PID, TOT_TABLE_ID, &uiVersion);
-
-		if (0 == iTemp)
+		switch (iTemp)
 		{
-			uiVersion = INITIAL_VERSION;
-			memset(uiRecordGetSection, 0, sizeof(char) * SECTION_COUNT_256);
-			fseek(pfTsFile, 0 - iTsLength, SEEK_CUR);
-		}
-
-		if (1 == iTemp)
-		{
-			if (0 == IsSectionGetBefore(ucSectionBuffer, uiRecordGetSection))
-			{
-				ParseTOT_Section(&stTS_TOT, ucSectionBuffer);
-				PrintTOT(&stTS_TOT);
+			case 0:
+				uiVersion = INITIAL_VERSION;
+				memset(uiRecordGetSection, 0, sizeof(char) * SECTION_COUNT_256);
+				fseek(pfTsFile, 0 - iTsLength, SEEK_CUR);
+				break;
+			case 1:
+				if (0 == IsSectionGetBefore(ucSectionBuffer, uiRecordGetSection))
+				{
+					ParseTOT_Section(&stTS_TOT, ucSectionBuffer);
+					PrintTOT(&stTS_TOT);
+					DUBUGPRINTF("\n=================================ParseTOT_Table END=================================== \n\n");
+					return 1;
+				}
+				break;
+			case 2:
+				break;
+			case -1:
 				DUBUGPRINTF("\n=================================ParseTOT_Table END=================================== \n\n");
 				return 1;
-			}
-		}
-		
-		if (-1 == iTemp)
-		{
-			DUBUGPRINTF("\n=================================ParseTOT_Table END=================================== \n\n");
-			return 1;
+				break;
+			default:
+				LOG("ParseTOT_Table switch (iTemp) default\n");
+				break;
 		}
 	}
-
 	DUBUGPRINTF("\n\n=================================ParseTOT_Table End================================= \n");
 	return -1;
 }

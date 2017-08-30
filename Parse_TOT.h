@@ -14,7 +14,7 @@ typedef struct TS_TOT_T
 	unsigned int uiReserved_second :4;
 	unsigned int uiDescriptors_loop_length :12;
 	unsigned char ucDescriptor[TOT_DESCRIPTOR_MAX];
-	unsigned int uiCRC_32 :32;
+	unsigned long uiCRC_32 :32;
 } TS_TOT_T;
 
 int ParseTOT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength);

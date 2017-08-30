@@ -159,7 +159,7 @@ void PrintPMT(TS_PMT_T *pstTS_PMT, int iStreamCount)
 	DUBUGPRINTF("PMT->PCR_PID : 0x%02x \n", pstTS_PMT->uiPCR_PID);
 	DUBUGPRINTF("PMT->Reserved_fourth : 0x%02x \n", pstTS_PMT->uiReserved_fourth);
 	DUBUGPRINTF("PMT->Program_info_length : 0x%02x \n", pstTS_PMT->uiProgram_info_length);
-	DUBUGPRINTF("PMT->CRC_32 : 0x%02x \n", pstTS_PMT->uiCRC_32);
+	DUBUGPRINTF("PMT->CRC_32 : 0x%08lx \n", pstTS_PMT->uiCRC_32);
 
 	if (pstTS_PMT->uiProgram_info_length > 0)
 	{
@@ -229,46 +229,50 @@ int ParsePMT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength, unsigned int 
 	while (!feof(pfTsFile))
 	{
 		iTemp = GetOneSection(pfTsFile, iTsLength, ucSectionBuffer, uiPMTPid, PMT_TABLE_ID, &uiVersion);
-
-		if (0 == iTemp)
+		switch (iTemp)
 		{
-			//DUBUGPRINTF("Enter if (0 == iTemp) in PARSE_PMT\n");
-			uiVersion = INITIAL_VERSION;
-			memset(uiRecordSectionNumber, 0, sizeof(char) * SECTION_COUNT_256);
-			fseek(pfTsFile, 0 - iTsLength, SEEK_CUR);
-			CleanPMT_Info(pstPMT_Info, &iAudioCount);
-		}
-		if (1 == iTemp)
-		{
-			if (0 == IsSectionGetBefore(ucSectionBuffer, uiRecordSectionNumber))
-			{
-				DUBUGPRINTF("Enter if (0 == IsSectionGetBefore) in PARSE_PMT\n");
-				iStreamCount = ParsePMT_Section(&stTS_PMT, ucSectionBuffer, stPMT_CAT_Info);
-				GetPMT_Info(&stTS_PMT, iStreamCount, pstPMT_Info, &iAudioCount);
-				//GetPMT_CAT_Info(pstTS_PMT, iCA_DescriptorCount, pstPMT_CAT_Info);
-				if (1 == PRINTFPMT_INFO)
+			case 0:
+				DUBUGPRINTF("Enter if (0 == iTemp) in PARSE_PMT\n");
+				uiVersion = INITIAL_VERSION;
+				memset(uiRecordSectionNumber, 0, sizeof(char) * SECTION_COUNT_256);
+				fseek(pfTsFile, 0 - iTsLength, SEEK_CUR);
+				CleanPMT_Info(pstPMT_Info, &iAudioCount);
+				break;
+			case 1:
+				if (0 == IsSectionGetBefore(ucSectionBuffer, uiRecordSectionNumber))
 				{
-					PrintPMT(&stTS_PMT, iStreamCount);
-				}
+					DUBUGPRINTF("Enter if (0 == IsSectionGetBefore) in PARSE_PMT\n");
+					iStreamCount = ParsePMT_Section(&stTS_PMT, ucSectionBuffer, stPMT_CAT_Info);
+					GetPMT_Info(&stTS_PMT, iStreamCount, pstPMT_Info, &iAudioCount);
+					//GetPMT_CAT_Info(pstTS_PMT, iCA_DescriptorCount, pstPMT_CAT_Info);
+					if (1 == PRINTFPMT_INFO)
+					{
+						PrintPMT(&stTS_PMT, iStreamCount);
+					}
 
-				//解析ECM
-				ParseECM(pfTsFile, iTsLength, ucSectionBuffer, stPMT_CAT_Info[0].uiPMT_CA_PID, &uiVersion);
-			}
-			if (1 == IsAllSectionOver(ucSectionBuffer, uiRecordSectionNumber))
-			{
-				DUBUGPRINTF("Enter if (1 == IsAllSectionOver) in PARSE_PMT\n");
-				DUBUGPRINTF("return iAudioCount, iAudioCount is: %d\n", iAudioCount);
+					//解析ECM
+					ParseECM(pfTsFile, iTsLength, ucSectionBuffer, stPMT_CAT_Info[0].uiPMT_CA_PID, &uiVersion);
+				}
+				if (1 == IsAllSectionOver(ucSectionBuffer, uiRecordSectionNumber))
+				{
+					DUBUGPRINTF("Enter if (1 == IsAllSectionOver) in PARSE_PMT\n");
+					DUBUGPRINTF("return iAudioCount, iAudioCount is: %d\n", iAudioCount);
+					DUBUGPRINTF("\n=================================ParsePMT_Table END=================================== \n\n");
+					return iAudioCount;
+				}
+				break;
+			case 2:
+				break;
+			case -1:
+				DUBUGPRINTF("Enter if (-1 == iTemp) in PARSE_PMT\n");
+				DUBUGPRINTF("PMTPid %x is not a PMT table \n", uiPMTPid);
+				DUBUGPRINTF("return 0\n");
 				DUBUGPRINTF("\n=================================ParsePMT_Table END=================================== \n\n");
-				return iAudioCount;
-			}
-		}
-		if (-1 == iTemp)
-		{
-			DUBUGPRINTF("Enter if (-1 == iTemp) in PARSE_PMT\n");
-			DUBUGPRINTF("PMTPid %x is not a PMT table \n", uiPMTPid);
-			DUBUGPRINTF("return 0\n");
-			DUBUGPRINTF("\n=================================ParsePMT_Table END=================================== \n\n");
-			return 0;
+				return 0;
+				break;
+			default:
+				LOG("ParsePMT_Table switch (iTemp) default\n");
+				break;
 		}
 	}
 	DUBUGPRINTF("return 0\n");

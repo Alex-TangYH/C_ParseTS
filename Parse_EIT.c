@@ -111,7 +111,7 @@ void PrintEIT(TS_EIT_T *pstTS_EIT, int iEIT_InfoCount)
 	DUBUGPRINTF("EIT->Original_network_id: 0x%02x\n", pstTS_EIT->uiOriginal_network_id);
 	DUBUGPRINTF("EIT->Segment_last_section_number: 0x%02x\n", pstTS_EIT->uiSegment_last_section_number);
 	DUBUGPRINTF("EIT->Last_table_id: 0x%02x\n", pstTS_EIT->uiLast_table_id);
-	DUBUGPRINTF("EIT->CRC_32: 0x%02x\n", pstTS_EIT->uiCRC_32);
+	DUBUGPRINTF("EIT->CRC_32: 0x%08lx\n", pstTS_EIT->uiCRC_32);
 	for (iLoopTime = 0; iLoopTime < iEIT_InfoCount; iLoopTime++)
 	{
 		char acUTC_time[50] = { 0 };
@@ -188,34 +188,36 @@ int ParseEIT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength, int iEIT_tabl
 	while (!feof(pfTsFile))
 	{
 		iTemp = GetOneSection(pfTsFile, iTsLength, ucSectionBuffer, EIT_PID, iEIT_table_id, &uiVersion);
-
-		if (0 == iTemp)
+		switch (iTemp)
 		{
-			uiVersion = INITIAL_VERSION;
-			memset(uiRecordGetSection, 0, sizeof(char) * SECTION_COUNT_256);
-			fseek(pfTsFile, 0 - iTsLength, SEEK_CUR);
-		}
-
-		if (1 == iTemp)
-		{
-			if (0 == IsEITSectionGetBefore(ucSectionBuffer, ast_EIT_identification, &iEITCount, &stTS_EIT))
-			{
-				iEIT_InfoCount = ParseEIT_Section(&stTS_EIT, ucSectionBuffer);
-				if (1 == PRINTFEID_INFO)
+			case 0:
+				uiVersion = INITIAL_VERSION;
+				memset(uiRecordGetSection, 0, sizeof(char) * SECTION_COUNT_256);
+				fseek(pfTsFile, 0 - iTsLength, SEEK_CUR);
+				break;
+			case 1:
+				if (0 == IsEITSectionGetBefore(ucSectionBuffer, ast_EIT_identification, &iEITCount, &stTS_EIT))
 				{
-					PrintEIT(&stTS_EIT, iEIT_InfoCount);
+					iEIT_InfoCount = ParseEIT_Section(&stTS_EIT, ucSectionBuffer);
+					if (1 == PRINTFEID_INFO)
+					{
+						PrintEIT(&stTS_EIT, iEIT_InfoCount);
+					}
 				}
-			}
-			//TODO 增加提前停止解析条件
-		}
-		if (-1 == iTemp)
-		{
-			DUBUGPRINTF("iEITCount : %d\n", iEITCount);
-			DUBUGPRINTF("\n=================================ParseEIT_Table END=================================== \n\n");
-			return 1;
+				//TODO 增加提前停止解析条件
+				break;
+			case 2:
+				break;
+			case -1:
+				DUBUGPRINTF("iEITCount : %d\n", iEITCount);
+				DUBUGPRINTF("\n=================================ParseEIT_Table END=================================== \n\n");
+				return 1;
+				break;
+			default:
+				LOG("ParseEIT_Table switch (iTemp) default\n");
+				break;
 		}
 	}
-
 	DUBUGPRINTF("\n\n=================================ParseEIT_Table End================================= \n");
 	return -1;
 }

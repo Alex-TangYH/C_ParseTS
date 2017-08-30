@@ -7,7 +7,6 @@
 #include "Parse_DesciptorStream.h"
 #include "TsParser.h"
 
-
 #define NIT_PID 0x0010
 #define NIT_TABLE_ID 0x40
 
@@ -107,7 +106,7 @@ void PrintNIT(TS_NIT_T * pstTS_NIT, int iNIT_TransportStreamCount)
 	}
 	DUBUGPRINTF("NIT->Reserved_future_use_second : 0x%02x \n", pstTS_NIT->uiReserved_future_use_second);
 	DUBUGPRINTF("NIT->Transport_stream_loop_Length : 0x%02x \n", pstTS_NIT->uiTransport_stream_loop_Length);
-	DUBUGPRINTF("NIT->CRC_32 : 0x%02x \n", pstTS_NIT->uiCRC_32);
+	DUBUGPRINTF("NIT->CRC_32 : 0x%08lx \n", pstTS_NIT->uiCRC_32);
 
 	if (0 != pstTS_NIT->uiTransport_stream_loop_Length)
 	{
@@ -153,31 +152,35 @@ int ParseNIT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength)
 	while (!feof(pfTsFile))
 	{
 		iTemp = GetOneSection(pfTsFile, iTsLength, ucSectionBuffer, NIT_PID, NIT_TABLE_ID, &uiVersion);
-
-		if (0 == iTemp)
+		switch (iTemp)
 		{
-			uiVersion = INITIAL_VERSION;
-			memset(uiRecordGetSection, 0, sizeof(char) * SECTION_COUNT_256);
-			fseek(pfTsFile, 0 - iTsLength, SEEK_CUR);
-		}
-		if (1 == iTemp)
-		{
-			if (0 == IsSectionGetBefore(ucSectionBuffer, uiRecordGetSection))
-			{
-				iTransportStreamCount = ParseNIT_Section(&stTS_NIT, ucSectionBuffer);
-				PrintNIT(&stTS_NIT, iTransportStreamCount);
-			}
-			if (1 == IsAllSectionOver(ucSectionBuffer, uiRecordGetSection))
-			{
+			case 0:
+				uiVersion = INITIAL_VERSION;
+				memset(uiRecordGetSection, 0, sizeof(char) * SECTION_COUNT_256);
+				fseek(pfTsFile, 0 - iTsLength, SEEK_CUR);
+				break;
+			case 1:
+				if (0 == IsSectionGetBefore(ucSectionBuffer, uiRecordGetSection))
+				{
+					iTransportStreamCount = ParseNIT_Section(&stTS_NIT, ucSectionBuffer);
+					PrintNIT(&stTS_NIT, iTransportStreamCount);
+				}
+				if (1 == IsAllSectionOver(ucSectionBuffer, uiRecordGetSection))
+				{
+					DUBUGPRINTF("\n=================================ParseNIT_Table END=================================== \n\n");
+					return 1;
+				}
+				break;
+			case 2:
+				break;
+			case -1:
+				DUBUGPRINTF("There is not NIT table in the transport stream \n ");
 				DUBUGPRINTF("\n=================================ParseNIT_Table END=================================== \n\n");
-				return 1;
-			}
-		}
-		if (-1 == iTemp)
-		{
-			DUBUGPRINTF("There is not NIT table in the transport stream \n ");
-			DUBUGPRINTF("\n=================================ParseNIT_Table END=================================== \n\n");
-			return 0;
+				return 0;
+				break;
+			default:
+				LOG("ParseNIT_Table switch (iTemp) default\n");
+				break;
 		}
 	}
 	

@@ -22,7 +22,7 @@ typedef struct TS_CAT_T
 	unsigned int uiSection_number :8;
 	unsigned int uiLast_section_number :8;
 	unsigned char aucDescriptor[CAT_DESCRIPTOR_MAX];
-	unsigned int uiCRC_32 :32;
+	unsigned long uiCRC_32 :32;
 } TS_CAT_T;
 
 int ParseCAT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength, CAT_INFO_T *pstCAT_Info);

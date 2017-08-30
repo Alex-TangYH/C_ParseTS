@@ -27,7 +27,7 @@ typedef struct TS_PAT_T
 	TS_PAT_PROGRAM_T stPAT_Program[PAT_PROGARM_MAX];
 
 	unsigned int uiNetwork_PID :13;
-	unsigned int uiCRC_32 :32;
+	unsigned long uiCRC_32 :32;
 } TS_PAT_T;
 
 typedef struct PAT_INFO_T

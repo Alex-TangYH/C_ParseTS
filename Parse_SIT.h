@@ -25,7 +25,7 @@ typedef struct TS_SIT_T
 	unsigned int uiTransmission_info_loop_length :12;
 	unsigned char aucSIT_info_descriptor[SIT_DESCRIPTOR_INFO_MAX];
 
-	unsigned int uiCRC32 :32;
+	unsigned long uiCRC32 :32;
 
 } TS_SIT_T;
 

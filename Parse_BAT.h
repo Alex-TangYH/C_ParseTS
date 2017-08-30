@@ -33,7 +33,7 @@ typedef struct TS_BAT_T
 	unsigned int uiTransport_stream_loop_lenth :12;
 	BAT_INFO_T stBAT_info[BAT_INFO_MAX];
 	
-	unsigned int uiCRC_32 :32;
+	unsigned long uiCRC_32 :32;
 
 } TS_BAT_T;
 

@@ -118,7 +118,7 @@ void PrintPAT(TS_PAT_T *pstTS_PAT_T, int iPAT_ProgramCount)
 	DUBUGPRINTF("PAT->Current_next_indicator: 0x%02x\n", pstTS_PAT_T->uiCurrent_next_indicator);
 	DUBUGPRINTF("PAT->Section_number: 0x%02x\n", pstTS_PAT_T->uiSection_number);
 	DUBUGPRINTF("PAT->Last_section_number: 0x%02x\n", pstTS_PAT_T->uiLast_section_number);
-	DUBUGPRINTF("PAT->CRC_32: 0x%02x\n", pstTS_PAT_T->uiCRC_32);
+	DUBUGPRINTF("PAT->CRC_32: 0x%08lx\n", pstTS_PAT_T->uiCRC_32);
 	
 	int iLoopTime = 0;
 	for (iLoopTime = 0; iLoopTime < iPAT_ProgramCount; iLoopTime++)
@@ -162,42 +162,47 @@ int ParsePAT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength, PAT_INFO_T *p
 	while (!feof(pfTsFile))
 	{
 		iTemp = GetOneSection(pfTsFile, iTsLength, ucSectionBuffer, PAT_PID, PAT_TABLE_ID, &uiVersion);
-		if (0 == iTemp)
+		switch (iTemp)
 		{
-			DUBUGPRINTF("Enter if (0 == iTemp) in PARSE_PAT\n");
-			uiVersion = INITIAL_VERSION;
-			memset(uiRecordSectionNumber, 0, sizeof(char) * SECTION_COUNT_256);
-			fseek(pfTsFile, 0 - iTsLength, SEEK_CUR);
-			CleanPAT_Info(pstPAT_Info_T, &iInfoCount);
-		}
-		if (1 == iTemp)
-		{
-			DUBUGPRINTF("Enter if (1 == iTemp) in PARSE_PAT\n");
-			if (0 == IsSectionGetBefore(ucSectionBuffer, uiRecordSectionNumber))
-			{
-				DUBUGPRINTF("Enter if (0 == IsSectionGetBefore) in PARSE_PAT\n");
-				iPATProgramCount = ParsePAT_Section(&stTS_PAT_T, ucSectionBuffer);
-				
-				GetPAT_Info(&stTS_PAT_T, iPATProgramCount, pstPAT_Info_T, &iInfoCount);
-				if (1 == PRINTFPAT_INFO)
+			case 0:
+				DUBUGPRINTF("Enter if (0 == iTemp) in PARSE_PAT\n");
+				uiVersion = INITIAL_VERSION;
+				memset(uiRecordSectionNumber, 0, sizeof(char) * SECTION_COUNT_256);
+				fseek(pfTsFile, 0 - iTsLength, SEEK_CUR);
+				CleanPAT_Info(pstPAT_Info_T, &iInfoCount);
+				break;
+			case 1:
+				DUBUGPRINTF("Enter if (1 == iTemp) in PARSE_PAT\n");
+				if (0 == IsSectionGetBefore(ucSectionBuffer, uiRecordSectionNumber))
 				{
-					PrintPAT(&stTS_PAT_T, iPATProgramCount);
+					DUBUGPRINTF("Enter if (0 == IsSectionGetBefore) in PARSE_PAT\n");
+					iPATProgramCount = ParsePAT_Section(&stTS_PAT_T, ucSectionBuffer);
+
+					GetPAT_Info(&stTS_PAT_T, iPATProgramCount, pstPAT_Info_T, &iInfoCount);
+					if (1 == PRINTFPAT_INFO)
+					{
+						PrintPAT(&stTS_PAT_T, iPATProgramCount);
+					}
 				}
-			}
-			if (1 == IsAllSectionOver(ucSectionBuffer, uiRecordSectionNumber))
-			{
-				DUBUGPRINTF("Enter if (1 == IsAllSectionOver) in PARSE_PAT\n");
+				if (1 == IsAllSectionOver(ucSectionBuffer, uiRecordSectionNumber))
+				{
+					DUBUGPRINTF("Enter if (1 == IsAllSectionOver) in PARSE_PAT\n");
+					DUBUGPRINTF("return iInfoCount, iInfoCount is: %d\n", iInfoCount);
+					DUBUGPRINTF("\n\n=================================ParsePAT_Table End=================================== \n\n");
+					return iInfoCount;
+				}
+				break;
+			case 2:
+				break;
+			case -1:
+				DUBUGPRINTF("Enter if (-1 == iTemp) in PARSE_PAT\n");
 				DUBUGPRINTF("return iInfoCount, iInfoCount is: %d\n", iInfoCount);
 				DUBUGPRINTF("\n\n=================================ParsePAT_Table End=================================== \n\n");
 				return iInfoCount;
-			}
-		}
-		if (-1 == iTemp)
-		{
-			DUBUGPRINTF("Enter if (-1 == iTemp) in PARSE_PAT\n");
-			DUBUGPRINTF("return iInfoCount, iInfoCount is: %d\n", iInfoCount);
-			DUBUGPRINTF("\n\n=================================ParsePAT_Table End=================================== \n\n");
-			return iInfoCount;
+				break;
+			default:
+				LOG("ParsePAT_Table switch (iTemp) default\n");
+				break;
 		}
 	}
 	DUBUGPRINTF("return 0\n");
