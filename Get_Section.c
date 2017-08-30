@@ -24,7 +24,7 @@
 #define EIT_SCHEDULE51_TABLE_ID 0x51
 /******************************************
  *
- * åˆ¤æ–­æ˜¯å¦å·²è·å–
+ * ÅĞ¶ÏÊÇ·ñÒÑ»ñÈ¡
  *
  ******************************************/
 int IsSectionGetBefore(unsigned char *pucSectionBuffer, unsigned int *puiRecordSectionNumber)
@@ -47,7 +47,7 @@ int IsSectionGetBefore(unsigned char *pucSectionBuffer, unsigned int *puiRecordS
 
 /******************************************
  *
- * åˆ¤æ–­æ˜¯å¦å·²è·å–
+ * ÅĞ¶ÏÊÇ·ñÒÑ»ñÈ¡
  *
  ******************************************/
 int IsAllSectionOver(unsigned char *pucSectionBuffer, unsigned int *puiRecordSectionNumber)
@@ -64,7 +64,7 @@ int IsAllSectionOver(unsigned char *pucSectionBuffer, unsigned int *puiRecordSec
 
 /******************************************
  *
- *é€šè¿‡PIDæŸ¥æ‰¾section
+ *Í¨¹ıPID²éÕÒsection
  *
  ******************************************/
 
@@ -75,7 +75,7 @@ int GetOneSectionByPID(FILE *pfTsFile, int iTsLength, unsigned char *pucSectionB
 }
 
 /*********************************************
- * è§£æTSçš„åŒ…å¤´
+ * ½âÎöTSµÄ°üÍ·
  *********************************************/
 
 static void ParseTS_PackageHead(TS_PACKAGE_HEAD_T *pstTS_PackageHead, unsigned char *pucPackageBuffer)
@@ -91,10 +91,10 @@ static void ParseTS_PackageHead(TS_PACKAGE_HEAD_T *pstTS_PackageHead, unsigned c
 }
 
 /*********************************************
- * è§£æTSä¸­æœ‰æ•ˆè´Ÿè½½çš„å¼€å§‹ä½ç½®
- * è·å–ä¼ é€æµåˆ†ç»„å±‚ä¸­è°ƒæ•´æ§åˆ¶å­—æ®µçš„å€¼
- * å¦‚æœä¸º0x00ã€0x10ï¼Œå³æ²¡æœ‰æœ‰æ•ˆè´Ÿè½½è¿”å›-1ï¼›
- * å¦‚æœä¸º0x01ã€0x11ï¼Œè¿”å›æœ‰æ•ˆè´Ÿè½½çš„å¼€å§‹ä½ç½®
+ * ½âÎöTSÖĞÓĞĞ§¸ºÔØµÄ¿ªÊ¼Î»ÖÃ
+ * »ñÈ¡´«ËÍÁ÷·Ö×é²ãÖĞµ÷Õû¿ØÖÆ×Ö¶ÎµÄÖµ
+ * Èç¹ûÎª0x00¡¢0x10£¬¼´Ã»ÓĞÓĞĞ§¸ºÔØ·µ»Ø-1£»
+ * Èç¹ûÎª0x01¡¢0x11£¬·µ»ØÓĞĞ§¸ºÔØµÄ¿ªÊ¼Î»ÖÃ
  *********************************************/
 int GetTheLoadBeginPostion(unsigned char *pucPackageBuffer)
 {
@@ -125,7 +125,7 @@ int GetTheLoadBeginPostion(unsigned char *pucPackageBuffer)
 }
 
 /*********************************************
- * æŠŠç¼“å­˜æ•°æ®å¤åˆ¶åˆ°Sectionä¸­
+ * °Ñ»º´æÊı¾İ¸´ÖÆµ½SectionÖĞ
  *********************************************/
 static void PutTheBufferToSection(unsigned char *pucSectionBuffer, unsigned char *pucPackageBuffer, int *piAlreadyAddSection, SECTION_HEAD_T *pstPAT_SectionHead, int iLoadBeginPosition)
 {
@@ -141,7 +141,7 @@ static void PutTheBufferToSection(unsigned char *pucSectionBuffer, unsigned char
 }
 
 /*********************************************
- * åˆ¤æ–­ä¸€ä¸ªSectionæ˜¯å¦ç»“æŸ
+ * ÅĞ¶ÏÒ»¸öSectionÊÇ·ñ½áÊø
  *********************************************/
 static int IsOneSectionOver(SECTION_HEAD_T stSectionHead, int iAddLength)
 {
@@ -154,7 +154,7 @@ static int IsOneSectionOver(SECTION_HEAD_T stSectionHead, int iAddLength)
 }
 
 /*********************************************
- * è§£æSectionç‰ˆæœ¬æ•°æ®
+ * ½âÎöSection°æ±¾Êı¾İ
  *********************************************/
 static int IsVersionChange(SECTION_HEAD_T *pstSectionHead, unsigned int *puiRecordVersion)
 {
@@ -170,9 +170,9 @@ static int IsVersionChange(SECTION_HEAD_T *pstSectionHead, unsigned int *puiReco
 }
 
 /*********************************************
- * å¤„ç†TSå¤´éƒ¨ä¿¡æ¯çš„æ ‡å¿—ä½
- * è¿”å›1è¡¨ç¤ºæ²¡æœ‰é—®é¢˜
- * è¿”å›-1è¡¨ç¤ºéœ€è¦ä¸¢å¼ƒ
+ * ´¦ÀíTSÍ·²¿ĞÅÏ¢µÄ±êÖ¾Î»
+ * ·µ»Ø1±íÊ¾Ã»ÓĞÎÊÌâ
+ * ·µ»Ø-1±íÊ¾ĞèÒª¶ªÆú
  *********************************************/
 static int CheckIndicateOfPackageHead(TS_PACKAGE_HEAD_T stTS_PackageHead)
 {
@@ -185,7 +185,7 @@ static int CheckIndicateOfPackageHead(TS_PACKAGE_HEAD_T stTS_PackageHead)
 }
 
 /*********************************************
- * è¾“å‡ºTS_HEADä¿¡æ¯
+ * Êä³öTS_HEADĞÅÏ¢
  *********************************************/
 static void PrintTS_PES_HEAD(TS_PACKAGE_HEAD_T stTS_PackageHead)
 {
@@ -200,7 +200,7 @@ static void PrintTS_PES_HEAD(TS_PACKAGE_HEAD_T stTS_PackageHead)
 }
 
 /*********************************************
- * è§£æPAT Sectionå¤´éƒ¨éƒ¨åˆ†æ•°æ®
+ * ½âÎöPAT SectionÍ·²¿²¿·ÖÊı¾İ
  *********************************************/
 
 void ParsePATSectionHeader(SECTION_HEAD_T *pstSectionHead, unsigned char *pucPackageBuffer)
@@ -223,7 +223,7 @@ void ParsePATSectionHeader(SECTION_HEAD_T *pstSectionHead, unsigned char *pucPac
 
 /*********************************************
  *
- * åˆ¤æ–­TableIdæ˜¯å¦æ˜¯å±äºæœ‰CRC32æ ¡éªŒç çš„è¡¨
+ * ÅĞ¶ÏTableIdÊÇ·ñÊÇÊôÓÚÓĞCRC32Ğ£ÑéÂëµÄ±í
  *
  *********************************************/
 int isHasCRC32_TableId(unsigned int uiTableId)
@@ -245,11 +245,11 @@ int isHasCRC32_TableId(unsigned int uiTableId)
 
 /*********************************************
  *
- * è§£æTSçš„ä¸€ä¸ªSection
- * -1ï¼šç¼“å­˜æµä¸­æ²¡æœ‰Section
- * 0ï¼šç‰ˆæœ¬å˜åŒ–äº†
- * 1ï¼šè·å–åˆ°æ­£ç¡®çš„Section
- * 2:æ•°æ®æ˜¯é”™è¯¯çš„Section
+ * ½âÎöTSµÄÒ»¸öSection
+ * -1£º»º´æÁ÷ÖĞÃ»ÓĞSection
+ * 0£º°æ±¾±ä»¯ÁË
+ * 1£º»ñÈ¡µ½ÕıÈ·µÄSection
+ * 2:Êı¾İÊÇ´íÎóµÄSection
  *
  *********************************************/
 int GetOneSection(FILE *pfTsFile, int iTsLength, unsigned char *pucSectionBuffer, unsigned int uiPID, unsigned int uiTableId, unsigned int *puiVersion)
@@ -270,13 +270,13 @@ int GetOneSection(FILE *pfTsFile, int iTsLength, unsigned char *pucSectionBuffer
 		}
 		ParseTS_PackageHead(&stTS_PackageHead, ucPackageBuffer);
 
-		//è¾“å‡ºTS_HEADä¿¡æ¯
+		//Êä³öTS_HEADĞÅÏ¢
 		if (1 == PRINTFTS_HEAD)
 		{
 			PrintTS_PES_HEAD(stTS_PackageHead);
 		}
 
-		//æ£€æŸ¥headæ ‡å¿—
+		//¼ì²éhead±êÖ¾
 		if (-1 == CheckIndicateOfPackageHead(stTS_PackageHead))
 		{
 			continue;
@@ -286,7 +286,7 @@ int GetOneSection(FILE *pfTsFile, int iTsLength, unsigned char *pucSectionBuffer
 		{
 
 			iPayloadPosition = GetTheLoadBeginPostion(ucPackageBuffer);
-			if (-1 == iPayloadPosition) /* æ²¡æœ‰æœ‰æ•ˆè´Ÿè½½ */
+			if (-1 == iPayloadPosition) /* Ã»ÓĞÓĞĞ§¸ºÔØ */
 			{
 				continue;
 			}
@@ -303,7 +303,7 @@ int GetOneSection(FILE *pfTsFile, int iTsLength, unsigned char *pucSectionBuffer
 				iLoadBeginPosition = GetTheLoadBeginPostion(ucPackageBuffer);
 				PutTheBufferToSection(pucSectionBuffer, ucPackageBuffer, &iAlreadyAddSection, &stSectionHead, iLoadBeginPosition);
 			}
-			else	// è·¨åŒ…æ•°æ®å¤„ç†
+			else	// ¿ç°üÊı¾İ´¦Àí
 			{
 				if (1 == iFlagSectionStart)
 				{
@@ -324,7 +324,7 @@ int GetOneSection(FILE *pfTsFile, int iTsLength, unsigned char *pucSectionBuffer
 			{
 				return 1;
 
-				if (1 == isHasCRC32_TableId(uiTableId))	// å¦‚æœå±äºéœ€è¦CRC32æ ¡éªŒçš„è¡¨æ ¼ å…ˆè¿›è¡ŒCRC32æ ¡éªŒ é€šè¿‡TABLEIDåˆ¤æ–­
+				if (1 == isHasCRC32_TableId(uiTableId))	// Èç¹ûÊôÓÚĞèÒªCRC32Ğ£ÑéµÄ±í¸ñ ÏÈ½øĞĞCRC32Ğ£Ñé Í¨¹ıTABLEIDÅĞ¶Ï
 				{
 					if (1 == Verify_CRC_32(pucSectionBuffer))
 					{

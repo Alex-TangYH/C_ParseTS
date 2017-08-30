@@ -32,7 +32,7 @@
 
 /******************************************
  *
- * è§£æå¹¶æ‰“å°ä¸TAGå¯¹åº”çš„æè¿°å­
+ * ½âÎö²¢´òÓ¡ÓëTAG¶ÔÓ¦µÄÃèÊö×Ó
  *
  ******************************************/
 void ParseDescriptorByTag(int iTag, int iDescriptorPosition, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, char *pacOutputPrefix)
@@ -153,7 +153,7 @@ void ParseDescriptorByTag(int iTag, int iDescriptorPosition, unsigned char *pucD
 
 /******************************************
  *
- * è§£ææ ‡å‡†æè¿°æµä¸­æè¿°ç¬¦çš„tagå€¼
+ * ½âÎö±ê×¼ÃèÊöÁ÷ÖĞÃèÊö·ûµÄtagÖµ
  *
  ******************************************/
 int GetDescriptorTag(int *piTag, int iDescriptorPosition, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength)
@@ -171,7 +171,7 @@ int GetDescriptorTag(int *piTag, int iDescriptorPosition, unsigned char *pucDesc
 
 /******************************************
  *
- * è§£ææŒ‡å®šæè¿°ç¬¦çš„tagä½ç½®
+ * ½âÎöÖ¸¶¨ÃèÊö·ûµÄtagÎ»ÖÃ
  *
  ******************************************/
 int GetDescriptorTagPosition(int *piDescriptorPosition, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iTagValue)
@@ -194,7 +194,7 @@ int GetDescriptorTagPosition(int *piDescriptorPosition, unsigned char *pucDescri
 
 /******************************************
  *
- * è§£ææè¿°æµ
+ * ½âÎöÃèÊöÁ÷
  *
  ******************************************/
 int ParseDescriptor(unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, char *pacOutputPrefix)

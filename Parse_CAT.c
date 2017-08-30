@@ -19,7 +19,7 @@
 
 /******************************************
  *
- * 閲嶇疆CAT鍐呭瓨
+ * 重置CAT内存
  *
  ******************************************/
 void CleanCAT_Info(CAT_INFO_T *pstCAT_info, int *piCA_systemCount)
@@ -30,7 +30,7 @@ void CleanCAT_Info(CAT_INFO_T *pstCAT_info, int *piCA_systemCount)
 
 /******************************************
  *
- * 瑙ｆ瀽CAT Section Head鏁版嵁
+ * 解析CAT Section Head数据
  *
  ******************************************/
 
@@ -54,7 +54,7 @@ void ParseCAT_Head(TS_CAT_T *pstTS_CAT, unsigned char *pucSectionBuffer)
 
 /******************************************
  *
- * 瑙ｆ瀽CAT Section鏁版嵁
+ * 解析CAT Section数据
  *
  ******************************************/
 
@@ -72,7 +72,7 @@ void ParseCAT_Section(TS_CAT_T *pstTS_CAT, unsigned char *pucSectionBuffer)
 
 /******************************************
  *
- *杈撳嚭CAT 鏁版嵁
+ *输出CAT 数据
  *
  ******************************************/
 void PrintCAT(TS_CAT_T *pstTS_CAT)
@@ -106,7 +106,7 @@ void PrintCAT(TS_CAT_T *pstTS_CAT)
 
 /******************************************
  *
- *璇诲彇鎵�闇�瑕佺殑CAT鏁版嵁
+ *读取所需要的CAT数据
  *
  ******************************************/
 void GetCAT_Info(CA_DESCRIPTOR_T *pstCA_Descriptor, int iDescriptorCount, CAT_INFO_T *pstCAT_Info, int *iInfoCount)
@@ -123,7 +123,7 @@ void GetCAT_Info(CA_DESCRIPTOR_T *pstCA_Descriptor, int iDescriptorCount, CAT_IN
 
 /******************************************
  *
- * 瑙ｆ瀽CAT鏁版嵁
+ * 解析CAT数据
  *
  ******************************************/
 int ParseCAT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength, CAT_INFO_T *pstCAT_Info)
@@ -133,7 +133,7 @@ int ParseCAT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength, CAT_INFO_T *p
 	TS_CAT_T stTS_CAT = { 0 };
 	int iInfoCount = 0;
 
-//	TODO 澶欳A淇℃伅瑙ｆ瀽
+//	TODO 多CA信息解析
 //	int iCA_systemCount = 0;
 	unsigned int uiVersion = INITIAL_VERSION;
 	unsigned int uiRecordSectionNumber[SECTION_COUNT_256] = { 0 };

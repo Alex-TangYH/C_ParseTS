@@ -5,12 +5,14 @@
 #include "Get_Section.h"
 #include "FormatUtils.h"
 #include "TsParser.h"
+#include "Parse_DesciptorStream.h"
 
 #define TOT_PID 0x0014
 #define TOT_TABLE_ID 0x73
 #define INITIAL_VERSION 0xff
 #define SECTION_COUNT_256 256
 #define SECTION_MAX_LENGTH_4092 1024 * 4
+#define OUTPUT_PREFIX_SIZE 256
 
 void ParseTOT_Section(TS_TOT_T *pstTS_TOT, unsigned char *pucSectionBuffer)
 {
@@ -28,7 +30,7 @@ void ParseTOT_Section(TS_TOT_T *pstTS_TOT, unsigned char *pucSectionBuffer)
 	}
 	pstTS_TOT->uiReserved_second = pucSectionBuffer[8] >> 4;
 	pstTS_TOT->uiDescriptors_loop_length = ((pucSectionBuffer[8] & 0x0f) << 8) | pucSectionBuffer[9];
-	memcpy(pstTS_TOT->ucDescriptor, pucSectionBuffer + 10, pstTS_TOT->uiDescriptors_loop_length);
+	memcpy(pstTS_TOT->aucDescriptor, pucSectionBuffer + 10, pstTS_TOT->uiDescriptors_loop_length);
 	iTOT_length = 3 + pstTS_TOT->uiSection_length;
 	pstTS_TOT->uiCRC_32 = (pucSectionBuffer[iTOT_length - 4] << 24) | (pucSectionBuffer[iTOT_length - 3] << 16) | (pucSectionBuffer[iTOT_length - 2] << 8) | (pucSectionBuffer[iTOT_length - 1]);
 	
@@ -36,6 +38,7 @@ void ParseTOT_Section(TS_TOT_T *pstTS_TOT, unsigned char *pucSectionBuffer)
 
 void PrintTOT(TS_TOT_T *pstTS_TOT)
 {
+	char acOutputPrefix[OUTPUT_PREFIX_SIZE] = { 0 };
 	DUBUGPRINTF("\n-------------TOT info start-------------\n");
 	DUBUGPRINTF("TOT->table_id: 0x%02x\n", pstTS_TOT->uitable_id);
 	DUBUGPRINTF("TOT->Section_syntax_indicator: 0x%02x\n", pstTS_TOT->uiSection_syntax_indicator);
@@ -48,7 +51,15 @@ void PrintTOT(TS_TOT_T *pstTS_TOT)
 	DUBUGPRINTF("TOT->UTC_time: %s\n", acUTC_time);
 	DUBUGPRINTF("TOT->Reserved_second: 0x%02x\n", pstTS_TOT->uiReserved_second);
 	DUBUGPRINTF("TOT->Descriptors_loop_length: 0x%02x\n", pstTS_TOT->uiDescriptors_loop_length);
-	// TODO: DUBUGPRINTF("TOT->Descriptor: %s\n", pstTS_TOT->ucDescriptor);
+	if (pstTS_TOT->uiDescriptors_loop_length > 0)
+	{
+		memset(acOutputPrefix, 0, OUTPUT_PREFIX_SIZE);
+		sprintf(acOutputPrefix, "TOT->");
+		ParseDescriptor(pstTS_TOT->aucDescriptor, pstTS_TOT->uiDescriptors_loop_length, acOutputPrefix);
+	}
+	else
+	{
+	}
 	DUBUGPRINTF("TOT->CRC_32: 0x%08lx\n", pstTS_TOT->uiCRC_32);
 	DUBUGPRINTF("\n-------------TOT info end-------------\n");
 }

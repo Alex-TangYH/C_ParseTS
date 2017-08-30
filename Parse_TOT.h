@@ -13,7 +13,7 @@ typedef struct TS_TOT_T
 	unsigned int uiUTC_time[5];
 	unsigned int uiReserved_second :4;
 	unsigned int uiDescriptors_loop_length :12;
-	unsigned char ucDescriptor[TOT_DESCRIPTOR_MAX];
+	unsigned char aucDescriptor[TOT_DESCRIPTOR_MAX];
 	unsigned long uiCRC_32 :32;
 } TS_TOT_T;
 

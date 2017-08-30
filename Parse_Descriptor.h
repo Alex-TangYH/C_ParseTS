@@ -15,7 +15,7 @@
 #define EXTENDED_EVENT_DESCRIPTOR_CHAR_MAX 256
 #define FREQUENCY_LIST_DESCRIPTOR_INFO_MAX 64
 
-//=============================================== 13818ÊèèËø∞Â≠êÔºö===============================================
+//=============================================== 13818√Ë ˆ◊”£∫===============================================
 
 typedef struct VIDEO_STREAM_DESCRIPTOR_T
 {
@@ -103,7 +103,7 @@ typedef struct ISO_639_LANGUAGE_DESCRIPTOR_T
 	unsigned int uiAudio_type :8;
 } ISO_639_LANGUAGE_DESCRIPTOR_T;
 
-//=============================================== 300468ÊèèËø∞Â≠êÔºö===============================================
+//=============================================== 300468√Ë ˆ◊”£∫===============================================
 typedef struct NETWORK_NAME_DESCRIPTOR_T
 {
 	unsigned int uiDescriptor_tag :8;

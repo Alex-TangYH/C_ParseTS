@@ -24,9 +24,7 @@ typedef struct TS_SIT_T
 	unsigned int uiDVB_Reserved_future_use_third :4;
 	unsigned int uiTransmission_info_loop_length :12;
 	unsigned char aucSIT_info_descriptor[SIT_DESCRIPTOR_INFO_MAX];
-
 	unsigned long uiCRC32 :32;
-
 } TS_SIT_T;
 
 int ParseSIT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength);

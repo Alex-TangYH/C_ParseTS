@@ -28,7 +28,7 @@ void ParseTDT_Section(TS_TDT_T *pstTS_TDT, unsigned char *pucSectionBuffer)
 
 /******************************************
  *
- * è¾“å‡ºTDTä¿¡æ¯
+ * Êä³öTDTÐÅÏ¢
  *
  ******************************************/
 void PrintTDT(TS_TDT_T *pstTS_TDT)
@@ -49,7 +49,7 @@ void PrintTDT(TS_TDT_T *pstTS_TDT)
 	{
 		if (i == 0)
 		{
-			DUBUGPRINTF("[åŽŸå§‹æ•°æ®ï¼š%02x, ", pstTS_TDT->uiUTC_time[i]);
+			DUBUGPRINTF("[Ô­Ê¼Êý¾Ý£º%02x, ", pstTS_TDT->uiUTC_time[i]);
 		}
 		else if (i < 5 - 1)
 		{
@@ -66,7 +66,7 @@ void PrintTDT(TS_TDT_T *pstTS_TDT)
 
 /******************************************
  *
- *ä»Žæµä¸­è§£æžTDTä¿¡æ¯
+ *´ÓÁ÷ÖÐ½âÎöTDTÐÅÏ¢
  *
  ******************************************/
 int ParseTDT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength)
@@ -87,25 +87,25 @@ int ParseTDT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength)
 	while (!feof(pfTsFile))
 	{
 		iTemp = GetOneSection(pfTsFile, iTsLength, ucSectionBuffer, TDT_PID, TDT_TABLE_ID, &uiVersion);
-
-		if (0 == iTemp)
+		switch (iTemp)
 		{
-			uiVersion = INITIAL_VERSION;
-			memset(uiRecordGetSection, 0, sizeof(char) * SECTION_COUNT_256);
-			fseek(pfTsFile, 0 - iTsLength, SEEK_CUR);
-		}
-
-		if (1 == iTemp)
-		{
-			ParseTDT_Section(&stTS_TDT, ucSectionBuffer);
-			PrintTDT(&stTS_TDT);
-			DUBUGPRINTF("\n=================================ParseTDT_Table END=================================== \n\n");
-			return 1;
-		}
-		
-		if (-1 == iTemp)
-		{
-			return 1;
+			case 0:
+				uiVersion = INITIAL_VERSION;
+				memset(uiRecordGetSection, 0, sizeof(char) * SECTION_COUNT_256);
+				fseek(pfTsFile, 0 - iTsLength, SEEK_CUR);
+				break;
+			case 1:
+				ParseTDT_Section(&stTS_TDT, ucSectionBuffer);
+				PrintTDT(&stTS_TDT);
+				DUBUGPRINTF("\n=================================ParseTDT_Table END=================================== \n\n");
+				return 1;
+				break;
+			case -1:
+				return 1;
+				break;
+			default:
+				LOG("ParseTDT_Table switch (iTemp) default\n");
+				break;
 		}
 	}
 

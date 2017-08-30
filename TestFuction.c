@@ -1,8 +1,8 @@
 /*
  * TestFuction.c
  *
- *  Created on: 2017å¹´8æœˆ30æ—¥
- *      Author: Administrator
+ *  Created on: 2017Äê8ÔÂ30ÈÕ
+ *      Author: AlexTang
  */
 #include <stdio.h>
 #include <string.h>
@@ -19,16 +19,6 @@
 #include "Parse_TDT.h"
 #include "Parse_TOT.h"
 #include "TsParser.h"
-
-//#define DEBUG
-//
-//#ifdef DEBUG
-//    #define DUBUGPRINTF printf
-//#else
-//    #define DUBUGPRINTF
-//#endif
-
-
 
 void Test()
 {

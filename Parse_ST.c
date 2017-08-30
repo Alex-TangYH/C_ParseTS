@@ -13,7 +13,7 @@
 
 /******************************************
  *
- *Ëß£ÊûêSTÊÆµ‰ø°ÊÅØ
+ *Ω‚ŒˆST∂Œ–≈œ¢
  *
  ******************************************/
 
@@ -24,7 +24,6 @@ void ParseST_Section(TS_ST_T *pstTS_ST, unsigned char *pucSectionBuffer)
 	pstTS_ST->uiReserved_future_use = (pucSectionBuffer[1] >> 6) & 0x01;
 	pstTS_ST->uiReserved = (pucSectionBuffer[1] >> 4) & 0x03;
 	pstTS_ST->uiSection_length = ((pucSectionBuffer[1] & 0x0f) << 8) | pucSectionBuffer[2];
-
 	if (pstTS_ST->uiSection_length > 0)
 	{
 		memcpy(pstTS_ST->aucST_data, pucSectionBuffer + 3, pstTS_ST->uiSection_length);
@@ -33,13 +32,12 @@ void ParseST_Section(TS_ST_T *pstTS_ST, unsigned char *pucSectionBuffer)
 
 /******************************************
  *
- *ËæìÂá∫ST‰ø°ÊÅØ
+ * ‰≥ˆST–≈œ¢
  *
  ******************************************/
 void PrintST(TS_ST_T *pstTS_ST)
 {
 	DUBUGPRINTF("\n-------------ST info start-------------\n");
-
 	DUBUGPRINTF("ST->table_id: %02x\n", pstTS_ST->uitable_id);
 	DUBUGPRINTF("ST->uiSection_syntax_indicator: %02x\n", pstTS_ST->uiSection_syntax_indicator);
 	DUBUGPRINTF("ST->uiReserved_future_use_fiST: %02x\n", pstTS_ST->uiReserved_future_use);
@@ -49,13 +47,12 @@ void PrintST(TS_ST_T *pstTS_ST)
 	{
 		DUBUGPRINTF("ST->ST_data: %s\n", pstTS_ST->aucST_data);
 	}
-	
 	DUBUGPRINTF("\n-------------ST info end-------------\n");
 }
 
 /******************************************
  *
- *‰ªéÊµÅ‰∏≠Ëß£ÊûêST‰ø°ÊÅØ
+ *¥”¡˜÷–Ω‚ŒˆST–≈œ¢
  *
  ******************************************/
 int ParseST_Table(FILE *pfTsFile, int iTsPosition, int iTsLength)
@@ -72,36 +69,35 @@ int ParseST_Table(FILE *pfTsFile, int iTsPosition, int iTsLength)
 		DUBUGPRINTF("Parse ST error\n");
 		return -1;
 	}
-	
 	while (!feof(pfTsFile))
 	{
 		iTemp = GetOneSection(pfTsFile, iTsLength, ucSectionBuffer, ST_PID, ST_TABLE_ID, &uiVersion);
-
-		if (0 == iTemp)
+		switch (iTemp)
 		{
-			uiVersion = INITIAL_VERSION;
-			memset(uiRecordGetSection, 0, sizeof(char) * SECTION_COUNT_256);
-			fseek(pfTsFile, 0 - iTsLength, SEEK_CUR);
-		}
-
-		if (1 == iTemp)
-		{
-			if (0 == IsSectionGetBefore(ucSectionBuffer, uiRecordGetSection))
-			{
-				ParseST_Section(&stTS_ST, ucSectionBuffer);
-				PrintST(&stTS_ST);
-			}
-			if (1 == IsAllSectionOver(ucSectionBuffer, uiRecordGetSection))
-			{
-				DUBUGPRINTF("\n=================================ParseST_Table END=================================== \n\n");
+			case 0:
+				uiVersion = INITIAL_VERSION;
+				memset(uiRecordGetSection, 0, sizeof(char) * SECTION_COUNT_256);
+				fseek(pfTsFile, 0 - iTsLength, SEEK_CUR);
+				break;
+			case 1:
+				if (0 == IsSectionGetBefore(ucSectionBuffer, uiRecordGetSection))
+				{
+					ParseST_Section(&stTS_ST, ucSectionBuffer);
+					PrintST(&stTS_ST);
+				}
+				if (1 == IsAllSectionOver(ucSectionBuffer, uiRecordGetSection))
+				{
+					DUBUGPRINTF("\n=================================ParseST_Table END=================================== \n\n");
+					return 1;
+				}
+				break;
+			case -1:
+				DUBUGPRINTF("\n\n=================================ParseST_Table End================================= \n");
 				return 1;
-			}
-		}
-		
-		if (-1 == iTemp)
-		{
-			DUBUGPRINTF("\n\n=================================ParseST_Table End================================= \n");
-			return 1;
+				break;
+			default:
+				LOG("ParseST_Table switch (iTemp) default\n");
+				break;
 		}
 	}
 

@@ -13,7 +13,7 @@
 
 /******************************************
  *
- *Ëß£ÊûêRSTÊÆµ‰ø°ÊÅØ
+ *Ω‚ŒˆRST∂Œ–≈œ¢
  *
  ******************************************/
 
@@ -46,7 +46,7 @@ int ParseRST_Section(TS_RST_T *pstTS_RST, unsigned char *pucSectionBuffer)
 
 /******************************************
  *
- *ËæìÂá∫RST‰ø°ÊÅØ
+ * ‰≥ˆRST–≈œ¢
  *
  ******************************************/
 void PrintRST(TS_RST_T *pstTS_RST, int iRST_LoopCount)
@@ -77,7 +77,7 @@ void PrintRST(TS_RST_T *pstTS_RST, int iRST_LoopCount)
 
 /******************************************
  *
- *‰ªéÊµÅ‰∏≠Ëß£ÊûêRST‰ø°ÊÅØ
+ *¥”¡˜÷–Ω‚ŒˆRST–≈œ¢
  *
  ******************************************/
 int ParseRST_Table(FILE *pfTsFile, int iTsPosition, int iTsLength)
@@ -99,32 +99,32 @@ int ParseRST_Table(FILE *pfTsFile, int iTsPosition, int iTsLength)
 	while (!feof(pfTsFile))
 	{
 		iTemp = GetOneSection(pfTsFile, iTsLength, ucSectionBuffer, RST_PID, RST_TABLE_ID, &uiVersion);
-
-		if (0 == iTemp)
+		switch (iTemp)
 		{
-			uiVersion = INITIAL_VERSION;
-			memset(uiRecordGetSection, 0, sizeof(char) * SECTION_COUNT_256);
-			fseek(pfTsFile, 0 - iTsLength, SEEK_CUR);
-		}
-
-		if (1 == iTemp)
-		{
-			if (0 == IsSectionGetBefore(ucSectionBuffer, uiRecordGetSection))
-			{
-				iRST_LoopCount = ParseRST_Section(&stTS_RST, ucSectionBuffer);
-				PrintRST(&stTS_RST, iRST_LoopCount);
-			}
-			if (1 == IsAllSectionOver(ucSectionBuffer, uiRecordGetSection))
-			{
-				DUBUGPRINTF("\n=================================ParseRST_Table END=================================== \n\n");
+			case 0:
+				uiVersion = INITIAL_VERSION;
+				memset(uiRecordGetSection, 0, sizeof(char) * SECTION_COUNT_256);
+				fseek(pfTsFile, 0 - iTsLength, SEEK_CUR);
+				break;
+			case 1:
+				if (0 == IsSectionGetBefore(ucSectionBuffer, uiRecordGetSection))
+				{
+					iRST_LoopCount = ParseRST_Section(&stTS_RST, ucSectionBuffer);
+					PrintRST(&stTS_RST, iRST_LoopCount);
+				}
+				if (1 == IsAllSectionOver(ucSectionBuffer, uiRecordGetSection))
+				{
+					DUBUGPRINTF("\n=================================ParseRST_Table END=================================== \n\n");
+					return 1;
+				}
+				break;
+			case -1:
+				DUBUGPRINTF("\n\n=================================ParseRST_Table End================================= \n");
 				return 1;
-			}
-		}
-		
-		if (-1 == iTemp)
-		{
-			DUBUGPRINTF("\n\n=================================ParseRST_Table End================================= \n");
-			return 1;
+				break;
+			default:
+				LOG("ParseRST_Table switch (iTemp) default\n");
+				break;
 		}
 	}
 

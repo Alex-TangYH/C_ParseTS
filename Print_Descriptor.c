@@ -6,49 +6,49 @@
 
 /*****************************************************************
  *
- * æ‰“å°Network Name Descriptoræè¿°å­
+ * ´òÓ¡Network Name DescriptorÃèÊö×Ó
  *
  *****************************************************************/
 void Print_NetworkNameDescriptor(NETWORK_NAME_DESCRIPTOR_T *pstNetworkNameDescriptor, char *pacOutputPrefix)
 {
 	DUBUGPRINTF("%sNetworkNameDescriptor:\n", pacOutputPrefix);
-	DUBUGPRINTF("%sâ”œâ”€NetworkNameDescriptor.Descriptor_tag: 0x%02x\n", pacOutputPrefix, pstNetworkNameDescriptor->uiDescriptor_tag);
+	DUBUGPRINTF("%s©À©¤NetworkNameDescriptor.Descriptor_tag: 0x%02x\n", pacOutputPrefix, pstNetworkNameDescriptor->uiDescriptor_tag);
 	if (pstNetworkNameDescriptor->uiDescriptor_length > 0)
 	{
-		DUBUGPRINTF("%sâ”œâ”€NetworkNameDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstNetworkNameDescriptor->uiDescriptor_length);
-		DUBUGPRINTF("%sâ””â”€NetworkNameDescriptor.NewworkName: %s\n", pacOutputPrefix, pstNetworkNameDescriptor->aucInfo);
+		DUBUGPRINTF("%s©À©¤NetworkNameDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstNetworkNameDescriptor->uiDescriptor_length);
+		DUBUGPRINTF("%s©¸©¤NetworkNameDescriptor.NewworkName: %s\n", pacOutputPrefix, pstNetworkNameDescriptor->aucInfo);
 	}
 	else
 	{
-		DUBUGPRINTF("%sâ””â”€NetworkNameDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstNetworkNameDescriptor->uiDescriptor_length);
+		DUBUGPRINTF("%s©¸©¤NetworkNameDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstNetworkNameDescriptor->uiDescriptor_length);
 	}
 }
 
 /*****************************************************************
  *
- * æ‰“å°Bouquet Name Descriptoræè¿°å­
+ * ´òÓ¡Bouquet Name DescriptorÃèÊö×Ó
  *
  *****************************************************************/
 
 void Print_BouquetNameDescriptor(BOUQUET_NAME_DESCRIPTOR_T *pstBouquetNameDescriptor, char *pacOutputPrefix)
 {
 	DUBUGPRINTF("%sBouquetNameDescriptor:\n", pacOutputPrefix);
-	DUBUGPRINTF("%sâ”œâ”€BouquetNameDescriptor.Descriptor_tag: 0x%02x\n", pacOutputPrefix, pstBouquetNameDescriptor->uiDescriptor_tag);
+	DUBUGPRINTF("%s©À©¤BouquetNameDescriptor.Descriptor_tag: 0x%02x\n", pacOutputPrefix, pstBouquetNameDescriptor->uiDescriptor_tag);
 	
 	if (pstBouquetNameDescriptor->uiDescriptor_length > 0)
 	{
-		DUBUGPRINTF("%sâ”œâ”€BouquetNameDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstBouquetNameDescriptor->uiDescriptor_length);
-		DUBUGPRINTF("%sâ””â”€BouquetNameDescriptor.Info: %s\n", pacOutputPrefix, pstBouquetNameDescriptor->aucInfo);
+		DUBUGPRINTF("%s©À©¤BouquetNameDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstBouquetNameDescriptor->uiDescriptor_length);
+		DUBUGPRINTF("%s©¸©¤BouquetNameDescriptor.Info: %s\n", pacOutputPrefix, pstBouquetNameDescriptor->aucInfo);
 	}
 	else
 	{
-		DUBUGPRINTF("%sâ””â”€BouquetNameDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstBouquetNameDescriptor->uiDescriptor_length);
+		DUBUGPRINTF("%s©¸©¤BouquetNameDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstBouquetNameDescriptor->uiDescriptor_length);
 	}
 }
 
 /*****************************************************************
  *
- * æ‰“å°Service List Descriptorræè¿°å­
+ * ´òÓ¡Service List DescriptorrÃèÊö×Ó
  *
  *****************************************************************/
 
@@ -58,135 +58,135 @@ void Print_ServiceListDescriptor(SERVICE_LIST_DESCRIPTOR_T *pstServiceListDescri
 	int iDescriptorInfoPosition = 0;
 	
 	DUBUGPRINTF("%sServiceListDescriptor:\n", pacOutputPrefix);
-	DUBUGPRINTF("%sâ”œâ”€ServiceListDescriptor.Descriptor_tag: 0x%02x\n", pacOutputPrefix, pstServiceListDescriptor->uiDescriptor_tag);
+	DUBUGPRINTF("%s©À©¤ServiceListDescriptor.Descriptor_tag: 0x%02x\n", pacOutputPrefix, pstServiceListDescriptor->uiDescriptor_tag);
 	
 	if (pstServiceListDescriptor->uiDescriptor_length > 0)
 	{
-		DUBUGPRINTF("%sâ”œâ”€ServiceListDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstServiceListDescriptor->uiDescriptor_length);
+		DUBUGPRINTF("%s©À©¤ServiceListDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstServiceListDescriptor->uiDescriptor_length);
 		for (iDescriptorInfoPosition = 0; iDescriptorInfoPosition < pstServiceListDescriptor->uiDescriptor_length; iDescriptorInfoPosition += 3)
 		{
 			
 			if (pstServiceListDescriptor->uiDescriptor_length - iDescriptorInfoPosition > 2)
 			{
-				DUBUGPRINTF("%sâ”œâ”€ServiceListDescriptor.Service_info[%d].Serviec_id: 0x%02x\n", pacOutputPrefix, iDescriptorInfoCount, pstServiceListDescriptor->astService_info[iDescriptorInfoCount].uiServiec_id);
-				DUBUGPRINTF("%sâ””â”€ServiceListDescriptor.Service_info[%d].Service_type: 0x%02x\n", pacOutputPrefix, iDescriptorInfoCount, pstServiceListDescriptor->astService_info[iDescriptorInfoCount].uiService_type);
+				DUBUGPRINTF("%s©À©¤ServiceListDescriptor.Service_info[%d].Serviec_id: 0x%02x\n", pacOutputPrefix, iDescriptorInfoCount, pstServiceListDescriptor->astService_info[iDescriptorInfoCount].uiServiec_id);
+				DUBUGPRINTF("%s©¸©¤ServiceListDescriptor.Service_info[%d].Service_type: 0x%02x\n", pacOutputPrefix, iDescriptorInfoCount, pstServiceListDescriptor->astService_info[iDescriptorInfoCount].uiService_type);
 			}
 			else
 			{
-				DUBUGPRINTF("%sâ””â”€ServiceListDescriptor.Service_info[%d].Serviec_id: 0x%02x\n", pacOutputPrefix, iDescriptorInfoCount, pstServiceListDescriptor->astService_info[iDescriptorInfoCount].uiServiec_id);
+				DUBUGPRINTF("%s©¸©¤ServiceListDescriptor.Service_info[%d].Serviec_id: 0x%02x\n", pacOutputPrefix, iDescriptorInfoCount, pstServiceListDescriptor->astService_info[iDescriptorInfoCount].uiServiec_id);
 			}
 			iDescriptorInfoCount++;
 		}
 	}
 	else
 	{
-		DUBUGPRINTF("%sâ””â”€ServiceListDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstServiceListDescriptor->uiDescriptor_length);
+		DUBUGPRINTF("%s©¸©¤ServiceListDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstServiceListDescriptor->uiDescriptor_length);
 	}
 }
 
 /*****************************************************************
  *
- * æ‰“å°Satellite Delivery System Descriptoræè¿°å­
+ * ´òÓ¡Satellite Delivery System DescriptorÃèÊö×Ó
  *
  *****************************************************************/
 void Print_SatelliteDeliverySystemDescriptor(SATELLITE_DELIVERY_SYSTEM_DESCRIPTOR_T *pstSatelliteDeliverySystemDescriptor, char *pacOutputPrefix)
 {
 	DUBUGPRINTF("%sSatelliteDeliverySystemDescriptor:\n", pacOutputPrefix);
-	DUBUGPRINTF("%sâ”œâ”€SatelliteDeliverySystemDescriptor.Descriptor_tag: 0x%02x\n", pacOutputPrefix, pstSatelliteDeliverySystemDescriptor->uiDescriptor_tag);
+	DUBUGPRINTF("%s©À©¤SatelliteDeliverySystemDescriptor.Descriptor_tag: 0x%02x\n", pacOutputPrefix, pstSatelliteDeliverySystemDescriptor->uiDescriptor_tag);
 	if (pstSatelliteDeliverySystemDescriptor->uiDescriptor_length > 0)
 	{
-		DUBUGPRINTF("%sâ”œâ”€SatelliteDeliverySystemDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstSatelliteDeliverySystemDescriptor->uiDescriptor_length);
-		DUBUGPRINTF("%sâ”œâ”€SatelliteDeliverySystemDescriptor.Frequency: 0x%08x\n", pacOutputPrefix, pstSatelliteDeliverySystemDescriptor->uiFrequency);
-		DUBUGPRINTF("%sâ”œâ”€SatelliteDeliverySystemDescriptor.Orbital_position: 0x%04x\n", pacOutputPrefix, pstSatelliteDeliverySystemDescriptor->uiOrbital_position);
-		DUBUGPRINTF("%sâ”œâ”€SatelliteDeliverySystemDescriptor.West_east_flag: 0x%02x\n", pacOutputPrefix, pstSatelliteDeliverySystemDescriptor->uiWest_east_flag);
-		DUBUGPRINTF("%sâ”œâ”€SatelliteDeliverySystemDescriptor.Polarization: 0x%02x\n", pacOutputPrefix, pstSatelliteDeliverySystemDescriptor->uiPolarization);
-		DUBUGPRINTF("%sâ”œâ”€SatelliteDeliverySystemDescriptor.Roll_off: 0x%02x\n", pacOutputPrefix, pstSatelliteDeliverySystemDescriptor->uiRoll_off);
-		DUBUGPRINTF("%sâ”œâ”€SatelliteDeliverySystemDescriptor.Modulation_system: 0x%02x\n", pacOutputPrefix, pstSatelliteDeliverySystemDescriptor->uiModulation_system);
-		DUBUGPRINTF("%sâ”œâ”€SatelliteDeliverySystemDescriptor.Modulation_type: 0x%02x\n", pacOutputPrefix, pstSatelliteDeliverySystemDescriptor->uiModulation_type);
-		DUBUGPRINTF("%sâ”œâ”€SatelliteDeliverySystemDescriptor.Symbol_rate: 0x%02x\n", pacOutputPrefix, pstSatelliteDeliverySystemDescriptor->uiSymbol_rate);
-		DUBUGPRINTF("%sâ””â”€SatelliteDeliverySystemDescriptor.FEC_inner: 0x%02x\n", pacOutputPrefix, pstSatelliteDeliverySystemDescriptor->uiFEC_inner);
+		DUBUGPRINTF("%s©À©¤SatelliteDeliverySystemDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstSatelliteDeliverySystemDescriptor->uiDescriptor_length);
+		DUBUGPRINTF("%s©À©¤SatelliteDeliverySystemDescriptor.Frequency: 0x%08x\n", pacOutputPrefix, pstSatelliteDeliverySystemDescriptor->uiFrequency);
+		DUBUGPRINTF("%s©À©¤SatelliteDeliverySystemDescriptor.Orbital_position: 0x%04x\n", pacOutputPrefix, pstSatelliteDeliverySystemDescriptor->uiOrbital_position);
+		DUBUGPRINTF("%s©À©¤SatelliteDeliverySystemDescriptor.West_east_flag: 0x%02x\n", pacOutputPrefix, pstSatelliteDeliverySystemDescriptor->uiWest_east_flag);
+		DUBUGPRINTF("%s©À©¤SatelliteDeliverySystemDescriptor.Polarization: 0x%02x\n", pacOutputPrefix, pstSatelliteDeliverySystemDescriptor->uiPolarization);
+		DUBUGPRINTF("%s©À©¤SatelliteDeliverySystemDescriptor.Roll_off: 0x%02x\n", pacOutputPrefix, pstSatelliteDeliverySystemDescriptor->uiRoll_off);
+		DUBUGPRINTF("%s©À©¤SatelliteDeliverySystemDescriptor.Modulation_system: 0x%02x\n", pacOutputPrefix, pstSatelliteDeliverySystemDescriptor->uiModulation_system);
+		DUBUGPRINTF("%s©À©¤SatelliteDeliverySystemDescriptor.Modulation_type: 0x%02x\n", pacOutputPrefix, pstSatelliteDeliverySystemDescriptor->uiModulation_type);
+		DUBUGPRINTF("%s©À©¤SatelliteDeliverySystemDescriptor.Symbol_rate: 0x%02x\n", pacOutputPrefix, pstSatelliteDeliverySystemDescriptor->uiSymbol_rate);
+		DUBUGPRINTF("%s©¸©¤SatelliteDeliverySystemDescriptor.FEC_inner: 0x%02x\n", pacOutputPrefix, pstSatelliteDeliverySystemDescriptor->uiFEC_inner);
 	}
 	else
 	{
-		DUBUGPRINTF("%sâ””â”€SatelliteDeliverySystemDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstSatelliteDeliverySystemDescriptor->uiDescriptor_length);
+		DUBUGPRINTF("%s©¸©¤SatelliteDeliverySystemDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstSatelliteDeliverySystemDescriptor->uiDescriptor_length);
 	}
 }
 
 /*****************************************************************
  *
- * æ‰“å°Terrestrial Delivery System Descriptoræè¿°å­
+ * ´òÓ¡Terrestrial Delivery System DescriptorÃèÊö×Ó
  *
  *****************************************************************/
 void Print_TerrestrialDeliverySystemDescriptor(TERRESTRIAL_DELIVERY_SYSTEM_DESCRIPTOR_T *pstTerrestrialDeliverySystemDescriptor, char *pacOutputPrefix)
 {
 	DUBUGPRINTF("%sTerrestrialDeliverySystemDescriptor:\n", pacOutputPrefix);
-	DUBUGPRINTF("%sâ”œâ”€TerrestrialDeliverySystemDescriptor.Descriptor_tag: 0x%02x\n", pacOutputPrefix, pstTerrestrialDeliverySystemDescriptor->uiDescriptor_tag);
+	DUBUGPRINTF("%s©À©¤TerrestrialDeliverySystemDescriptor.Descriptor_tag: 0x%02x\n", pacOutputPrefix, pstTerrestrialDeliverySystemDescriptor->uiDescriptor_tag);
 	if (pstTerrestrialDeliverySystemDescriptor->uiDescriptor_length > 0)
 	{
-		DUBUGPRINTF("%sâ”œâ”€TerrestrialDeliverySystemDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstTerrestrialDeliverySystemDescriptor->uiDescriptor_length);
-		DUBUGPRINTF("%sâ”œâ”€TerrestrialDeliverySystemDescriptor.Centre_frequency: 0x%02x\n", pacOutputPrefix, pstTerrestrialDeliverySystemDescriptor->uiCentre_frequency);
-		DUBUGPRINTF("%sâ”œâ”€TerrestrialDeliverySystemDescriptor.Bandwidth: 0x%02x\n", pacOutputPrefix, pstTerrestrialDeliverySystemDescriptor->uiBandwidth);
-		DUBUGPRINTF("%sâ”œâ”€TerrestrialDeliverySystemDescriptor.Priority: 0x%02x\n", pacOutputPrefix, pstTerrestrialDeliverySystemDescriptor->uiPriority);
-		DUBUGPRINTF("%sâ”œâ”€TerrestrialDeliverySystemDescriptor.Time_Slicing_indicator: 0x%02x\n", pacOutputPrefix, pstTerrestrialDeliverySystemDescriptor->uiTime_Slicing_indicator);
-		DUBUGPRINTF("%sâ”œâ”€TerrestrialDeliverySystemDescriptor.MPE_FEC_indicator: 0x%02x\n", pacOutputPrefix, pstTerrestrialDeliverySystemDescriptor->uiMPE_FEC_indicator);
-		DUBUGPRINTF("%sâ”œâ”€TerrestrialDeliverySystemDescriptor.Reserved_future_use_first: 0x%02x\n", pacOutputPrefix, pstTerrestrialDeliverySystemDescriptor->uiReserved_future_use_first);
-		DUBUGPRINTF("%sâ”œâ”€TerrestrialDeliverySystemDescriptor.Constellation: 0x%02x\n", pacOutputPrefix, pstTerrestrialDeliverySystemDescriptor->uiConstellation);
-		DUBUGPRINTF("%sâ”œâ”€TerrestrialDeliverySystemDescriptor.Hierarchy_information: 0x%02x\n", pacOutputPrefix, pstTerrestrialDeliverySystemDescriptor->uiHierarchy_information);
-		DUBUGPRINTF("%sâ”œâ”€TerrestrialDeliverySystemDescriptor.Code_rate_HP_stream: 0x%02x\n", pacOutputPrefix, pstTerrestrialDeliverySystemDescriptor->uiCode_rate_HP_stream);
-		DUBUGPRINTF("%sâ”œâ”€TerrestrialDeliverySystemDescriptor.Code_rate_LP_stream: 0x%02x\n", pacOutputPrefix, pstTerrestrialDeliverySystemDescriptor->uiCode_rate_LP_stream);
-		DUBUGPRINTF("%sâ”œâ”€TerrestrialDeliverySystemDescriptor.Guard_interval: 0x%02x\n", pacOutputPrefix, pstTerrestrialDeliverySystemDescriptor->uiGuard_interval);
-		DUBUGPRINTF("%sâ”œâ”€TerrestrialDeliverySystemDescriptor.Transmission_mode: 0x%02x\n", pacOutputPrefix, pstTerrestrialDeliverySystemDescriptor->uiTransmission_mode);
-		DUBUGPRINTF("%sâ”œâ”€TerrestrialDeliverySystemDescriptor.Other_frequency_flag: 0x%02x\n", pacOutputPrefix, pstTerrestrialDeliverySystemDescriptor->uiOther_frequency_flag);
-		DUBUGPRINTF("%sâ””â”€TerrestrialDeliverySystemDescriptor.uiReserved_future_use_second: 0x%02x\n", pacOutputPrefix, pstTerrestrialDeliverySystemDescriptor->uiReserved_future_use_second);
+		DUBUGPRINTF("%s©À©¤TerrestrialDeliverySystemDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstTerrestrialDeliverySystemDescriptor->uiDescriptor_length);
+		DUBUGPRINTF("%s©À©¤TerrestrialDeliverySystemDescriptor.Centre_frequency: 0x%02x\n", pacOutputPrefix, pstTerrestrialDeliverySystemDescriptor->uiCentre_frequency);
+		DUBUGPRINTF("%s©À©¤TerrestrialDeliverySystemDescriptor.Bandwidth: 0x%02x\n", pacOutputPrefix, pstTerrestrialDeliverySystemDescriptor->uiBandwidth);
+		DUBUGPRINTF("%s©À©¤TerrestrialDeliverySystemDescriptor.Priority: 0x%02x\n", pacOutputPrefix, pstTerrestrialDeliverySystemDescriptor->uiPriority);
+		DUBUGPRINTF("%s©À©¤TerrestrialDeliverySystemDescriptor.Time_Slicing_indicator: 0x%02x\n", pacOutputPrefix, pstTerrestrialDeliverySystemDescriptor->uiTime_Slicing_indicator);
+		DUBUGPRINTF("%s©À©¤TerrestrialDeliverySystemDescriptor.MPE_FEC_indicator: 0x%02x\n", pacOutputPrefix, pstTerrestrialDeliverySystemDescriptor->uiMPE_FEC_indicator);
+		DUBUGPRINTF("%s©À©¤TerrestrialDeliverySystemDescriptor.Reserved_future_use_first: 0x%02x\n", pacOutputPrefix, pstTerrestrialDeliverySystemDescriptor->uiReserved_future_use_first);
+		DUBUGPRINTF("%s©À©¤TerrestrialDeliverySystemDescriptor.Constellation: 0x%02x\n", pacOutputPrefix, pstTerrestrialDeliverySystemDescriptor->uiConstellation);
+		DUBUGPRINTF("%s©À©¤TerrestrialDeliverySystemDescriptor.Hierarchy_information: 0x%02x\n", pacOutputPrefix, pstTerrestrialDeliverySystemDescriptor->uiHierarchy_information);
+		DUBUGPRINTF("%s©À©¤TerrestrialDeliverySystemDescriptor.Code_rate_HP_stream: 0x%02x\n", pacOutputPrefix, pstTerrestrialDeliverySystemDescriptor->uiCode_rate_HP_stream);
+		DUBUGPRINTF("%s©À©¤TerrestrialDeliverySystemDescriptor.Code_rate_LP_stream: 0x%02x\n", pacOutputPrefix, pstTerrestrialDeliverySystemDescriptor->uiCode_rate_LP_stream);
+		DUBUGPRINTF("%s©À©¤TerrestrialDeliverySystemDescriptor.Guard_interval: 0x%02x\n", pacOutputPrefix, pstTerrestrialDeliverySystemDescriptor->uiGuard_interval);
+		DUBUGPRINTF("%s©À©¤TerrestrialDeliverySystemDescriptor.Transmission_mode: 0x%02x\n", pacOutputPrefix, pstTerrestrialDeliverySystemDescriptor->uiTransmission_mode);
+		DUBUGPRINTF("%s©À©¤TerrestrialDeliverySystemDescriptor.Other_frequency_flag: 0x%02x\n", pacOutputPrefix, pstTerrestrialDeliverySystemDescriptor->uiOther_frequency_flag);
+		DUBUGPRINTF("%s©¸©¤TerrestrialDeliverySystemDescriptor.uiReserved_future_use_second: 0x%02x\n", pacOutputPrefix, pstTerrestrialDeliverySystemDescriptor->uiReserved_future_use_second);
 	}
 	else
 	{
-		DUBUGPRINTF("%sâ””â”€TerrestrialDeliverySystemDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstTerrestrialDeliverySystemDescriptor->uiDescriptor_length);
+		DUBUGPRINTF("%s©¸©¤TerrestrialDeliverySystemDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstTerrestrialDeliverySystemDescriptor->uiDescriptor_length);
 	}
 }
 
 /*****************************************************************
  *
- * æ‰“å°Cable Delivery System Descriptoræè¿°å­
+ * ´òÓ¡Cable Delivery System DescriptorÃèÊö×Ó
  *
  *****************************************************************/
 void Print_CableDeliverySystemDescriptor(CABLE_DELIVERY_SYSTEM_DESCRIPTOR_T *pstCableDeliverySystemDescriptor, char *pacOutputPrefix)
 {
 	DUBUGPRINTF("%sCableDeliverySystemDescriptor:\n", pacOutputPrefix);
-	DUBUGPRINTF("%sâ”œâ”€CableDeliverySystemDescriptor.Descriptor_tag: 0x%02x\n", pacOutputPrefix, pstCableDeliverySystemDescriptor->uiDescriptor_tag);
+	DUBUGPRINTF("%s©À©¤CableDeliverySystemDescriptor.Descriptor_tag: 0x%02x\n", pacOutputPrefix, pstCableDeliverySystemDescriptor->uiDescriptor_tag);
 	if (pstCableDeliverySystemDescriptor->uiDescriptor_length > 0)
 	{
-		DUBUGPRINTF("%sâ”œâ”€CableDeliverySystemDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstCableDeliverySystemDescriptor->uiDescriptor_length);
-		DUBUGPRINTF("%sâ”œâ”€CableDeliverySystemDescriptor.Frequency: 0x%02x\n", pacOutputPrefix, pstCableDeliverySystemDescriptor->uiFrequency);
-		DUBUGPRINTF("%sâ”œâ”€CableDeliverySystemDescriptor.Reserved_future_use: 0x%02x\n", pacOutputPrefix, pstCableDeliverySystemDescriptor->uiReserved_future_use);
-		DUBUGPRINTF("%sâ”œâ”€CableDeliverySystemDescriptor.Fec_outer: 0x%02x\n", pacOutputPrefix, pstCableDeliverySystemDescriptor->uiFec_outer);
-		DUBUGPRINTF("%sâ”œâ”€CableDeliverySystemDescriptor.Modulation: 0x%02x\n", pacOutputPrefix, pstCableDeliverySystemDescriptor->uiModulation);
-		DUBUGPRINTF("%sâ”œâ”€CableDeliverySystemDescriptor.Symbol_rate: 0x%02x\n", pacOutputPrefix, pstCableDeliverySystemDescriptor->uiSymbol_rate);
-		DUBUGPRINTF("%sâ””â”€CableDeliverySystemDescriptor.FEC_inner: 0x%02x\n", pacOutputPrefix, pstCableDeliverySystemDescriptor->uiFEC_inner);
+		DUBUGPRINTF("%s©À©¤CableDeliverySystemDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstCableDeliverySystemDescriptor->uiDescriptor_length);
+		DUBUGPRINTF("%s©À©¤CableDeliverySystemDescriptor.Frequency: 0x%02x\n", pacOutputPrefix, pstCableDeliverySystemDescriptor->uiFrequency);
+		DUBUGPRINTF("%s©À©¤CableDeliverySystemDescriptor.Reserved_future_use: 0x%02x\n", pacOutputPrefix, pstCableDeliverySystemDescriptor->uiReserved_future_use);
+		DUBUGPRINTF("%s©À©¤CableDeliverySystemDescriptor.Fec_outer: 0x%02x\n", pacOutputPrefix, pstCableDeliverySystemDescriptor->uiFec_outer);
+		DUBUGPRINTF("%s©À©¤CableDeliverySystemDescriptor.Modulation: 0x%02x\n", pacOutputPrefix, pstCableDeliverySystemDescriptor->uiModulation);
+		DUBUGPRINTF("%s©À©¤CableDeliverySystemDescriptor.Symbol_rate: 0x%02x\n", pacOutputPrefix, pstCableDeliverySystemDescriptor->uiSymbol_rate);
+		DUBUGPRINTF("%s©¸©¤CableDeliverySystemDescriptor.FEC_inner: 0x%02x\n", pacOutputPrefix, pstCableDeliverySystemDescriptor->uiFEC_inner);
 	}
 	else
 	{
-		DUBUGPRINTF("%sâ””â”€CableDeliverySystemDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstCableDeliverySystemDescriptor->uiDescriptor_length);
+		DUBUGPRINTF("%s©¸©¤CableDeliverySystemDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstCableDeliverySystemDescriptor->uiDescriptor_length);
 	}
 }
 
 /*****************************************************************
  *
- * æ‰“å°ServiceDescriptoræè¿°å­
+ * ´òÓ¡ServiceDescriptorÃèÊö×Ó
  *
  *****************************************************************/
 void Print_ServiceDescriptor(SERVICE_DESCRIPTOR_T *pstServiceDescriptor, char *pacOutputPrefix)
 {
 	DUBUGPRINTF("%sServiceDescriptor:\n", pacOutputPrefix);
-	DUBUGPRINTF("%sâ”œâ”€ServiceDescriptor.Descriptor_tag: 0x%02x\n", pacOutputPrefix, pstServiceDescriptor->uiDescriptor_tag);
+	DUBUGPRINTF("%s©À©¤ServiceDescriptor.Descriptor_tag: 0x%02x\n", pacOutputPrefix, pstServiceDescriptor->uiDescriptor_tag);
 	if (pstServiceDescriptor->uiDescriptor_length > 0)
 	{
-		DUBUGPRINTF("%sâ”œâ”€ServiceDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstServiceDescriptor->uiDescriptor_length);
-		DUBUGPRINTF("%sâ”œâ”€ServiceDescriptor.Service_type: 0x%02x\n", pacOutputPrefix, pstServiceDescriptor->uiService_type);
-		DUBUGPRINTF("%sâ”œâ”€ServiceDescriptor.Service_provider_name_length: 0x%02x\n", pacOutputPrefix, pstServiceDescriptor->uiService_provider_name_length);
+		DUBUGPRINTF("%s©À©¤ServiceDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstServiceDescriptor->uiDescriptor_length);
+		DUBUGPRINTF("%s©À©¤ServiceDescriptor.Service_type: 0x%02x\n", pacOutputPrefix, pstServiceDescriptor->uiService_type);
+		DUBUGPRINTF("%s©À©¤ServiceDescriptor.Service_provider_name_length: 0x%02x\n", pacOutputPrefix, pstServiceDescriptor->uiService_provider_name_length);
 		if (pstServiceDescriptor->uiService_provider_name_length > 0)
 		{
-			DUBUGPRINTF("%sâ”œâ”€ServiceDescriptor.Service_provider_name: %s\n", pacOutputPrefix, pstServiceDescriptor->aucService_provider_name);
+			DUBUGPRINTF("%s©À©¤ServiceDescriptor.Service_provider_name: %s\n", pacOutputPrefix, pstServiceDescriptor->aucService_provider_name);
 		}
 		else
 		{
@@ -194,86 +194,86 @@ void Print_ServiceDescriptor(SERVICE_DESCRIPTOR_T *pstServiceDescriptor, char *p
 		
 		if (pstServiceDescriptor->uiService_provider_name_length > 0)
 		{
-			DUBUGPRINTF("%sâ”œâ”€ServiceDescriptor.Service_name_length: 0x%02x\n", pacOutputPrefix, pstServiceDescriptor->uiService_name_length);
-			DUBUGPRINTF("%sâ””â”€ServiceDescriptor.Service_name: %s\n", pacOutputPrefix, pstServiceDescriptor->aucService_name);
+			DUBUGPRINTF("%s©À©¤ServiceDescriptor.Service_name_length: 0x%02x\n", pacOutputPrefix, pstServiceDescriptor->uiService_name_length);
+			DUBUGPRINTF("%s©¸©¤ServiceDescriptor.Service_name: %s\n", pacOutputPrefix, pstServiceDescriptor->aucService_name);
 		}
 		else
 		{
-			DUBUGPRINTF("%sâ””â”€ServiceDescriptor.Service_name_length: 0x%02x\n", pacOutputPrefix, pstServiceDescriptor->uiService_name_length);
+			DUBUGPRINTF("%s©¸©¤ServiceDescriptor.Service_name_length: 0x%02x\n", pacOutputPrefix, pstServiceDescriptor->uiService_name_length);
 		}
 	}
 	else
 	{
-		DUBUGPRINTF("%sâ””â”€ServiceDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstServiceDescriptor->uiDescriptor_length);
+		DUBUGPRINTF("%s©¸©¤ServiceDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstServiceDescriptor->uiDescriptor_length);
 	}
 }
 
 /*****************************************************************
  *
- * æ‰“å°LinkageDescriptoræè¿°å­
+ * ´òÓ¡LinkageDescriptorÃèÊö×Ó
  *
  *****************************************************************/
 void Print_LinkageDescriptor(LINKAGE_DESCRIPTOR_T *pstLinkageDescriptor, char *pacOutputPrefix)
 {
 	DUBUGPRINTF("%sLinkageDescriptor:\n", pacOutputPrefix);
-	DUBUGPRINTF("%sâ”œâ”€LinkageDescriptor.Descriptor_tag: 0x%02x\n", pacOutputPrefix, pstLinkageDescriptor->uiDescriptor_tag);
+	DUBUGPRINTF("%s©À©¤LinkageDescriptor.Descriptor_tag: 0x%02x\n", pacOutputPrefix, pstLinkageDescriptor->uiDescriptor_tag);
 	if (pstLinkageDescriptor->uiDescriptor_length > 0)
 	{
-		DUBUGPRINTF("%sâ”œâ”€LinkageDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstLinkageDescriptor->uiDescriptor_length);
-		DUBUGPRINTF("%sâ”œâ”€LinkageDescriptor.Transport_stream_id: 0x%02x\n", pacOutputPrefix, pstLinkageDescriptor->uiTransport_stream_id);
-		DUBUGPRINTF("%sâ”œâ”€LinkageDescriptor.Original_network_id: 0x%02x\n", pacOutputPrefix, pstLinkageDescriptor->uiOriginal_network_id);
-		DUBUGPRINTF("%sâ”œâ”€LinkageDescriptor.Service_id: 0x%02x\n", pacOutputPrefix, pstLinkageDescriptor->uiService_id);
-		DUBUGPRINTF("%sâ”œâ”€LinkageDescriptor.Linage_type: 0x%02x\n", pacOutputPrefix, pstLinkageDescriptor->uiLinage_type);
+		DUBUGPRINTF("%s©À©¤LinkageDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstLinkageDescriptor->uiDescriptor_length);
+		DUBUGPRINTF("%s©À©¤LinkageDescriptor.Transport_stream_id: 0x%02x\n", pacOutputPrefix, pstLinkageDescriptor->uiTransport_stream_id);
+		DUBUGPRINTF("%s©À©¤LinkageDescriptor.Original_network_id: 0x%02x\n", pacOutputPrefix, pstLinkageDescriptor->uiOriginal_network_id);
+		DUBUGPRINTF("%s©À©¤LinkageDescriptor.Service_id: 0x%02x\n", pacOutputPrefix, pstLinkageDescriptor->uiService_id);
+		DUBUGPRINTF("%s©À©¤LinkageDescriptor.Linage_type: 0x%02x\n", pacOutputPrefix, pstLinkageDescriptor->uiLinage_type);
 		if (0x08 == pstLinkageDescriptor->uiLinage_type)
 		{
-			DUBUGPRINTF("%sâ”œâ”€LinkageDescriptor.Hand_over_type: 0x%02x\n", pacOutputPrefix, pstLinkageDescriptor->stLinkage_info_union.stLinkage_union_08.uiHand_over_type);
-			DUBUGPRINTF("%sâ”œâ”€LinkageDescriptor.Reserved_future_use: 0x%02x\n", pacOutputPrefix, pstLinkageDescriptor->stLinkage_info_union.stLinkage_union_08.uiReserved_future_use);
-			DUBUGPRINTF("%sâ”œâ”€LinkageDescriptor.Origin_type: 0x%02x\n", pacOutputPrefix, pstLinkageDescriptor->stLinkage_info_union.stLinkage_union_08.uiOrigin_type);
+			DUBUGPRINTF("%s©À©¤LinkageDescriptor.Hand_over_type: 0x%02x\n", pacOutputPrefix, pstLinkageDescriptor->stLinkage_info_union.stLinkage_union_08.uiHand_over_type);
+			DUBUGPRINTF("%s©À©¤LinkageDescriptor.Reserved_future_use: 0x%02x\n", pacOutputPrefix, pstLinkageDescriptor->stLinkage_info_union.stLinkage_union_08.uiReserved_future_use);
+			DUBUGPRINTF("%s©À©¤LinkageDescriptor.Origin_type: 0x%02x\n", pacOutputPrefix, pstLinkageDescriptor->stLinkage_info_union.stLinkage_union_08.uiOrigin_type);
 			if ((1 == pstLinkageDescriptor->stLinkage_info_union.stLinkage_union_08.uiHand_over_type) || (2 == pstLinkageDescriptor->stLinkage_info_union.stLinkage_union_08.uiHand_over_type)
 					|| (3 == pstLinkageDescriptor->stLinkage_info_union.stLinkage_union_08.uiHand_over_type))
 			{
-				DUBUGPRINTF("%sâ”œâ”€LinkageDescriptor.Network_id: 0x%02x\n", pacOutputPrefix, pstLinkageDescriptor->stLinkage_info_union.stLinkage_union_08.uiNetwork_id);
+				DUBUGPRINTF("%s©À©¤LinkageDescriptor.Network_id: 0x%02x\n", pacOutputPrefix, pstLinkageDescriptor->stLinkage_info_union.stLinkage_union_08.uiNetwork_id);
 			}
 			if (0 == pstLinkageDescriptor->stLinkage_info_union.stLinkage_union_08.uiOrigin_type)
 			{
-				DUBUGPRINTF("%sâ”œâ”€LinkageDescriptor.Initial_service_id: 0x%02x\n", pacOutputPrefix, pstLinkageDescriptor->stLinkage_info_union.stLinkage_union_08.uiInitial_service_id);
+				DUBUGPRINTF("%s©À©¤LinkageDescriptor.Initial_service_id: 0x%02x\n", pacOutputPrefix, pstLinkageDescriptor->stLinkage_info_union.stLinkage_union_08.uiInitial_service_id);
 			}
 		}
 		else if (0x0D == pstLinkageDescriptor->uiLinage_type)
 		{
-			DUBUGPRINTF("%sâ”œâ”€LinkageDescriptor.Target_event_id: 0x%02x\n", pacOutputPrefix, pstLinkageDescriptor->stLinkage_info_union.stLinkage_union_0d.uiTarget_event_id);
-			DUBUGPRINTF("%sâ”œâ”€LinkageDescriptor.Target_listed: 0x%02x\n", pacOutputPrefix, pstLinkageDescriptor->stLinkage_info_union.stLinkage_union_0d.uiTarget_listed);
-			DUBUGPRINTF("%sâ”œâ”€LinkageDescriptor.Event_simulcast: 0x%02x\n", pacOutputPrefix, pstLinkageDescriptor->stLinkage_info_union.stLinkage_union_0d.uiEvent_simulcast);
-			DUBUGPRINTF("%sâ”œâ”€LinkageDescriptor.Reserved: 0x%02x\n", pacOutputPrefix, pstLinkageDescriptor->stLinkage_info_union.stLinkage_union_0d.uiReserved);
+			DUBUGPRINTF("%s©À©¤LinkageDescriptor.Target_event_id: 0x%02x\n", pacOutputPrefix, pstLinkageDescriptor->stLinkage_info_union.stLinkage_union_0d.uiTarget_event_id);
+			DUBUGPRINTF("%s©À©¤LinkageDescriptor.Target_listed: 0x%02x\n", pacOutputPrefix, pstLinkageDescriptor->stLinkage_info_union.stLinkage_union_0d.uiTarget_listed);
+			DUBUGPRINTF("%s©À©¤LinkageDescriptor.Event_simulcast: 0x%02x\n", pacOutputPrefix, pstLinkageDescriptor->stLinkage_info_union.stLinkage_union_0d.uiEvent_simulcast);
+			DUBUGPRINTF("%s©À©¤LinkageDescriptor.Reserved: 0x%02x\n", pacOutputPrefix, pstLinkageDescriptor->stLinkage_info_union.stLinkage_union_0d.uiReserved);
 		}
 		else
 		{
 		}
-		DUBUGPRINTF("%sâ””â”€LinkageDescriptor.Private_data: %s\n", pacOutputPrefix, pstLinkageDescriptor->aucPrivate_data);
+		DUBUGPRINTF("%s©¸©¤LinkageDescriptor.Private_data: %s\n", pacOutputPrefix, pstLinkageDescriptor->aucPrivate_data);
 	}
 	else
 	{
-		DUBUGPRINTF("%sâ””â”€LinkageDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstLinkageDescriptor->uiDescriptor_length);
+		DUBUGPRINTF("%s©¸©¤LinkageDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstLinkageDescriptor->uiDescriptor_length);
 	}
 }
 
 /*****************************************************************
  *
- * æ‰“å°Stream Indentifier Descriptoræè¿°å­
+ * ´òÓ¡Stream Indentifier DescriptorÃèÊö×Ó
  *
  *****************************************************************/
 void Print_StreamIndentifierDescriptor(STREAM_IDENTIFIER_DESCRIPTOR_T *pstStreamIndentifierDescriptor, char *pacOutputPrefix)
 {
 	DUBUGPRINTF("%sStreamIndentifierDescriptor:\n", pacOutputPrefix);
-	DUBUGPRINTF("%sâ”œâ”€StreamIndentifierDescriptor.Descriptor_tag: 0x%02x\n", pacOutputPrefix, pstStreamIndentifierDescriptor->uiDescriptor_tag);
+	DUBUGPRINTF("%s©À©¤StreamIndentifierDescriptor.Descriptor_tag: 0x%02x\n", pacOutputPrefix, pstStreamIndentifierDescriptor->uiDescriptor_tag);
 	if (pstStreamIndentifierDescriptor->uiDescriptor_length > 0)
 	{
-		DUBUGPRINTF("%sâ”œâ”€StreamIndentifierDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstStreamIndentifierDescriptor->uiDescriptor_length);
-		DUBUGPRINTF("%sâ””â”€StreamIndentifierDescriptor.Component_tag: 0x%02x\n", pacOutputPrefix, pstStreamIndentifierDescriptor->uiComponent_tag);
+		DUBUGPRINTF("%s©À©¤StreamIndentifierDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstStreamIndentifierDescriptor->uiDescriptor_length);
+		DUBUGPRINTF("%s©¸©¤StreamIndentifierDescriptor.Component_tag: 0x%02x\n", pacOutputPrefix, pstStreamIndentifierDescriptor->uiComponent_tag);
 	}
 	else
 	{
-		DUBUGPRINTF("%sâ””â”€StreamIndentifierDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstStreamIndentifierDescriptor->uiDescriptor_length);
+		DUBUGPRINTF("%s©¸©¤StreamIndentifierDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstStreamIndentifierDescriptor->uiDescriptor_length);
 	}
 }
 
@@ -281,88 +281,88 @@ void Print_StreamIndentifierDescriptor(STREAM_IDENTIFIER_DESCRIPTOR_T *pstStream
 
 /*****************************************************************
  *
- * æ‰“å°VideoStreamDescriptoræè¿°å­
+ * ´òÓ¡VideoStreamDescriptorÃèÊö×Ó
  *
  *****************************************************************/
 void Print_VideoStreamDescriptor(VIDEO_STREAM_DESCRIPTOR_T *pstVideoStreamDescriptor, char *pacOutputPrefix)
 {
 	DUBUGPRINTF("%sVideoStreamDescriptor:\n", pacOutputPrefix);
-	DUBUGPRINTF("%sâ”œâ”€VideoStreamDescriptor.Descriptor_tag: 0x%02x\n", pacOutputPrefix, pstVideoStreamDescriptor->uiDescriptor_tag);
+	DUBUGPRINTF("%s©À©¤VideoStreamDescriptor.Descriptor_tag: 0x%02x\n", pacOutputPrefix, pstVideoStreamDescriptor->uiDescriptor_tag);
 	if (pstVideoStreamDescriptor->uiDescriptor_length > 0)
 	{
-		DUBUGPRINTF("%sâ”œâ”€VideoStreamDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstVideoStreamDescriptor->uiDescriptor_length);
-		DUBUGPRINTF("%sâ”œâ”€VideoStreamDescriptor.uiMultiple_frame_rate_flag: 0x%02x\n", pacOutputPrefix, pstVideoStreamDescriptor->uiMultiple_frame_rate_flag);
-		DUBUGPRINTF("%sâ”œâ”€VideoStreamDescriptor.uiFrame_rate_code: 0x%02x\n", pacOutputPrefix, pstVideoStreamDescriptor->uiFrame_rate_code);
-		DUBUGPRINTF("%sâ”œâ”€VideoStreamDescriptor.uiMPEG_2_flag: 0x%02x\n", pacOutputPrefix, pstVideoStreamDescriptor->uiMPEG_2_flag);
-		DUBUGPRINTF("%sâ”œâ”€VideoStreamDescriptor.uiConstrained_parameter_flag: 0x%02x\n", pacOutputPrefix, pstVideoStreamDescriptor->uiConstrained_parameter_flag);
+		DUBUGPRINTF("%s©À©¤VideoStreamDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstVideoStreamDescriptor->uiDescriptor_length);
+		DUBUGPRINTF("%s©À©¤VideoStreamDescriptor.uiMultiple_frame_rate_flag: 0x%02x\n", pacOutputPrefix, pstVideoStreamDescriptor->uiMultiple_frame_rate_flag);
+		DUBUGPRINTF("%s©À©¤VideoStreamDescriptor.uiFrame_rate_code: 0x%02x\n", pacOutputPrefix, pstVideoStreamDescriptor->uiFrame_rate_code);
+		DUBUGPRINTF("%s©À©¤VideoStreamDescriptor.uiMPEG_2_flag: 0x%02x\n", pacOutputPrefix, pstVideoStreamDescriptor->uiMPEG_2_flag);
+		DUBUGPRINTF("%s©À©¤VideoStreamDescriptor.uiConstrained_parameter_flag: 0x%02x\n", pacOutputPrefix, pstVideoStreamDescriptor->uiConstrained_parameter_flag);
 		
 		if (1 == pstVideoStreamDescriptor->uiMPEG_2_flag)
 		{
-			DUBUGPRINTF("%sâ”œâ”€VideoStreamDescriptor.uiStill_picture_flag: 0x%02x\n", pacOutputPrefix, pstVideoStreamDescriptor->uiStill_picture_flag);
-			DUBUGPRINTF("%sâ”œâ”€VideoStreamDescriptor.uiProfile_and_level_indication: 0x%02x\n", pacOutputPrefix, pstVideoStreamDescriptor->uiProfile_and_level_indication);
-			DUBUGPRINTF("%sâ”œâ”€VideoStreamDescriptor.uiChroma_format: 0x%02x\n", pacOutputPrefix, pstVideoStreamDescriptor->uiChroma_format);
-			DUBUGPRINTF("%sâ”œâ”€VideoStreamDescriptor.uiFrame_rate_extension_flag: 0x%02x\n", pacOutputPrefix, pstVideoStreamDescriptor->uiFrame_rate_extension_flag);
-			DUBUGPRINTF("%sâ””â”€VideoStreamDescriptor.uiReserved: 0x%02x\n", pacOutputPrefix, pstVideoStreamDescriptor->uiReserved);
+			DUBUGPRINTF("%s©À©¤VideoStreamDescriptor.uiStill_picture_flag: 0x%02x\n", pacOutputPrefix, pstVideoStreamDescriptor->uiStill_picture_flag);
+			DUBUGPRINTF("%s©À©¤VideoStreamDescriptor.uiProfile_and_level_indication: 0x%02x\n", pacOutputPrefix, pstVideoStreamDescriptor->uiProfile_and_level_indication);
+			DUBUGPRINTF("%s©À©¤VideoStreamDescriptor.uiChroma_format: 0x%02x\n", pacOutputPrefix, pstVideoStreamDescriptor->uiChroma_format);
+			DUBUGPRINTF("%s©À©¤VideoStreamDescriptor.uiFrame_rate_extension_flag: 0x%02x\n", pacOutputPrefix, pstVideoStreamDescriptor->uiFrame_rate_extension_flag);
+			DUBUGPRINTF("%s©¸©¤VideoStreamDescriptor.uiReserved: 0x%02x\n", pacOutputPrefix, pstVideoStreamDescriptor->uiReserved);
 		}
 		else
 		{
-			DUBUGPRINTF("%sâ””â”€VideoStreamDescriptor.uiStill_picture_flag: 0x%02x\n", pacOutputPrefix, pstVideoStreamDescriptor->uiStill_picture_flag);
+			DUBUGPRINTF("%s©¸©¤VideoStreamDescriptor.uiStill_picture_flag: 0x%02x\n", pacOutputPrefix, pstVideoStreamDescriptor->uiStill_picture_flag);
 		}
 		
 	}
 	else
 	{
-		DUBUGPRINTF("%sâ””â”€VideoStreamDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstVideoStreamDescriptor->uiDescriptor_length);
+		DUBUGPRINTF("%s©¸©¤VideoStreamDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstVideoStreamDescriptor->uiDescriptor_length);
 	}
 
 }
 
 /*****************************************************************
  *
- * æ‰“å°Audio Stream Descriptoræè¿°å­
+ * ´òÓ¡Audio Stream DescriptorÃèÊö×Ó
  *
  *****************************************************************/
 void Print_AudioStreamDescriptor(AUDIO_STREAM_DESCRIPTOR_T *pstAudioStreamDescriptor, char *pacOutputPrefix)
 {
 	DUBUGPRINTF("%sAudioStreamDescriptor:\n", pacOutputPrefix);
-	DUBUGPRINTF("%sâ”œâ”€AudioStreamDescriptor.Descriptor_tag: 0x%02x\n", pacOutputPrefix, pstAudioStreamDescriptor->uiDescriptor_tag);
+	DUBUGPRINTF("%s©À©¤AudioStreamDescriptor.Descriptor_tag: 0x%02x\n", pacOutputPrefix, pstAudioStreamDescriptor->uiDescriptor_tag);
 	if (pstAudioStreamDescriptor->uiDescriptor_length > 0)
 	{
-		DUBUGPRINTF("%sâ”œâ”€AudioStreamDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstAudioStreamDescriptor->uiDescriptor_length);
-		DUBUGPRINTF("%sâ”œâ”€AudioStreamDescriptor.Free_format_flag: 0x%02x\n", pacOutputPrefix, pstAudioStreamDescriptor->uiFree_format_flag);
-		DUBUGPRINTF("%sâ”œâ”€AudioStreamDescriptor.ID: 0x%02x\n", pacOutputPrefix, pstAudioStreamDescriptor->uiID);
-		DUBUGPRINTF("%sâ”œâ”€AudioStreamDescriptor.Layer: 0x%02x\n", pacOutputPrefix, pstAudioStreamDescriptor->uiLayer);
-		DUBUGPRINTF("%sâ””â”€AudioStreamDescriptor.Reserved: 0x%02x\n", pacOutputPrefix, pstAudioStreamDescriptor->uiReserved);
+		DUBUGPRINTF("%s©À©¤AudioStreamDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstAudioStreamDescriptor->uiDescriptor_length);
+		DUBUGPRINTF("%s©À©¤AudioStreamDescriptor.Free_format_flag: 0x%02x\n", pacOutputPrefix, pstAudioStreamDescriptor->uiFree_format_flag);
+		DUBUGPRINTF("%s©À©¤AudioStreamDescriptor.ID: 0x%02x\n", pacOutputPrefix, pstAudioStreamDescriptor->uiID);
+		DUBUGPRINTF("%s©À©¤AudioStreamDescriptor.Layer: 0x%02x\n", pacOutputPrefix, pstAudioStreamDescriptor->uiLayer);
+		DUBUGPRINTF("%s©¸©¤AudioStreamDescriptor.Reserved: 0x%02x\n", pacOutputPrefix, pstAudioStreamDescriptor->uiReserved);
 	}
 	else
 	{
-		DUBUGPRINTF("%sâ””â”€AudioStreamDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstAudioStreamDescriptor->uiDescriptor_length);
+		DUBUGPRINTF("%s©¸©¤AudioStreamDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstAudioStreamDescriptor->uiDescriptor_length);
 	}
 }
 
 /*****************************************************************
  *
- * æ‰“å°DataStreamAlignmentDescriptoræè¿°å­
+ * ´òÓ¡DataStreamAlignmentDescriptorÃèÊö×Ó
  *
  *****************************************************************/
 void Print_DataStreamAlignmentDescriptor(DATA_STREAM_ALIGNMENT_DESCRIPTOR_T *pstDataStreamAlignmentDescriptor, char *pacOutputPrefix)
 {
 	DUBUGPRINTF("%sDataStreamAlignmentDescriptor:\n", pacOutputPrefix);
-	DUBUGPRINTF("%sâ”œâ”€DataStreamAlignmentDescriptor.Descriptor_tag: 0x%02x\n", pacOutputPrefix, pstDataStreamAlignmentDescriptor->uiDescriptor_tag);
+	DUBUGPRINTF("%s©À©¤DataStreamAlignmentDescriptor.Descriptor_tag: 0x%02x\n", pacOutputPrefix, pstDataStreamAlignmentDescriptor->uiDescriptor_tag);
 	if (pstDataStreamAlignmentDescriptor->uiDescriptor_length > 0)
 	{
-		DUBUGPRINTF("%sâ”œâ”€DataStreamAlignmentDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstDataStreamAlignmentDescriptor->uiDescriptor_length);
-		DUBUGPRINTF("%sâ””â”€DataStreamAlignmentDescriptor.Alignment_type: 0x%02x\n", pacOutputPrefix, pstDataStreamAlignmentDescriptor->uiAlignment_type);
+		DUBUGPRINTF("%s©À©¤DataStreamAlignmentDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstDataStreamAlignmentDescriptor->uiDescriptor_length);
+		DUBUGPRINTF("%s©¸©¤DataStreamAlignmentDescriptor.Alignment_type: 0x%02x\n", pacOutputPrefix, pstDataStreamAlignmentDescriptor->uiAlignment_type);
 	}
 	else
 	{
-		DUBUGPRINTF("%sâ””â”€DataStreamAlignmentDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstDataStreamAlignmentDescriptor->uiDescriptor_length);
+		DUBUGPRINTF("%s©¸©¤DataStreamAlignmentDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstDataStreamAlignmentDescriptor->uiDescriptor_length);
 	}
 }
 
 /*****************************************************************
  *
- * æ‰“å°ISO_639_LanguageDescriptoræè¿°å­
+ * ´òÓ¡ISO_639_LanguageDescriptorÃèÊö×Ó
  *
  *****************************************************************/
 void Print_ISO_639_LANGUAGE_DESCRIPTOR(ISO_639_LANGUAGE_DESCRIPTOR_T *pstISO_639_LanguageDescriptor, char *pacOutputPrefix)
@@ -372,197 +372,197 @@ void Print_ISO_639_LANGUAGE_DESCRIPTOR(ISO_639_LANGUAGE_DESCRIPTOR_T *pstISO_639
 	int iDescriptorLoopCount = 0;
 	
 	DUBUGPRINTF("%sISO_639_LanguageDescriptor:\n", pacOutputPrefix);
-	DUBUGPRINTF("%sâ”œâ”€ISO_639_LanguageDescriptor.Descriptor_tag: 0x%02x\n", pacOutputPrefix, pstISO_639_LanguageDescriptor->uiDescriptor_tag);
+	DUBUGPRINTF("%s©À©¤ISO_639_LanguageDescriptor.Descriptor_tag: 0x%02x\n", pacOutputPrefix, pstISO_639_LanguageDescriptor->uiDescriptor_tag);
 	if (pstISO_639_LanguageDescriptor->uiDescriptor_length > 0)
 	{
-		DUBUGPRINTF("%sâ”œâ”€ISO_639_LanguageDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstISO_639_LanguageDescriptor->uiDescriptor_length);
+		DUBUGPRINTF("%s©À©¤ISO_639_LanguageDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstISO_639_LanguageDescriptor->uiDescriptor_length);
 		
 		for (iDescriptorLength = 0; iDescriptorLength < pstISO_639_LanguageDescriptor->uiDescriptor_length - 1; iDescriptorLength += 3)
 		{
-			DUBUGPRINTF("%sâ”œâ”€ISO_639_LanguageDescriptor.Descriptor_length: %s\n", pacOutputPrefix, pstISO_639_LanguageDescriptor->stISO_639_Language_code[iDescriptorLoopCount].aucPrivate_data_byte);
+			DUBUGPRINTF("%s©À©¤ISO_639_LanguageDescriptor.Descriptor_length: %s\n", pacOutputPrefix, pstISO_639_LanguageDescriptor->stISO_639_Language_code[iDescriptorLoopCount].aucPrivate_data_byte);
 			iDescriptorLoopCount++;
 		}
-		DUBUGPRINTF("%sâ””â”€ISO_639_LanguageDescriptor.Audio_type: 0x%02x\n", pacOutputPrefix, pstISO_639_LanguageDescriptor->uiAudio_type);
+		DUBUGPRINTF("%s©¸©¤ISO_639_LanguageDescriptor.Audio_type: 0x%02x\n", pacOutputPrefix, pstISO_639_LanguageDescriptor->uiAudio_type);
 	}
 	else
 	{
-		DUBUGPRINTF("%sâ””â”€ISO_639_LanguageDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstISO_639_LanguageDescriptor->uiDescriptor_length);
+		DUBUGPRINTF("%s©¸©¤ISO_639_LanguageDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstISO_639_LanguageDescriptor->uiDescriptor_length);
 	}
 }
 
 /*****************************************************************
  *
- * æ‰“å°Maximum Bitrate Descriptoræè¿°å­
+ * ´òÓ¡Maximum Bitrate DescriptorÃèÊö×Ó
  *
  *****************************************************************/
 void Print_MaximumBitrateDescriptor(MAXIMUM_BITRATE_DESCRIPTOR_T *pstMaximumBitrateDescriptor, char *pacOutputPrefix)
 {
 	DUBUGPRINTF("%sMaximumBitrateDescriptor:\n", pacOutputPrefix);
-	DUBUGPRINTF("%sâ”œâ”€MaximumBitrateDescriptor.Descriptor_tag: 0x%02x\n", pacOutputPrefix, pstMaximumBitrateDescriptor->uiDescriptor_tag);
+	DUBUGPRINTF("%s©À©¤MaximumBitrateDescriptor.Descriptor_tag: 0x%02x\n", pacOutputPrefix, pstMaximumBitrateDescriptor->uiDescriptor_tag);
 	if (pstMaximumBitrateDescriptor->uiDescriptor_length > 0)
 	{
-		DUBUGPRINTF("%sâ”œâ”€MaximumBitrateDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstMaximumBitrateDescriptor->uiDescriptor_length);
-		DUBUGPRINTF("%sâ”œâ”€MaximumBitrateDescriptor.Reserved: 0x%02x\n", pacOutputPrefix, pstMaximumBitrateDescriptor->uiReserved);
-		DUBUGPRINTF("%sâ””â”€MaximumBitrateDescriptor.Maximum_bitrate: 0x%02x\n", pacOutputPrefix, pstMaximumBitrateDescriptor->uiMaximum_bitrate);
+		DUBUGPRINTF("%s©À©¤MaximumBitrateDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstMaximumBitrateDescriptor->uiDescriptor_length);
+		DUBUGPRINTF("%s©À©¤MaximumBitrateDescriptor.Reserved: 0x%02x\n", pacOutputPrefix, pstMaximumBitrateDescriptor->uiReserved);
+		DUBUGPRINTF("%s©¸©¤MaximumBitrateDescriptor.Maximum_bitrate: 0x%02x\n", pacOutputPrefix, pstMaximumBitrateDescriptor->uiMaximum_bitrate);
 	}
 	else
 	{
-		DUBUGPRINTF("%sâ””â”€MaximumBitrateDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstMaximumBitrateDescriptor->uiDescriptor_length);
+		DUBUGPRINTF("%s©¸©¤MaximumBitrateDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstMaximumBitrateDescriptor->uiDescriptor_length);
 	}
 }
 
 /*****************************************************************
  *
- * æ‰“å°CA_Descriptoræè¿°å­
+ * ´òÓ¡CA_DescriptorÃèÊö×Ó
  *
  *****************************************************************/
 void Print_CA_Descriptor(CA_DESCRIPTOR_T *pstCA_Descriptor, char *pacOutputPrefix)
 {
 	DUBUGPRINTF("%sCA_Descriptor:\n", pacOutputPrefix);
-	DUBUGPRINTF("%sâ”œâ”€CA_Descriptor.Descriptor_tag: 0x%02x\n", pacOutputPrefix, pstCA_Descriptor->uiDescriptor_tag);
+	DUBUGPRINTF("%s©À©¤CA_Descriptor.Descriptor_tag: 0x%02x\n", pacOutputPrefix, pstCA_Descriptor->uiDescriptor_tag);
 	if (pstCA_Descriptor->uiDescriptor_length > 0)
 	{
-		DUBUGPRINTF("%sâ”œâ”€CA_Descriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstCA_Descriptor->uiDescriptor_length);
-		DUBUGPRINTF("%sâ”œâ”€CA_Descriptor.CA_system_ID: 0x%02x\n", pacOutputPrefix, pstCA_Descriptor->uiCA_system_ID);
-		DUBUGPRINTF("%sâ”œâ”€CA_Descriptor.Reserved: 0x%02x\n", pacOutputPrefix, pstCA_Descriptor->uiReserved);
+		DUBUGPRINTF("%s©À©¤CA_Descriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstCA_Descriptor->uiDescriptor_length);
+		DUBUGPRINTF("%s©À©¤CA_Descriptor.CA_system_ID: 0x%02x\n", pacOutputPrefix, pstCA_Descriptor->uiCA_system_ID);
+		DUBUGPRINTF("%s©À©¤CA_Descriptor.Reserved: 0x%02x\n", pacOutputPrefix, pstCA_Descriptor->uiReserved);
 		if (pstCA_Descriptor->uiDescriptor_length - 4 > 0)
 		{
-			DUBUGPRINTF("%sâ”œâ”€CA_Descriptor.CA_PID: 0x%02x\n", pacOutputPrefix, pstCA_Descriptor->uiCA_PID);
-			DUBUGPRINTF("%sâ””â”€CA_Descriptor.Private_data_byte: %s\n", pacOutputPrefix, pstCA_Descriptor->aucPrivate_data_byte);
+			DUBUGPRINTF("%s©À©¤CA_Descriptor.CA_PID: 0x%02x\n", pacOutputPrefix, pstCA_Descriptor->uiCA_PID);
+			DUBUGPRINTF("%s©¸©¤CA_Descriptor.Private_data_byte: %s\n", pacOutputPrefix, pstCA_Descriptor->aucPrivate_data_byte);
 		}
 		else
 		{
-			DUBUGPRINTF("%sâ””â”€CA_Descriptor.CA_PID: 0x%02x\n", pacOutputPrefix, pstCA_Descriptor->uiCA_PID);
+			DUBUGPRINTF("%s©¸©¤CA_Descriptor.CA_PID: 0x%02x\n", pacOutputPrefix, pstCA_Descriptor->uiCA_PID);
 		}
 		
 	}
 	else
 	{
-		DUBUGPRINTF("%sâ””â”€CA_Descriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstCA_Descriptor->uiDescriptor_length);
+		DUBUGPRINTF("%s©¸©¤CA_Descriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstCA_Descriptor->uiDescriptor_length);
 	}
 
 }
 
 /*****************************************************************
  *
- * æ‰“å°System Clock Descriptoræè¿°å­
+ * ´òÓ¡System Clock DescriptorÃèÊö×Ó
  *
  *****************************************************************/
 void Print_SystemClockDescriptor(SYSTEM_CLOCK_DESCRIPTOR_T *pstSystemClockDescriptor, char *pacOutputPrefix)
 {
 	DUBUGPRINTF("%sSystemClockDescriptor:\n", pacOutputPrefix);
-	DUBUGPRINTF("%sâ”œâ”€SystemClockDescriptor.Descriptor_tag: 0x%02x\n", pacOutputPrefix, pstSystemClockDescriptor->uiDescriptor_tag);
+	DUBUGPRINTF("%s©À©¤SystemClockDescriptor.Descriptor_tag: 0x%02x\n", pacOutputPrefix, pstSystemClockDescriptor->uiDescriptor_tag);
 	if (pstSystemClockDescriptor->uiDescriptor_length > 0)
 	{
-		DUBUGPRINTF("%sâ”œâ”€SystemClockDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstSystemClockDescriptor->uiDescriptor_length);
-		DUBUGPRINTF("%sâ”œâ”€SystemClockDescriptor.External_clock_reference_indicator: 0x%02x\n", pacOutputPrefix, pstSystemClockDescriptor->uiExternal_clock_reference_indicator);
-		DUBUGPRINTF("%sâ”œâ”€SystemClockDescriptor.Reserved_first: 0x%02x\n", pacOutputPrefix, pstSystemClockDescriptor->uiReserved_first);
-		DUBUGPRINTF("%sâ”œâ”€SystemClockDescriptor.Clock_accuracy_integer: 0x%02x\n", pacOutputPrefix, pstSystemClockDescriptor->uiClock_accuracy_integer);
-		DUBUGPRINTF("%sâ”œâ”€SystemClockDescriptor.Clock_accuracy_exponent: 0x%02x\n", pacOutputPrefix, pstSystemClockDescriptor->uiClock_accuracy_exponent);
-		DUBUGPRINTF("%sâ””â”€SystemClockDescriptor.Reserved_second: 0x%02x\n", pacOutputPrefix, pstSystemClockDescriptor->uiReserved_second);
+		DUBUGPRINTF("%s©À©¤SystemClockDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstSystemClockDescriptor->uiDescriptor_length);
+		DUBUGPRINTF("%s©À©¤SystemClockDescriptor.External_clock_reference_indicator: 0x%02x\n", pacOutputPrefix, pstSystemClockDescriptor->uiExternal_clock_reference_indicator);
+		DUBUGPRINTF("%s©À©¤SystemClockDescriptor.Reserved_first: 0x%02x\n", pacOutputPrefix, pstSystemClockDescriptor->uiReserved_first);
+		DUBUGPRINTF("%s©À©¤SystemClockDescriptor.Clock_accuracy_integer: 0x%02x\n", pacOutputPrefix, pstSystemClockDescriptor->uiClock_accuracy_integer);
+		DUBUGPRINTF("%s©À©¤SystemClockDescriptor.Clock_accuracy_exponent: 0x%02x\n", pacOutputPrefix, pstSystemClockDescriptor->uiClock_accuracy_exponent);
+		DUBUGPRINTF("%s©¸©¤SystemClockDescriptor.Reserved_second: 0x%02x\n", pacOutputPrefix, pstSystemClockDescriptor->uiReserved_second);
 	}
 	else
 	{
-		DUBUGPRINTF("%sâ””â”€SystemClockDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstSystemClockDescriptor->uiDescriptor_length);
+		DUBUGPRINTF("%s©¸©¤SystemClockDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstSystemClockDescriptor->uiDescriptor_length);
 	}
 }
 
 /*****************************************************************
  *
- * æ‰“å°Teletext Descriptoræè¿°å­
+ * ´òÓ¡Teletext DescriptorÃèÊö×Ó
  *
  *****************************************************************/
 void Print_TeletextDescriptor(TELETEXT_DESCRIPTOR_T *pstTeletextDescriptor, char *pacOutputPrefix)
 {
 	int iLoopCount = 0;
 	DUBUGPRINTF("%sTeletextDescriptor:\n", pacOutputPrefix);
-	DUBUGPRINTF("%sâ”œâ”€TeletextDescriptor.Descriptor_tag: 0x%02x\n", pacOutputPrefix, pstTeletextDescriptor->uiDescriptor_tag);
+	DUBUGPRINTF("%s©À©¤TeletextDescriptor.Descriptor_tag: 0x%02x\n", pacOutputPrefix, pstTeletextDescriptor->uiDescriptor_tag);
 	if (pstTeletextDescriptor->uiDescriptor_length > 0)
 	{
-		DUBUGPRINTF("%sâ”œâ”€TeletextDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstTeletextDescriptor->uiDescriptor_length);
+		DUBUGPRINTF("%s©À©¤TeletextDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstTeletextDescriptor->uiDescriptor_length);
 		for (iLoopCount = 0; iLoopCount * 5 < pstTeletextDescriptor->uiDescriptor_length; iLoopCount++)
 		{
-			DUBUGPRINTF("%sâ”œâ”€TeletextDescriptor.Teletext[%d].ISO_639_Language_code: %s\n", pacOutputPrefix, iLoopCount, pstTeletextDescriptor->astTeletext_Info[iLoopCount].stISO_639_Language_code.aucPrivate_data_byte);
-			DUBUGPRINTF("%sâ”œâ”€TeletextDescriptor.Teletext[%d].Teletext_type: 0x%02x\n", pacOutputPrefix, iLoopCount, pstTeletextDescriptor->astTeletext_Info[iLoopCount].uiTeletext_type);
-			DUBUGPRINTF("%sâ”œâ”€TeletextDescriptor.Teletext[%d].Teletext_magazine_number: 0x%02x\n", pacOutputPrefix, iLoopCount, pstTeletextDescriptor->astTeletext_Info[iLoopCount].uiTeletext_magazine_number);
-			DUBUGPRINTF("%sâ””â”€TeletextDescriptor.Teletext[%d].Teletext_page_number: 0x%02x\n", pacOutputPrefix, iLoopCount, pstTeletextDescriptor->astTeletext_Info[iLoopCount].uiTeletext_page_number);
+			DUBUGPRINTF("%s©À©¤TeletextDescriptor.Teletext[%d].ISO_639_Language_code: %s\n", pacOutputPrefix, iLoopCount, pstTeletextDescriptor->astTeletext_Info[iLoopCount].stISO_639_Language_code.aucPrivate_data_byte);
+			DUBUGPRINTF("%s©À©¤TeletextDescriptor.Teletext[%d].Teletext_type: 0x%02x\n", pacOutputPrefix, iLoopCount, pstTeletextDescriptor->astTeletext_Info[iLoopCount].uiTeletext_type);
+			DUBUGPRINTF("%s©À©¤TeletextDescriptor.Teletext[%d].Teletext_magazine_number: 0x%02x\n", pacOutputPrefix, iLoopCount, pstTeletextDescriptor->astTeletext_Info[iLoopCount].uiTeletext_magazine_number);
+			DUBUGPRINTF("%s©¸©¤TeletextDescriptor.Teletext[%d].Teletext_page_number: 0x%02x\n", pacOutputPrefix, iLoopCount, pstTeletextDescriptor->astTeletext_Info[iLoopCount].uiTeletext_page_number);
 		}
 	}
 	else
 	{
-		DUBUGPRINTF("%sâ””â”€TeletextDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstTeletextDescriptor->uiDescriptor_length);
+		DUBUGPRINTF("%s©¸©¤TeletextDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstTeletextDescriptor->uiDescriptor_length);
 	}
 
 }
 
 /*****************************************************************
  *
- * æ‰“å°Subtitling Descriptoræè¿°å­
+ * ´òÓ¡Subtitling DescriptorÃèÊö×Ó
  *
  *****************************************************************/
 void Print_SubtitlingDescriptor(SUBTITLING_DESCRIPTOR_T *pstSubtitlingDescriptor, char *pacOutputPrefix)
 {
 	int iLoopCount = 0;
 	DUBUGPRINTF("%sSubtitlingDescriptor:\n", pacOutputPrefix);
-	DUBUGPRINTF("%sâ”œâ”€SubtitlingDescriptor.Descriptor_tag: 0x%02x\n", pacOutputPrefix, pstSubtitlingDescriptor->uiDescriptor_tag);
+	DUBUGPRINTF("%s©À©¤SubtitlingDescriptor.Descriptor_tag: 0x%02x\n", pacOutputPrefix, pstSubtitlingDescriptor->uiDescriptor_tag);
 	if (pstSubtitlingDescriptor->uiDescriptor_length > 0)
 	{
-		DUBUGPRINTF("%sâ”œâ”€SubtitlingDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstSubtitlingDescriptor->uiDescriptor_length);
+		DUBUGPRINTF("%s©À©¤SubtitlingDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstSubtitlingDescriptor->uiDescriptor_length);
 		for (iLoopCount = 0; iLoopCount * 8 < pstSubtitlingDescriptor->uiDescriptor_length; iLoopCount++)
 		{
-			DUBUGPRINTF("%sâ”œâ”€SubtitlingDescriptor.Subtitling[%d].ISO_639_Language_code: %s\n", pacOutputPrefix, iLoopCount, pstSubtitlingDescriptor->astSubtitling_Info[iLoopCount].stISO_639_Language_code.aucPrivate_data_byte);
-			DUBUGPRINTF("%sâ”œâ”€SubtitlingDescriptor.Subtitling[%d].Subtitling_type: 0x%02x\n", pacOutputPrefix, iLoopCount, pstSubtitlingDescriptor->astSubtitling_Info[iLoopCount].uiSubtitling_type);
-			DUBUGPRINTF("%sâ”œâ”€SubtitlingDescriptor.Subtitling[%d].Composition_page_id: 0x%02x\n", pacOutputPrefix, iLoopCount, pstSubtitlingDescriptor->astSubtitling_Info[iLoopCount].uiComposition_page_id);
-			DUBUGPRINTF("%sâ””â”€SubtitlingDescriptor.Subtitling[%d].Ancillary_page_id: 0x%02x\n", pacOutputPrefix, iLoopCount, pstSubtitlingDescriptor->astSubtitling_Info[iLoopCount].uiAncillary_page_id);
+			DUBUGPRINTF("%s©À©¤SubtitlingDescriptor.Subtitling[%d].ISO_639_Language_code: %s\n", pacOutputPrefix, iLoopCount, pstSubtitlingDescriptor->astSubtitling_Info[iLoopCount].stISO_639_Language_code.aucPrivate_data_byte);
+			DUBUGPRINTF("%s©À©¤SubtitlingDescriptor.Subtitling[%d].Subtitling_type: 0x%02x\n", pacOutputPrefix, iLoopCount, pstSubtitlingDescriptor->astSubtitling_Info[iLoopCount].uiSubtitling_type);
+			DUBUGPRINTF("%s©À©¤SubtitlingDescriptor.Subtitling[%d].Composition_page_id: 0x%02x\n", pacOutputPrefix, iLoopCount, pstSubtitlingDescriptor->astSubtitling_Info[iLoopCount].uiComposition_page_id);
+			DUBUGPRINTF("%s©¸©¤SubtitlingDescriptor.Subtitling[%d].Ancillary_page_id: 0x%02x\n", pacOutputPrefix, iLoopCount, pstSubtitlingDescriptor->astSubtitling_Info[iLoopCount].uiAncillary_page_id);
 		}
 	}
 	else
 	{
-		DUBUGPRINTF("%sâ””â”€SubtitlingDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstSubtitlingDescriptor->uiDescriptor_length);
+		DUBUGPRINTF("%s©¸©¤SubtitlingDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstSubtitlingDescriptor->uiDescriptor_length);
 	}
 
 }
 
 /*****************************************************************
  *
- * æ‰“å°ShortEvent Descriptoræè¿°å­
+ * ´òÓ¡ShortEvent DescriptorÃèÊö×Ó
  *
  *****************************************************************/
 void Print_ShortEventDescriptor(SHORT_EVENT_DESCRIPTOR_T *pstShortEventDescriptor, char *pacOutputPrefix)
 {
 	DUBUGPRINTF("%sShortEventDescriptor:\n", pacOutputPrefix);
-	DUBUGPRINTF("%sâ”œâ”€ShortEventDescriptor.Descriptor_tag: 0x%02x\n", pacOutputPrefix, pstShortEventDescriptor->uiDescriptor_tag);
+	DUBUGPRINTF("%s©À©¤ShortEventDescriptor.Descriptor_tag: 0x%02x\n", pacOutputPrefix, pstShortEventDescriptor->uiDescriptor_tag);
 	
 	if (pstShortEventDescriptor->uiDescriptor_length > 0)
 	{
-		DUBUGPRINTF("%sâ”œâ”€ShortEventDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstShortEventDescriptor->uiDescriptor_length);
-		DUBUGPRINTF("%sâ”œâ”€ShortEventDescriptor.ISO_639_Language_code: %s\n", pacOutputPrefix, pstShortEventDescriptor->stISO_639_Language_code.aucPrivate_data_byte);
-		DUBUGPRINTF("%sâ”œâ”€ShortEventDescriptor.Event_name_length: 0x%02x\n", pacOutputPrefix, pstShortEventDescriptor->uiEvent_name_length);
+		DUBUGPRINTF("%s©À©¤ShortEventDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstShortEventDescriptor->uiDescriptor_length);
+		DUBUGPRINTF("%s©À©¤ShortEventDescriptor.ISO_639_Language_code: %s\n", pacOutputPrefix, pstShortEventDescriptor->stISO_639_Language_code.aucPrivate_data_byte);
+		DUBUGPRINTF("%s©À©¤ShortEventDescriptor.Event_name_length: 0x%02x\n", pacOutputPrefix, pstShortEventDescriptor->uiEvent_name_length);
 		if (pstShortEventDescriptor->uiEvent_name_length > 0)
 		{
-			DUBUGPRINTF("%sâ”œâ”€ShortEventDescriptor.Event_name_char: %s\n", pacOutputPrefix, pstShortEventDescriptor->aucEvent_name_char);
+			DUBUGPRINTF("%s©À©¤ShortEventDescriptor.Event_name_char: %s\n", pacOutputPrefix, pstShortEventDescriptor->aucEvent_name_char);
 		}
 
 		if (pstShortEventDescriptor->uiText_length > 0)
 		{
-			DUBUGPRINTF("%sâ”œâ”€ShortEventDescriptor.Text_length: 0x%02x\n", pacOutputPrefix, pstShortEventDescriptor->uiText_length);
-			DUBUGPRINTF("%sâ””â”€ShortEventDescriptor.Text_char: %s\n", pacOutputPrefix, pstShortEventDescriptor->aucText_char);
+			DUBUGPRINTF("%s©À©¤ShortEventDescriptor.Text_length: 0x%02x\n", pacOutputPrefix, pstShortEventDescriptor->uiText_length);
+			DUBUGPRINTF("%s©¸©¤ShortEventDescriptor.Text_char: %s\n", pacOutputPrefix, pstShortEventDescriptor->aucText_char);
 		}
 		else
 		{
-			DUBUGPRINTF("%sâ””â”€ShortEventDescriptor.Text_length: 0x%02x\n", pacOutputPrefix, pstShortEventDescriptor->uiText_length);
+			DUBUGPRINTF("%s©¸©¤ShortEventDescriptor.Text_length: 0x%02x\n", pacOutputPrefix, pstShortEventDescriptor->uiText_length);
 		}
 	}
 	else
 	{
-		DUBUGPRINTF("%sâ””â”€ShortEventDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstShortEventDescriptor->uiDescriptor_length);
+		DUBUGPRINTF("%s©¸©¤ShortEventDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstShortEventDescriptor->uiDescriptor_length);
 	}
 	
 }
 
 /*****************************************************************
  *
- * æ‰“å°Extended Event Descriptoræè¿°å­
+ * ´òÓ¡Extended Event DescriptorÃèÊö×Ó
  *
  *****************************************************************/
 void Print_ExtendedEventDescriptor(EXTENDED_EVENT_DESCRIPTOR_T *pstExtendedEventDescriptor, char *pacOutputPrefix)
@@ -571,29 +571,29 @@ void Print_ExtendedEventDescriptor(EXTENDED_EVENT_DESCRIPTOR_T *pstExtendedEvent
 	int iDescriptorInfoPostion = 0;
 	
 	DUBUGPRINTF("%sExtendedEventDescriptor:\n", pacOutputPrefix);
-	DUBUGPRINTF("%sâ”œâ”€ExtendedEventDescriptor.Descriptor_tag: 0x%02x\n", pacOutputPrefix, pstExtendedEventDescriptor->uiDescriptor_tag);
+	DUBUGPRINTF("%s©À©¤ExtendedEventDescriptor.Descriptor_tag: 0x%02x\n", pacOutputPrefix, pstExtendedEventDescriptor->uiDescriptor_tag);
 	
 	if (pstExtendedEventDescriptor->uiDescriptor_length > 0)
 	{
-		DUBUGPRINTF("%sâ”œâ”€ExtendedEventDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstExtendedEventDescriptor->uiDescriptor_length);
-		DUBUGPRINTF("%sâ”œâ”€ExtendedEventDescriptor.Descriptor_number: 0x%02x\n", pacOutputPrefix, pstExtendedEventDescriptor->uiDescriptor_number);
-		DUBUGPRINTF("%sâ”œâ”€ExtendedEventDescriptor.Last_descriptor_number: 0x%02x\n", pacOutputPrefix, pstExtendedEventDescriptor->uiLast_descriptor_number);
-		DUBUGPRINTF("%sâ”œâ”€ExtendedEventDescriptor.ISO_639_language_code: %s\n", pacOutputPrefix, pstExtendedEventDescriptor->stISO_639_language_code.aucPrivate_data_byte);
-		DUBUGPRINTF("%sâ”œâ”€ExtendedEventDescriptor.Length_of_items: 0x%02x\n", pacOutputPrefix, pstExtendedEventDescriptor->uiLength_of_items);
+		DUBUGPRINTF("%s©À©¤ExtendedEventDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstExtendedEventDescriptor->uiDescriptor_length);
+		DUBUGPRINTF("%s©À©¤ExtendedEventDescriptor.Descriptor_number: 0x%02x\n", pacOutputPrefix, pstExtendedEventDescriptor->uiDescriptor_number);
+		DUBUGPRINTF("%s©À©¤ExtendedEventDescriptor.Last_descriptor_number: 0x%02x\n", pacOutputPrefix, pstExtendedEventDescriptor->uiLast_descriptor_number);
+		DUBUGPRINTF("%s©À©¤ExtendedEventDescriptor.ISO_639_language_code: %s\n", pacOutputPrefix, pstExtendedEventDescriptor->stISO_639_language_code.aucPrivate_data_byte);
+		DUBUGPRINTF("%s©À©¤ExtendedEventDescriptor.Length_of_items: 0x%02x\n", pacOutputPrefix, pstExtendedEventDescriptor->uiLength_of_items);
 		if (pstExtendedEventDescriptor->uiLength_of_items > 0)
 		{
 			for (iDescriptorInfoPostion = 0; iDescriptorInfoPostion < pstExtendedEventDescriptor->uiLength_of_items; iDescriptorInfoPostion += 2)
 			{
-				DUBUGPRINTF("%sâ”œâ”€ExtendedEventDescriptor.Extended_event_info[%d].Item_descriptor_length: 0x%02x\n", pacOutputPrefix, iLoopCount, pstExtendedEventDescriptor->astExtended_event_info[iLoopCount].uiItem_descriptor_length);
+				DUBUGPRINTF("%s©À©¤ExtendedEventDescriptor.Extended_event_info[%d].Item_descriptor_length: 0x%02x\n", pacOutputPrefix, iLoopCount, pstExtendedEventDescriptor->astExtended_event_info[iLoopCount].uiItem_descriptor_length);
 				if (pstExtendedEventDescriptor->astExtended_event_info[iLoopCount].uiItem_descriptor_length > 0)
 				{
-					DUBUGPRINTF("%sâ”œâ”€ExtendedEventDescriptor.Extended_event_info[%d].Item_descriptor_length: %s\n", pacOutputPrefix, iLoopCount, pstExtendedEventDescriptor->astExtended_event_info[iLoopCount].aucItem_descriptor_char);
+					DUBUGPRINTF("%s©À©¤ExtendedEventDescriptor.Extended_event_info[%d].Item_descriptor_length: %s\n", pacOutputPrefix, iLoopCount, pstExtendedEventDescriptor->astExtended_event_info[iLoopCount].aucItem_descriptor_char);
 				}
 				iDescriptorInfoPostion += pstExtendedEventDescriptor->astExtended_event_info[iLoopCount].uiItem_descriptor_length;
-				DUBUGPRINTF("%sâ”œâ”€ExtendedEventDescriptor.Extended_event_info[%d].Item_length: 0x%02x\n", pacOutputPrefix, iLoopCount, pstExtendedEventDescriptor->astExtended_event_info[iLoopCount].uiItem_length);
+				DUBUGPRINTF("%s©À©¤ExtendedEventDescriptor.Extended_event_info[%d].Item_length: 0x%02x\n", pacOutputPrefix, iLoopCount, pstExtendedEventDescriptor->astExtended_event_info[iLoopCount].uiItem_length);
 				if (pstExtendedEventDescriptor->astExtended_event_info[iLoopCount].uiItem_length > 0)
 				{
-					DUBUGPRINTF("%sâ”œâ”€ExtendedEventDescriptor.Extended_event_info[%d].Item_char: %s\n", pacOutputPrefix, iLoopCount, pstExtendedEventDescriptor->astExtended_event_info[iLoopCount].aucItem_char);
+					DUBUGPRINTF("%s©À©¤ExtendedEventDescriptor.Extended_event_info[%d].Item_char: %s\n", pacOutputPrefix, iLoopCount, pstExtendedEventDescriptor->astExtended_event_info[iLoopCount].aucItem_char);
 				}
 				iDescriptorInfoPostion += pstExtendedEventDescriptor->astExtended_event_info[iLoopCount].uiItem_length;
 			}
@@ -603,47 +603,47 @@ void Print_ExtendedEventDescriptor(EXTENDED_EVENT_DESCRIPTOR_T *pstExtendedEvent
 		}
 		if (pstExtendedEventDescriptor->uiText_length > 0)
 		{
-			DUBUGPRINTF("%sâ”œâ”€ExtendedEventDescriptor.Text_length: 0x%02x\n", pacOutputPrefix, pstExtendedEventDescriptor->uiText_length);
-			DUBUGPRINTF("%sâ””â”€ExtendedEventDescriptor.Text_char: %s\n", pacOutputPrefix, pstExtendedEventDescriptor->aucText_char);
+			DUBUGPRINTF("%s©À©¤ExtendedEventDescriptor.Text_length: 0x%02x\n", pacOutputPrefix, pstExtendedEventDescriptor->uiText_length);
+			DUBUGPRINTF("%s©¸©¤ExtendedEventDescriptor.Text_char: %s\n", pacOutputPrefix, pstExtendedEventDescriptor->aucText_char);
 		}
 		else
 		{
-			DUBUGPRINTF("%sâ””â”€ExtendedEventDescriptor.Text_length: 0x%02x\n", pacOutputPrefix, pstExtendedEventDescriptor->uiText_length);
+			DUBUGPRINTF("%s©¸©¤ExtendedEventDescriptor.Text_length: 0x%02x\n", pacOutputPrefix, pstExtendedEventDescriptor->uiText_length);
 		}
 	}
 	else
 	{
-		DUBUGPRINTF("%sâ””â”€ExtendedEventDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstExtendedEventDescriptor->uiDescriptor_length);
+		DUBUGPRINTF("%s©¸©¤ExtendedEventDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstExtendedEventDescriptor->uiDescriptor_length);
 	}
 }
 
 /*****************************************************************
  *
- * æ‰“å°Frequency List Descriptoræè¿°å­
+ * ´òÓ¡Frequency List DescriptorÃèÊö×Ó
  *
  *****************************************************************/
 void Print_FrequencyListDescriptor(FREQUENCY_LIST_DESCRIPTOR_T *pstFrequencyListDescriptor, char *pacOutputPrefix)
 {
 	int iLoopCount = 0;
 	DUBUGPRINTF("%sFrequencyListDescriptor:\n", pacOutputPrefix);
-	DUBUGPRINTF("%sâ”œâ”€FrequencyListDescriptor.Descriptor_tag: 0x%02x\n", pacOutputPrefix, pstFrequencyListDescriptor->uiDescriptor_tag);
+	DUBUGPRINTF("%s©À©¤FrequencyListDescriptor.Descriptor_tag: 0x%02x\n", pacOutputPrefix, pstFrequencyListDescriptor->uiDescriptor_tag);
 	
 	if (pstFrequencyListDescriptor->uiDescriptor_length > 0)
 	{
-		DUBUGPRINTF("%sâ”œâ”€FrequencyListDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstFrequencyListDescriptor->uiDescriptor_length);
-		DUBUGPRINTF("%sâ”œâ”€FrequencyListDescriptor.Reserved_future_use: 0x%02x\n", pacOutputPrefix, pstFrequencyListDescriptor->uiReserved_future_use);
-		DUBUGPRINTF("%sâ”œâ”€FrequencyListDescriptor.Coding_type: 0x%02x\n", pacOutputPrefix, pstFrequencyListDescriptor->uiCoding_type);
+		DUBUGPRINTF("%s©À©¤FrequencyListDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstFrequencyListDescriptor->uiDescriptor_length);
+		DUBUGPRINTF("%s©À©¤FrequencyListDescriptor.Reserved_future_use: 0x%02x\n", pacOutputPrefix, pstFrequencyListDescriptor->uiReserved_future_use);
+		DUBUGPRINTF("%s©À©¤FrequencyListDescriptor.Coding_type: 0x%02x\n", pacOutputPrefix, pstFrequencyListDescriptor->uiCoding_type);
 		if (pstFrequencyListDescriptor->uiDescriptor_length - 1 > 0)
 		{
 			for (iLoopCount = 0; iLoopCount * 4 < pstFrequencyListDescriptor->uiDescriptor_length - 1; iLoopCount++)
 			{
-				DUBUGPRINTF("%sâ”œâ”€FrequencyListDescriptor.Centre_frequency[%d]: 0x%08x\n", pacOutputPrefix, iLoopCount, pstFrequencyListDescriptor->astCentre_frequency[iLoopCount].uiCentre_frequency);
+				DUBUGPRINTF("%s©À©¤FrequencyListDescriptor.Centre_frequency[%d]: 0x%08x\n", pacOutputPrefix, iLoopCount, pstFrequencyListDescriptor->astCentre_frequency[iLoopCount].uiCentre_frequency);
 			}
 		}
 	}
 	else
 	{
-		DUBUGPRINTF("%sâ””â”€FrequencyListDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstFrequencyListDescriptor->uiDescriptor_length);
+		DUBUGPRINTF("%s©¸©¤FrequencyListDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstFrequencyListDescriptor->uiDescriptor_length);
 	}
 	
 }

@@ -1,8 +1,8 @@
 /*
  * Parse_DesciptorStream.h
  *
- *  Created on: 2017å¹´8æœˆ29æ—¥
- *      Author: Administrator
+ *  Created on: 2017Äê8ÔÂ29ÈÕ
+ *      Author: AlexTang
  */
 
 #ifndef _PARSE_DESCIPTORSTREAM_H_

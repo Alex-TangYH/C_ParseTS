@@ -1,8 +1,8 @@
 /*
  * DVB_CRC32.c
  *
- *  Created on: 2017å¹´8æœˆ30æ—¥
- *      Author: Administrator
+ *  Created on: 2017Äê8ÔÂ30ÈÕ
+ *      Author: AlexTang
  */
 
 #include "DVB_CRC32.h"
@@ -32,9 +32,9 @@ unsigned long OsgCalSectionCRC(unsigned char *pDataBuffer, unsigned char startIn
 
 /******************************************
  *
- * CRC32æ ¡éªŒ
- * 1:CRC32ä¸€è‡´
- * 0:CRC32ä¸ä¸€è‡´
+ * CRC32Ğ£Ñé
+ * 1:CRC32Ò»ÖÂ
+ * 0:CRC32²»Ò»ÖÂ
  ******************************************/
 int Verify_CRC_32(unsigned char *pucSectionBuffer)
 {

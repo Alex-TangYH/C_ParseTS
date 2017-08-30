@@ -12,14 +12,12 @@
 #define INITIAL_VERSION 0xff
 #define SECTION_COUNT_256 256
 #define SECTION_MAX_LENGTH_4092 1024 * 4
-
 #define OUTPUT_PREFIX_SIZE 256
-
 #define PRINTFEID_INFO 1
 
 /******************************************
  *
- * è§£æEITæ®µå¤´éƒ¨æ•°æ®
+ * ½âÎöEIT¶ÎÍ·²¿Êı¾İ
  *
  ******************************************/
 void ParseEIT_SectionHead(TS_EIT_T *pstTS_EIT, unsigned char *pucSectionBuffer)
@@ -47,7 +45,7 @@ void ParseEIT_SectionHead(TS_EIT_T *pstTS_EIT, unsigned char *pucSectionBuffer)
 
 /******************************************
  *
- * è§£æEITæ®µæ•°æ®
+ * ½âÎöEIT¶ÎÊı¾İ
  *
  ******************************************/
 int ParseEIT_Section(TS_EIT_T *pstTS_EIT, unsigned char *pucSectionBuffer)
@@ -86,7 +84,7 @@ int ParseEIT_Section(TS_EIT_T *pstTS_EIT, unsigned char *pucSectionBuffer)
 
 /******************************************
  *
- * è¾“å‡ºEITè¡¨
+ * Êä³öEIT±í
  *
  ******************************************/
 void PrintEIT(TS_EIT_T *pstTS_EIT, int iEIT_InfoCount)
@@ -134,7 +132,7 @@ void PrintEIT(TS_EIT_T *pstTS_EIT, int iEIT_InfoCount)
 
 /******************************************
  *
- * EITå»é‡
+ * EITÈ¥ÖØ
  *
  ******************************************/
 
@@ -164,7 +162,7 @@ int IsEITSectionGetBefore(unsigned char *pucSectionBuffer, EIT_IDENTIFICATION_IN
 
 /******************************************
  *
- * ä»ç¼“å­˜ä¸­è§£æEITè¡¨
+ * ´Ó»º´æÖĞ½âÎöEIT±í
  *
  ******************************************/
 int ParseEIT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength, int iEIT_table_id)
@@ -204,7 +202,7 @@ int ParseEIT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength, int iEIT_tabl
 						PrintEIT(&stTS_EIT, iEIT_InfoCount);
 					}
 				}
-				//TODO å¢åŠ æå‰åœæ­¢è§£ææ¡ä»¶
+				//TODO Ôö¼ÓÌáÇ°Í£Ö¹½âÎöÌõ¼ş
 				break;
 			case 2:
 				break;

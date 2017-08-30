@@ -28,7 +28,7 @@
 
 /******************************************
  *
- * è§£æNetwork Name Descriptoræè¿°å­ä¿¡æ¯
+ * ½âÎöNetwork Name DescriptorÃèÊö×ÓĞÅÏ¢
  *
  ******************************************/
 int GetNetworkNameDescriptor(NETWORK_NAME_DESCRIPTOR_T *pstNetworkNameDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition)
@@ -42,7 +42,7 @@ int GetNetworkNameDescriptor(NETWORK_NAME_DESCRIPTOR_T *pstNetworkNameDescriptor
 
 /******************************************
  *
- * è§£æService List Descriptoræè¿°å­ä¿¡æ¯
+ * ½âÎöService List DescriptorÃèÊö×ÓĞÅÏ¢
  *
  ******************************************/
 int GetServiceListDescriptor(SERVICE_LIST_DESCRIPTOR_T *pstServiceListDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition)
@@ -79,7 +79,7 @@ int GetServiceListDescriptor(SERVICE_LIST_DESCRIPTOR_T *pstServiceListDescriptor
 
 /**********************************************************
  *
- * è§£æCable Delivery System Descriptoræè¿°å­ä¿¡æ¯
+ * ½âÎöCable Delivery System DescriptorÃèÊö×ÓĞÅÏ¢
  *
  **********************************************************/
 int GetCableDeliverySystemDescriptor(CABLE_DELIVERY_SYSTEM_DESCRIPTOR_T *pstCableDeliverySystemDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition)
@@ -106,7 +106,7 @@ int GetCableDeliverySystemDescriptor(CABLE_DELIVERY_SYSTEM_DESCRIPTOR_T *pstCabl
 
 /**********************************************************
  *
- * è§£æSatellite Delivery System Descriptoræè¿°å­ä¿¡æ¯
+ * ½âÎöSatellite Delivery System DescriptorÃèÊö×ÓĞÅÏ¢
  *
  **********************************************************/
 int GetSatelliteDeliverySystemDescriptor(SATELLITE_DELIVERY_SYSTEM_DESCRIPTOR_T *pstSatelliteDeliverySystemDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition)
@@ -143,7 +143,7 @@ int GetSatelliteDeliverySystemDescriptor(SATELLITE_DELIVERY_SYSTEM_DESCRIPTOR_T 
 
 /******************************************
  *
- * è§£æNetwork Name Descriptoræè¿°å­ä¿¡æ¯
+ * ½âÎöNetwork Name DescriptorÃèÊö×ÓĞÅÏ¢
  *
  ******************************************/
 int GetBouquetNameDescriptor(BOUQUET_NAME_DESCRIPTOR_T *pstBouquetNameDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition)
@@ -157,7 +157,7 @@ int GetBouquetNameDescriptor(BOUQUET_NAME_DESCRIPTOR_T *pstBouquetNameDescriptor
 
 /******************************************
  *
- * è§£æService   Descriptoræè¿°å­ä¿¡æ¯
+ * ½âÎöService   DescriptorÃèÊö×ÓĞÅÏ¢
  *
  ******************************************/
 int GetServiceDescriptor(SERVICE_DESCRIPTOR_T *pstServiceDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition)
@@ -187,7 +187,7 @@ int GetServiceDescriptor(SERVICE_DESCRIPTOR_T *pstServiceDescriptor, unsigned ch
 
 /******************************************
  *
- * è§£æLink   Descriptoræè¿°å­ä¿¡æ¯
+ * ½âÎöLink   DescriptorÃèÊö×ÓĞÅÏ¢
  *
  ******************************************/
 int GetLinkageDescriptor(LINKAGE_DESCRIPTOR_T *pstLinkageDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition)
@@ -242,7 +242,7 @@ int GetLinkageDescriptor(LINKAGE_DESCRIPTOR_T *pstLinkageDescriptor, unsigned ch
 
 /******************************************
  *
- * è§£æStream Indentifier Descriptoræè¿°å­ä¿¡æ¯
+ * ½âÎöStream Indentifier DescriptorÃèÊö×ÓĞÅÏ¢
  *
  ******************************************/
 int GetStreamIndentifierDescriptor(STREAM_IDENTIFIER_DESCRIPTOR_T *pstStreamIndentifierDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition)
@@ -256,7 +256,7 @@ int GetStreamIndentifierDescriptor(STREAM_IDENTIFIER_DESCRIPTOR_T *pstStreamInde
 
 /******************************************
  *
- * è§£æTeletext Descriptoræè¿°å­ä¿¡æ¯
+ * ½âÎöTeletext DescriptorÃèÊö×ÓĞÅÏ¢
  *
  ******************************************/
 int GetTeletextDescriptor(TELETEXT_DESCRIPTOR_T *pstTeletextDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition)
@@ -281,7 +281,7 @@ int GetTeletextDescriptor(TELETEXT_DESCRIPTOR_T *pstTeletextDescriptor, unsigned
 
 /******************************************
  *
- * è§£æSubtitling Descriptoræè¿°å­ä¿¡æ¯
+ * ½âÎöSubtitling DescriptorÃèÊö×ÓĞÅÏ¢
  *
  ******************************************/
 int GetSubtitlingDescriptor(SUBTITLING_DESCRIPTOR_T *pstSubtitlingDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition)
@@ -305,7 +305,7 @@ int GetSubtitlingDescriptor(SUBTITLING_DESCRIPTOR_T *pstSubtitlingDescriptor, un
 
 /**********************************************************
  *
- * è§£æTerrestrial Delivery System Descriptoræè¿°å­ä¿¡æ¯
+ * ½âÎöTerrestrial Delivery System DescriptorÃèÊö×ÓĞÅÏ¢
  *
  **********************************************************/
 int GetTerrestrialDeliverySystemDescriptor(TERRESTRIAL_DELIVERY_SYSTEM_DESCRIPTOR_T *pstTerrestrialDeliverySystemDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition)
@@ -340,7 +340,7 @@ int GetTerrestrialDeliverySystemDescriptor(TERRESTRIAL_DELIVERY_SYSTEM_DESCRIPTO
 
 /******************************************
  *
- * è§£æShort Event Descriptoræè¿°å­ä¿¡æ¯
+ * ½âÎöShort Event DescriptorÃèÊö×ÓĞÅÏ¢
  *
  ******************************************/
 int GetShortEventDescriptor(SHORT_EVENT_DESCRIPTOR_T *pstShortEventDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition)
@@ -372,7 +372,7 @@ int GetShortEventDescriptor(SHORT_EVENT_DESCRIPTOR_T *pstShortEventDescriptor, u
 
 /******************************************
  *
- * è§£æExtended Event Descriptoræè¿°å­ä¿¡æ¯
+ * ½âÎöExtended Event DescriptorÃèÊö×ÓĞÅÏ¢
  *
  ******************************************/
 int GetExtendedEventDescriptor(EXTENDED_EVENT_DESCRIPTOR_T *pstExtendedEventDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition)
@@ -430,7 +430,7 @@ int GetExtendedEventDescriptor(EXTENDED_EVENT_DESCRIPTOR_T *pstExtendedEventDesc
 
 /*********************************************************
  *
- * è§£æFrequency List Descriptoræè¿°å­ä¿¡æ¯
+ * ½âÎöFrequency List DescriptorÃèÊö×ÓĞÅÏ¢
  *
  *********************************************************/
 int GetFrequencyListDescriptor(FREQUENCY_LIST_DESCRIPTOR_T *pstFrequencyListDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition)
@@ -449,11 +449,11 @@ int GetFrequencyListDescriptor(FREQUENCY_LIST_DESCRIPTOR_T *pstFrequencyListDesc
 	return iDescriptorPosition;
 }
 
-// 13818æè¿°å­
+// 13818ÃèÊö×Ó
 
 /******************************************
  *
- * è§£æVideo Stream Descriptoræè¿°å­ä¿¡æ¯
+ * ½âÎöVideo Stream DescriptorÃèÊö×ÓĞÅÏ¢
  *
  ******************************************/
 int GetVideoStreamDescriptor(VIDEO_STREAM_DESCRIPTOR_T *pstVideoStreamDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition)
@@ -482,7 +482,7 @@ int GetVideoStreamDescriptor(VIDEO_STREAM_DESCRIPTOR_T *pstVideoStreamDescriptor
 
 /******************************************
  *
- * è§£æAudio Stream Descriptoræè¿°å­ä¿¡æ¯
+ * ½âÎöAudio Stream DescriptorÃèÊö×ÓĞÅÏ¢
  *
  ******************************************/
 int GetAudioStreamDescriptor(AUDIO_STREAM_DESCRIPTOR_T *pstAudioStreamDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition)
@@ -499,7 +499,7 @@ int GetAudioStreamDescriptor(AUDIO_STREAM_DESCRIPTOR_T *pstAudioStreamDescriptor
 
 /******************************************
  *
- * è§£æData Stream Alignment Descriptoræè¿°å­ä¿¡æ¯
+ * ½âÎöData Stream Alignment DescriptorÃèÊö×ÓĞÅÏ¢
  *
  ******************************************/
 int GetDataStreamAlignmentDescriptor(DATA_STREAM_ALIGNMENT_DESCRIPTOR_T *pstDataStreamAlignmentDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition)
@@ -513,7 +513,7 @@ int GetDataStreamAlignmentDescriptor(DATA_STREAM_ALIGNMENT_DESCRIPTOR_T *pstData
 
 /******************************************
  *
- * è§£æService   Descriptoræè¿°å­ä¿¡æ¯
+ * ½âÎöService   DescriptorÃèÊö×ÓĞÅÏ¢
  *
  ******************************************/
 int GetMaximumBitrateDescriptor(MAXIMUM_BITRATE_DESCRIPTOR_T *pstMaximumBitrateDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition)
@@ -528,7 +528,7 @@ int GetMaximumBitrateDescriptor(MAXIMUM_BITRATE_DESCRIPTOR_T *pstMaximumBitrateD
 
 /******************************************
  *
- * è§£æCA   Descriptoræè¿°å­ä¿¡æ¯
+ * ½âÎöCA   DescriptorÃèÊö×ÓĞÅÏ¢
  *
  ******************************************/
 int GetCA_Descriptor(CA_DESCRIPTOR_T *pstCA_Descriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition)
@@ -545,7 +545,7 @@ int GetCA_Descriptor(CA_DESCRIPTOR_T *pstCA_Descriptor, unsigned char *pucDescri
 
 /******************************************
  *
- * è§£æSystem Clock Descriptoræè¿°å­ä¿¡æ¯
+ * ½âÎöSystem Clock DescriptorÃèÊö×ÓĞÅÏ¢
  *
  ******************************************/
 int GetSystemClockDescriptor(SYSTEM_CLOCK_DESCRIPTOR_T *pstSystemClockDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition)
@@ -563,7 +563,7 @@ int GetSystemClockDescriptor(SYSTEM_CLOCK_DESCRIPTOR_T *pstSystemClockDescriptor
 
 /******************************************
  *
- * è§£æISO_639_Language_Descriptoræè¿°å­ä¿¡æ¯
+ * ½âÎöISO_639_Language_DescriptorÃèÊö×ÓĞÅÏ¢
  *
  ******************************************/
 int GetISO_639_Language_Descriptor(ISO_639_LANGUAGE_DESCRIPTOR_T *pstISO_639_LanguageDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition)

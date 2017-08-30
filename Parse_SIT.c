@@ -15,7 +15,7 @@
 
 /******************************************
  *
- * è§£æSITæ®µä¿¡æ¯
+ * ½âÎöSIT¶ÎĞÅÏ¢
  *
  ******************************************/
 
@@ -45,7 +45,7 @@ void ParseSIT_Section(TS_SIT_T *pstTS_SIT, unsigned char *pucSectionBuffer)
 
 /******************************************
  *
- *è¾“å‡ºSITä¿¡æ¯
+ *Êä³öSITĞÅÏ¢
  *
  ******************************************/
 void PrintSIT(TS_SIT_T *pstTS_SIT)
@@ -79,7 +79,7 @@ void PrintSIT(TS_SIT_T *pstTS_SIT)
 
 /******************************************
  *
- *ä»æµä¸­è§£æSITä¿¡æ¯
+ *´ÓÁ÷ÖĞ½âÎöSITĞÅÏ¢
  *
  ******************************************/
 int ParseSIT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength)

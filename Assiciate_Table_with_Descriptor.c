@@ -2,22 +2,22 @@
 
 #include "Assiciate_Table_with_Descriptor.h"
 
-// 获取节目名--从SDT表中获取
+// ��ȡ��Ŀ��--��SDT���л�ȡ
 void getProgramName(){
 	;
 }
 
-// 获取所有节目名--从SDT表中获取
+// ��ȡ���н�Ŀ��--��SDT���л�ȡ
 void getAllProgramName(){
 	;
 }
 
-// 获取节目描述信息--从EIT表中获取
+// ��ȡ��Ŀ������Ϣ--��EIT���л�ȡ
 void getProgramDescriptorInfo(){
 	;
 }
 
-// 获取所有节目描述信息--从EIT表中获取
+// ��ȡ���н�Ŀ������Ϣ--��EIT���л�ȡ
 void getAllProgramDescriptorInfo(){
 	;
 }

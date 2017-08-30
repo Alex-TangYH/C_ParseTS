@@ -17,7 +17,7 @@
 
 /******************************************
  *
- * è§£æSDTæ®µå¤´éƒ¨æ•°æ®
+ * ½âÎöSDT¶ÎÍ·²¿Êı¾İ
  *
  ******************************************/
 
@@ -44,7 +44,7 @@ void ParseSDT_SectionHead(TS_SDT_T *pstTS_SDT, unsigned char *pucSectionBuffer)
 
 /******************************************
  *
- * è§£æSDTæ®µæ•°æ®
+ * ½âÎöSDT¶ÎÊı¾İ
  *
  ******************************************/
 int ParseSDT_Section(TS_SDT_T *pstTS_SDT, unsigned char *pucSectionBuffer)
@@ -81,7 +81,7 @@ int ParseSDT_Section(TS_SDT_T *pstTS_SDT, unsigned char *pucSectionBuffer)
 
 /******************************************
  *
- * è¾“å‡ºSDTè¡¨
+ * Êä³öSDT±í
  *
  ******************************************/
 void PrintSDT(TS_SDT_T *pstTS_SDT, int iServiceCount)
@@ -125,7 +125,7 @@ void PrintSDT(TS_SDT_T *pstTS_SDT, int iServiceCount)
 
 /******************************************
  *
- * SDTå»é‡
+ * SDTÈ¥ÖØ
  *
  ******************************************/
 int IsSDTSectionGetBefore(unsigned char *pucSectionBuffer, SDT_IDENTIFICATION_INFO_T *past_SDT_identification, int *piSDTCount, TS_SDT_T *pstTS_SDT)
@@ -159,7 +159,7 @@ int IsSDTSectionGetBefore(unsigned char *pucSectionBuffer, SDT_IDENTIFICATION_IN
 
 /******************************************
  *
- * ä»TSæµä¸­è§£æSDTè¡¨
+ * ´ÓTSÁ÷ÖĞ½âÎöSDT±í
  *
  ******************************************/
 int ParseSDT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength)

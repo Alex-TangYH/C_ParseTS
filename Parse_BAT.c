@@ -16,7 +16,7 @@
 
 /******************************************
  *
- * Ëß£ÊûêBATÊÆµÂ§¥ÈÉ®Êï∞ÊçÆ
+ * Ω‚ŒˆBAT∂ŒÕ∑≤ø ˝æ›
  *
  ******************************************/
 void ParseBAT_SectionHead(TS_BAT_T *pstTS_BAT, unsigned char *pucSectionBuffer)
@@ -50,7 +50,7 @@ void ParseBAT_SectionHead(TS_BAT_T *pstTS_BAT, unsigned char *pucSectionBuffer)
 
 /******************************************
  *
- * Ëß£ÊûêBATÊÆµÊï∞ÊçÆ
+ * Ω‚ŒˆBAT∂Œ ˝æ›
  *
  ******************************************/
 int ParseBAT_Section(TS_BAT_T *pstTS_BAT, unsigned char *pucSectionBuffer)
@@ -58,17 +58,14 @@ int ParseBAT_Section(TS_BAT_T *pstTS_BAT, unsigned char *pucSectionBuffer)
 	int iBAT_SectionLength = 0;
 	int iLoopPosition = 0;
 	int iLoopCount = 0;
-	
 	ParseBAT_SectionHead(pstTS_BAT, pucSectionBuffer);
 	iBAT_SectionLength = 3 + pstTS_BAT->uiSection_length;
-
 	for (iLoopPosition = 10 + pstTS_BAT->uiBoquet_descriptor_length + 2; iLoopPosition < iBAT_SectionLength - 4; iLoopPosition += 6)
 	{
 		pstTS_BAT->stBAT_info[iLoopCount].uiTransport_stream_id = (pucSectionBuffer[iLoopPosition + 0] << 8) | pucSectionBuffer[iLoopPosition + 1];
 		pstTS_BAT->stBAT_info[iLoopCount].uiOriginal_network_id = (pucSectionBuffer[iLoopPosition + 2] << 8) | pucSectionBuffer[iLoopPosition + 3];
 		pstTS_BAT->stBAT_info[iLoopCount].uiReserved_future_use_third = pucSectionBuffer[iLoopPosition + 4] >> 4;
 		pstTS_BAT->stBAT_info[iLoopCount].uiTransport_descriptor_length = ((pucSectionBuffer[iLoopPosition + 4] & 0x0f) << 8) | pucSectionBuffer[iLoopPosition + 5];
-
 		if (pstTS_BAT->stBAT_info[iLoopCount].uiTransport_descriptor_length > 0)
 		{
 			memcpy(pstTS_BAT->stBAT_info[iLoopCount].aucDescriptor, pucSectionBuffer + iLoopPosition + 6, pstTS_BAT->stBAT_info[iLoopCount].uiTransport_descriptor_length);
@@ -81,7 +78,7 @@ int ParseBAT_Section(TS_BAT_T *pstTS_BAT, unsigned char *pucSectionBuffer)
 
 /******************************************
  *
- * ËæìÂá∫BATË°®
+ *  ‰≥ˆBAT±Ì
  *
  ******************************************/
 void PrintBAT(TS_BAT_T *pstTS_BAT, int iBAT_InfoCount)
@@ -135,7 +132,7 @@ void PrintBAT(TS_BAT_T *pstTS_BAT, int iBAT_InfoCount)
 
 /******************************************
  *
- * ‰ªéÁºìÂ≠ò‰∏≠Ëß£ÊûêBATË°®
+ * ¥”ª∫¥Ê÷–Ω‚ŒˆBAT±Ì
  *
  ******************************************/
 int ParseBAT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength)
@@ -191,4 +188,3 @@ int ParseBAT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength)
 	DUBUGPRINTF("\n\n=================================ParseBAT_Table End================================= \n");
 	return -1;
 }
-

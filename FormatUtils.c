@@ -1,8 +1,8 @@
 /*
  * FormatUtils.c
  *
- *  Created on: 2017å¹´8æœˆ29æ—¥
- *      Author: Administrator
+ *  Created on: 2017Äê8ÔÂ29ÈÕ
+ *      Author: AlexTang
  */
 #include <stdio.h>
 #include <string.h>
@@ -10,7 +10,7 @@
 
 /******************************************
  *
- *å°†MJDæ—¶é—´iMJDè½¬æ¢ä¸ºUTCæ—¶é—´
+ *½«MJDÊ±¼äiMJD×ª»»ÎªUTCÊ±¼ä
  *
  ******************************************/
 void MJDtoUTC(char *pcUTC_time, int iMJD)
@@ -38,7 +38,7 @@ void MJDtoUTC(char *pcUTC_time, int iMJD)
 
 /***************************************
  *
- * å°†UTC_TIME[5] MJDè½¬æ¢ä¸ºUTCå¹¶æ ¼å¼åŒ–
+ * ½«UTC_TIME[5] MJD×ª»»ÎªUTC²¢¸ñÊ½»¯
  *
  ***************************************/
 void FormatUTC_TimeFormMJD(char *pacUTC_time, unsigned int *puiUTC_time)
@@ -53,7 +53,7 @@ void FormatUTC_TimeFormMJD(char *pacUTC_time, unsigned int *puiUTC_time)
 	{
 		if (i == 0)
 		{
-			sprintf(acTemp, "[åŸå§‹æ•°æ®ï¼š%02x, ", puiUTC_time[i]);
+			sprintf(acTemp, "[Ô­Ê¼Êı¾İ£º%02x, ", puiUTC_time[i]);
 		}
 		else if (i < 5 - 1)
 		{

@@ -17,7 +17,7 @@
 
 /******************************************
  *
- *é‡ç½®PMTçš„sectionä¿¡æ¯
+ *ÖØÖÃPMTµÄsectionÐÅÏ¢
  *
  ******************************************/
 void CleanPMT_Info(PMT_INFO_T *pstPMT_Info, int *piAudioCount)
@@ -28,7 +28,7 @@ void CleanPMT_Info(PMT_INFO_T *pstPMT_Info, int *piAudioCount)
 
 /******************************************
  *
- *è§£æžPMTçš„sectionå¤´éƒ¨æ•°æ®
+ *½âÎöPMTµÄsectionÍ·²¿Êý¾Ý
  *
  ******************************************/
 void ParsePMT_SectionHead(TS_PMT_T *pstTS_PMT, unsigned char *pucSectionBuffer, int *piCA_DescriptorCount)
@@ -60,7 +60,7 @@ void ParsePMT_SectionHead(TS_PMT_T *pstTS_PMT, unsigned char *pucSectionBuffer, 
 
 /******************************************
  *
- * è¯»å–æ‰€éœ€è¦çš„CATæ•°æ®
+ * ¶ÁÈ¡ËùÐèÒªµÄCATÊý¾Ý
  *
  ******************************************/
 void GetPMT_CAT_Info(CA_DESCRIPTOR_T *pstCA_Descriptor, int iCA_DescriptorCount, PMT_CAT_INFO_T *pstCAT_Info)
@@ -71,7 +71,7 @@ void GetPMT_CAT_Info(CA_DESCRIPTOR_T *pstCA_Descriptor, int iCA_DescriptorCount,
 
 /******************************************
  *
- * è§£æžPMTçš„sectionæ•°æ®
+ * ½âÎöPMTµÄsectionÊý¾Ý
  *
  ******************************************/
 int ParsePMT_Section(TS_PMT_T *pstTS_PMT, unsigned char *pucSectionBuffer, PMT_CAT_INFO_T *pstPMT_CAT_Info)
@@ -104,7 +104,7 @@ int ParsePMT_Section(TS_PMT_T *pstTS_PMT, unsigned char *pucSectionBuffer, PMT_C
 
 /******************************************
  *
- *æå–éœ€è¦çš„PMTä¿¡æ¯ï¼Œå­˜åˆ°ç›®æ ‡å‚æ•°ä¸­
+ *ÌáÈ¡ÐèÒªµÄPMTÐÅÏ¢£¬´æµ½Ä¿±ê²ÎÊýÖÐ
  *
  ******************************************/
 void GetPMT_Info(TS_PMT_T *pstTS_PMT, int iStreamCount, PMT_INFO_T *pstPMT_Info, int *iVideoCount)
@@ -136,7 +136,7 @@ void GetPMT_Info(TS_PMT_T *pstTS_PMT, int iStreamCount, PMT_INFO_T *pstPMT_Info,
 
 /******************************************
  *
- *æ‰“å°ä¸€ä¸ªPMTä¿¡æ¯
+ *´òÓ¡Ò»¸öPMTÐÅÏ¢
  *
  ******************************************/
 void PrintPMT(TS_PMT_T *pstTS_PMT, int iStreamCount)
@@ -189,7 +189,7 @@ void PrintPMT(TS_PMT_T *pstTS_PMT, int iStreamCount)
 
 /******************************************
  *
- *è§£æžECMä¿¡æ¯
+ *½âÎöECMÐÅÏ¢
  *
  ******************************************/
 int ParseECM(FILE *pfTsFile, int iTsLength, unsigned char *pucSectionBuffer, unsigned int uiPID, unsigned int *puiVersion)
@@ -203,7 +203,7 @@ int ParseECM(FILE *pfTsFile, int iTsLength, unsigned char *pucSectionBuffer, uns
 
 /******************************************
  *
- *è§£æžå•ä¸ªPMTä¿¡æ¯
+ *½âÎöµ¥¸öPMTÐÅÏ¢
  *
  ******************************************/
 int ParsePMT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength, unsigned int uiPMTPid, PMT_INFO_T *pstPMT_Info)
@@ -250,7 +250,7 @@ int ParsePMT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength, unsigned int 
 						PrintPMT(&stTS_PMT, iStreamCount);
 					}
 
-					//è§£æžECM
+					//½âÎöECM
 					ParseECM(pfTsFile, iTsLength, ucSectionBuffer, stPMT_CAT_Info[0].uiPMT_CA_PID, &uiVersion);
 				}
 				if (1 == IsAllSectionOver(ucSectionBuffer, uiRecordSectionNumber))

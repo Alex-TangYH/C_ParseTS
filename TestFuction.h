@@ -1,8 +1,8 @@
 /*
  * TestFuction.h
  *
- *  Created on: 2017å¹´8æœˆ30æ—¥
- *      Author: Administrator
+ *  Created on: 2017Äê8ÔÂ30ÈÕ
+ *      Author: AlexTang
  */
 
 #ifndef _TESTFUCTION_H_

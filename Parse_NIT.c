@@ -17,7 +17,7 @@
 
 /******************************************
  *
- *è§£æNITæ®µå¤´éƒ¨ä¿¡æ¯
+ *½âÎöNIT¶ÎÍ·²¿ĞÅÏ¢
  *
  ******************************************/
 void ParseNIT_SectionHead(TS_NIT_T * pstTS_NIT, unsigned char *pucSectionBuffer)
@@ -46,7 +46,7 @@ void ParseNIT_SectionHead(TS_NIT_T * pstTS_NIT, unsigned char *pucSectionBuffer)
 
 /******************************************
  *
- *è§£æNITæ®µä¿¡æ¯
+ *½âÎöNIT¶ÎĞÅÏ¢
  *
  ******************************************/
 
@@ -130,7 +130,7 @@ void PrintNIT(TS_NIT_T * pstTS_NIT, int iNIT_TransportStreamCount)
 
 /******************************************
  *
- *è§£æNITä¿¡æ¯
+ *½âÎöNITĞÅÏ¢
  *
  ******************************************/
 int ParseNIT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength)

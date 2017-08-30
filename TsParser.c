@@ -45,7 +45,7 @@
 
 /******************************************
  *
- *Ëé∑ÂèñÊâÄÊúâPMT‰ø°ÊÅØ
+ *ªÒ»°À˘”–PMT–≈œ¢
  *
  ******************************************/
 
@@ -54,7 +54,7 @@ int ParseAllProgramPMT(FILE *pfTsFile, int iTsPosition, int iTsLength, PAT_INFO_
 	int iProgramIndex = 0;
 	unsigned int uiPMT_PID = 0;
 	PMT_INFO_T stOnePMT_Info = { 0 };
-	DUBUGPRINTF("ParseAllProgramPMT\nProgramCountÔºö%d\n", iProgramCount);
+	DUBUGPRINTF("ParseAllProgramPMT\nProgramCount£∫%d\n", iProgramCount);
 
 	for (iProgramIndex = 0; iProgramIndex < iProgramCount; iProgramIndex++)
 	{
@@ -71,7 +71,7 @@ int ParseAllProgramPMT(FILE *pfTsFile, int iTsPosition, int iTsLength, PAT_INFO_
 
 /******************************************
  *
- * Ëé∑ÂèñÊâÄÊúâEIT‰ø°ÊÅØ
+ * ªÒ»°À˘”–EIT–≈œ¢
  *
  ******************************************/
 
@@ -80,7 +80,7 @@ int ParseAllEIT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength)
 	ParseEIT_Table(pfTsFile, iTsPosition, iTsLength, EIT_PF_ACTUAL_TABLE_ID);
 //	ParseEIT_Table(pfTsFile, iTsPosition, iTsLength, EIT_EIT_SCHEDULE_TABLE_ID_ONE);
 //	ParseEIT_Table(pfTsFile, iTsPosition, iTsLength, EIT_EIT_SCHEDULE_TABLE_ID_TWO);
-//	 TODO ÂØπËøîÂõûÂÄºËøõË°åÂà§Êñ≠
+//	 TODO ∂‘∑µªÿ÷µΩ¯––≈–∂œ
 	return 0;
 }
 
@@ -211,10 +211,10 @@ int main()
 {
 	FILE *pfTsFile = NULL;
 
-	pfTsFile = fopen("test.ts", "rb");
+	pfTsFile = fopen("test_ca.ts", "rb");
 	if (NULL == pfTsFile)
 	{
-		pfTsFile = fopen("test.TS", "rb");
+		pfTsFile = fopen("test_ca.TS", "rb");
 		if (NULL == pfTsFile)
 		{
 			DUBUGPRINTF("file does not exist \n");
@@ -223,7 +223,7 @@ int main()
 	}
 
 	ParseTransportStream(pfTsFile);
-	DUBUGPRINTF("ÂÆåÊàê\n");
+	DUBUGPRINTF("ÕÍ≥…\n");
 	fclose(pfTsFile);
 
 	Test();

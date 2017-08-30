@@ -17,7 +17,7 @@
 #define PRINTFPAT_INFO 1
 
 /******************************************************************
- * å°†SectionBufferçš„PATå¤´éƒ¨ä¿¡æ¯å­˜å…¥TS_PATä¸­
+ * ½«SectionBufferµÄPATÍ·²¿ĞÅÏ¢´æÈëTS_PATÖĞ
  ******************************************************************/
 
 void ParsePAT_SectionHead(TS_PAT_T *pstTS_PAT, unsigned char *pucSectionBuffer)
@@ -40,7 +40,7 @@ void ParsePAT_SectionHead(TS_PAT_T *pstTS_PAT, unsigned char *pucSectionBuffer)
 }
 
 /******************************************************************
- * è§£æPATçš„å…³é”®ä¿¡æ¯ï¼Œå¹¶å°†è§£æåˆ°çš„PATå¤´éƒ¨ä¿¡æ¯ä¸å…¶æ‹¼æ¥æˆå®Œæ•´çš„PATè¡¨
+ * ½âÎöPATµÄ¹Ø¼üĞÅÏ¢£¬²¢½«½âÎöµ½µÄPATÍ·²¿ĞÅÏ¢ÓëÆäÆ´½Ó³ÉÍêÕûµÄPAT±í
  ******************************************************************/
 int ParsePAT_Section(TS_PAT_T *pstTS_PAT, unsigned char *pucSectionBuffer)
 {
@@ -71,7 +71,7 @@ int ParsePAT_Section(TS_PAT_T *pstTS_PAT, unsigned char *pucSectionBuffer)
 
 /******************************************
  *
- * ä»PATä¸­è·å–PMTçš„å‰æä¿¡æ¯
+ * ´ÓPATÖĞ»ñÈ¡PMTµÄÇ°ÌáĞÅÏ¢
  *
  ******************************************/
 
@@ -89,7 +89,7 @@ void GetPAT_Info(TS_PAT_T *pstTS_PAT, int iPAT_ProgramCount, PAT_INFO_T *pstPAT_
 
 /******************************************
  *
- * é‡ç½®PATæ•°æ®
+ * ÖØÖÃPATÊı¾İ
  *
  ******************************************/
 void CleanPAT_Info(PAT_INFO_T *pstPAT_Info, int *piInfoCount)
@@ -100,7 +100,7 @@ void CleanPAT_Info(PAT_INFO_T *pstPAT_Info, int *piInfoCount)
 
 /******************************************
  *
- * è¾“å‡ºPATè¡¨ä¿¡æ¯
+ * Êä³öPAT±íĞÅÏ¢
  *
  ******************************************/
 void PrintPAT(TS_PAT_T *pstTS_PAT_T, int iPAT_ProgramCount)
@@ -139,7 +139,7 @@ void PrintPAT(TS_PAT_T *pstTS_PAT_T, int iPAT_ProgramCount)
 
 /******************************************
  *
- * ä»TSæµä¸­è§£æPATè¡¨
+ * ´ÓTSÁ÷ÖĞ½âÎöPAT±í
  *
  ******************************************/
 int ParsePAT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength, PAT_INFO_T *pstPAT_Info_T)

@@ -13,7 +13,7 @@
 
 /******************************************
  *
- *Ëß£ÊûêDITÊÆµ‰ø°ÊÅØ
+ *Ω‚ŒˆDIT∂Œ–≈œ¢
  *
  ******************************************/
 
@@ -30,13 +30,12 @@ void ParseDIT_Section(TS_DIT_T *pstTS_DIT, unsigned char *pucSectionBuffer)
 
 /******************************************
  *
- *ËæìÂá∫DIT‰ø°ÊÅØ
+ * ‰≥ˆDIT–≈œ¢
  *
  ******************************************/
 void PrintDIT(TS_DIT_T *pstTS_DIT)
 {
 	DUBUGPRINTF("\n-------------DIT info DITart-------------\n");
-
 	DUBUGPRINTF("DIT->table_id: %02x\n", pstTS_DIT->uitable_id);
 	DUBUGPRINTF("DIT->Section_syntax_indicator: %02x\n", pstTS_DIT->uiSection_syntax_indicator);
 	DUBUGPRINTF("DIT->Reserved_future_use_first: %02x\n", pstTS_DIT->uiReserved_future_use_first);
@@ -49,7 +48,7 @@ void PrintDIT(TS_DIT_T *pstTS_DIT)
 
 /******************************************
  *
- *‰ªéÊµÅ‰∏≠Ëß£ÊûêDIT‰ø°ÊÅØ
+ *¥”¡˜÷–Ω‚ŒˆDIT–≈œ¢
  *
  ******************************************/
 int ParseDIT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength)
@@ -70,32 +69,32 @@ int ParseDIT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength)
 	while (!feof(pfTsFile))
 	{
 		iTemp = GetOneSection(pfTsFile, iTsLength, ucSectionBuffer, DIT_PID, DIT_TABLE_ID, &uiVersion);
-
-		if (0 == iTemp)
+		switch (iTemp)
 		{
-			uiVersion = INITIAL_VERSION;
-			memset(uiRecordGetSection, 0, sizeof(char) * SECTION_COUNT_256);
-			fseek(pfTsFile, 0 - iTsLength, SEEK_CUR);
-		}
-
-		if (1 == iTemp)
-		{
-			if (0 == IsSectionGetBefore(ucSectionBuffer, uiRecordGetSection))
-			{
-				ParseDIT_Section(&stTS_DIT, ucSectionBuffer);
-				PrintDIT(&stTS_DIT);
-			}
-			if (1 == IsAllSectionOver(ucSectionBuffer, uiRecordGetSection))
-			{
-				DUBUGPRINTF("\n=================================ParseDIT_Table END=================================== \n\n");
+			case 0:
+				uiVersion = INITIAL_VERSION;
+				memset(uiRecordGetSection, 0, sizeof(char) * SECTION_COUNT_256);
+				fseek(pfTsFile, 0 - iTsLength, SEEK_CUR);
+				break;
+			case 1:
+				if (0 == IsSectionGetBefore(ucSectionBuffer, uiRecordGetSection))
+				{
+					ParseDIT_Section(&stTS_DIT, ucSectionBuffer);
+					PrintDIT(&stTS_DIT);
+				}
+				if (1 == IsAllSectionOver(ucSectionBuffer, uiRecordGetSection))
+				{
+					DUBUGPRINTF("\n=================================ParseDIT_Table END=================================== \n\n");
+					return 1;
+				}
+				break;
+			case -1:
+				DUBUGPRINTF("\n\n=================================ParseDIT_Table End================================= \n");
 				return 1;
-			}
-		}
-		
-		if (-1 == iTemp)
-		{
-			DUBUGPRINTF("\n\n=================================ParseDIT_Table End================================= \n");
-			return 1;
+				break;
+			default:
+				LOG("ParseDIT_Table switch (iTemp) default\n");
+				break;
 		}
 	}
 
