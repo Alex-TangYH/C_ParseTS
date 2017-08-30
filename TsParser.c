@@ -19,18 +19,22 @@
 
 #include "ParseTS_Length.h"
 
+#include "TsParser.h"
+#include "Parse_EIT.h"
 #include "Parse_EMM.h"
 #include "Parse_PAT.h"
 #include "Parse_PMT.h"
 #include "Parse_CAT.h"
 #include "Parse_SDT.h"
 #include "Parse_BAT.h"
-#include "Parse_EIT.h"
 #include "Parse_NIT.h"
 #include "Parse_TDT.h"
 #include "Parse_TOT.h"
-
-
+#include "Parse_RST.h"
+#include "Parse_ST.h"
+#include "Parse_DIT.h"
+#include "Parse_SIT.h"
+#include "TestFuction.h"
 
 #define PROGRAM_MAX 128
 #define CA_SYSTEM_MAX 64
@@ -50,14 +54,14 @@ int ParseAllProgramPMT(FILE *pfTsFile, int iTsPosition, int iTsLength, PAT_INFO_
 	int iProgramIndex = 0;
 	unsigned int uiPMT_PID = 0;
 	PMT_INFO_T stOnePMT_Info = { 0 };
-	printf("ParseAllProgramPMT\nProgramCount：%d\n", iProgramCount);
+	DUBUGPRINTF("ParseAllProgramPMT\nProgramCount：%d\n", iProgramCount);
 
 	for (iProgramIndex = 0; iProgramIndex < iProgramCount; iProgramIndex++)
 	{
 		uiPMT_PID = pstPAT_Info[iProgramIndex].uiPMT_PID;
 		if (-1 == ParsePMT_Table(pfTsFile, iTsPosition, iTsLength, uiPMT_PID, &stOnePMT_Info))
 		{
-			printf("Parse PMT error, the ProgramIndex is %d, PMT_PID is 0x%0x", iProgramIndex, uiPMT_PID);
+			DUBUGPRINTF("Parse PMT error, the ProgramIndex is %d, PMT_PID is 0x%0x", iProgramIndex, uiPMT_PID);
 			return -1;
 		}
 		pstPMT_Info[iProgramIndex] = stOnePMT_Info;
@@ -102,21 +106,21 @@ int ParseTransportStream(FILE *pfTsFile)
 	iTsLength = ParseTsLength(pfTsFile, &iTsPosition);
 	if (-1 == iTsLength)
 	{
-		printf("The file is not the transport stream file\n");
+		DUBUGPRINTF("The file is not the transport stream file\n");
 		return -1;
 	}
-	printf("The position is %d\n", iTsPosition);
-	printf("The package length is %d\n", iTsLength);
+	DUBUGPRINTF("The position is %d\n", iTsPosition);
+	DUBUGPRINTF("The package length is %d\n", iTsLength);
 
 	iEmmCount = ParseCAT_Table(pfTsFile, iTsPosition, iTsLength, stCAT_Info);
 	if (-1 == iEmmCount)
 	{
-		printf("ParseCAT_Table error \n");
+		DUBUGPRINTF("ParseCAT_Table error \n");
 		return -1;
 	}
 	if (0 == iEmmCount)
 	{
-		printf("This file had not be encrypted\n");
+		DUBUGPRINTF("This file had not be encrypted\n");
 	}
 	else
 	{
@@ -206,20 +210,22 @@ int ParseTransportStream(FILE *pfTsFile)
 int main()
 {
 	FILE *pfTsFile = NULL;
-	
+
 	pfTsFile = fopen("test.ts", "rb");
 	if (NULL == pfTsFile)
 	{
 		pfTsFile = fopen("test.TS", "rb");
 		if (NULL == pfTsFile)
 		{
-			printf("file does not exist \n");
+			DUBUGPRINTF("file does not exist \n");
 			return 0;
 		}
 	}
 
 	ParseTransportStream(pfTsFile);
-	printf("完成\n");
+	DUBUGPRINTF("完成\n");
 	fclose(pfTsFile);
+
+	Test();
 	return 1;
 }

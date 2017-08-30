@@ -5,6 +5,7 @@
 #include "Parse_Descriptor.h"
 #include "Get_Section.h"
 #include "Parse_DesciptorStream.h"
+#include "TsParser.h"
 
 #define PMT_TABLE_ID 0x02
 #define INITIAL_VERSION 0xff
@@ -120,7 +121,7 @@ void GetPMT_Info(TS_PMT_T *pstTS_PMT, int iStreamCount, PMT_INFO_T *pstPMT_Info,
 		/* get audio */
 		if ((0x04 == uiStreamType) || (0x03 == uiStreamType) || (0x0f == uiStreamType) || (0x11 == uiStreamType))
 		{
-			printf("Enter get audio\n");
+			DUBUGPRINTF("Enter get audio\n");
 			pstPMT_Info->uiAudioPID[*iVideoCount] = uiElementrayPID;
 			(*iVideoCount)++;
 		}
@@ -142,23 +143,23 @@ void PrintPMT(TS_PMT_T *pstTS_PMT, int iStreamCount)
 {
 	char acOutputPrefix[OUTPUT_PREFIX_SIZE] = { 0 };
 	
-	printf("\n-------------PMT info start-------------\n");
-	printf("PMT->Table_id : 0x%02x \n", pstTS_PMT->uiTable_id);
-	printf("PMT->Section_syntax_indicator : 0x%02x \n", pstTS_PMT->uiSection_syntax_indicator);
-	printf("PMT->Zero : 0x%02x \n", pstTS_PMT->uiZero);
-	printf("PMT->Reserved_first : 0x%02x \n", pstTS_PMT->uiReserved_first);
-	printf("PMT->Section_length : 0x%02x \n", pstTS_PMT->uiSection_length);
-	printf("PMT->Program_number : 0x%02x \n", pstTS_PMT->uiProgram_number);
-	printf("PMT->Reserved_second : 0x%02x \n", pstTS_PMT->uiReserved_second);
-	printf("PMT->Version_number : 0x%02x \n", pstTS_PMT->uiVersion_number);
-	printf("PMT->Current_next_indicator : 0x%02x \n", pstTS_PMT->uiCurrent_next_indicator);
-	printf("PMT->Section_number : 0x%02x \n", pstTS_PMT->uiSection_number);
-	printf("PMT->Last_section_number : 0x%02x \n", pstTS_PMT->uiLast_section_number);
-	printf("PMT->Reserved_third : 0x%02x \n", pstTS_PMT->uiReserved_third);
-	printf("PMT->PCR_PID : 0x%02x \n", pstTS_PMT->uiPCR_PID);
-	printf("PMT->Reserved_fourth : 0x%02x \n", pstTS_PMT->uiReserved_fourth);
-	printf("PMT->Program_info_length : 0x%02x \n", pstTS_PMT->uiProgram_info_length);
-	printf("PMT->CRC_32 : 0x%02x \n", pstTS_PMT->uiCRC_32);
+	DUBUGPRINTF("\n-------------PMT info start-------------\n");
+	DUBUGPRINTF("PMT->Table_id : 0x%02x \n", pstTS_PMT->uiTable_id);
+	DUBUGPRINTF("PMT->Section_syntax_indicator : 0x%02x \n", pstTS_PMT->uiSection_syntax_indicator);
+	DUBUGPRINTF("PMT->Zero : 0x%02x \n", pstTS_PMT->uiZero);
+	DUBUGPRINTF("PMT->Reserved_first : 0x%02x \n", pstTS_PMT->uiReserved_first);
+	DUBUGPRINTF("PMT->Section_length : 0x%02x \n", pstTS_PMT->uiSection_length);
+	DUBUGPRINTF("PMT->Program_number : 0x%02x \n", pstTS_PMT->uiProgram_number);
+	DUBUGPRINTF("PMT->Reserved_second : 0x%02x \n", pstTS_PMT->uiReserved_second);
+	DUBUGPRINTF("PMT->Version_number : 0x%02x \n", pstTS_PMT->uiVersion_number);
+	DUBUGPRINTF("PMT->Current_next_indicator : 0x%02x \n", pstTS_PMT->uiCurrent_next_indicator);
+	DUBUGPRINTF("PMT->Section_number : 0x%02x \n", pstTS_PMT->uiSection_number);
+	DUBUGPRINTF("PMT->Last_section_number : 0x%02x \n", pstTS_PMT->uiLast_section_number);
+	DUBUGPRINTF("PMT->Reserved_third : 0x%02x \n", pstTS_PMT->uiReserved_third);
+	DUBUGPRINTF("PMT->PCR_PID : 0x%02x \n", pstTS_PMT->uiPCR_PID);
+	DUBUGPRINTF("PMT->Reserved_fourth : 0x%02x \n", pstTS_PMT->uiReserved_fourth);
+	DUBUGPRINTF("PMT->Program_info_length : 0x%02x \n", pstTS_PMT->uiProgram_info_length);
+	DUBUGPRINTF("PMT->CRC_32 : 0x%02x \n", pstTS_PMT->uiCRC_32);
 
 	if (pstTS_PMT->uiProgram_info_length > 0)
 	{
@@ -171,11 +172,11 @@ void PrintPMT(TS_PMT_T *pstTS_PMT, int iStreamCount)
 	
 	for (iLoopTime = 0; iLoopTime < iStreamCount; ++iLoopTime)
 	{
-		printf("PMT->PMT_Stream[%d].Stream_type : 0x%02x \n", iLoopTime, pstTS_PMT->stPMT_Stream[iLoopTime].uiStream_type);
-		printf("PMT->PMT_Stream[%d].Reserved_fifth : 0x%02x \n", iLoopTime, pstTS_PMT->stPMT_Stream[iLoopTime].uiReserved_fifth);
-		printf("PMT->PMT_Stream[%d].Elementary_PID : 0x%02x \n", iLoopTime, pstTS_PMT->stPMT_Stream[iLoopTime].uiElementary_PID);
-		printf("PMT->PMT_Stream[%d].Reserved_sixth : 0x%02x \n", iLoopTime, pstTS_PMT->stPMT_Stream[iLoopTime].uiReserved_sixth);
-		printf("PMT->PMT_Stream[%d].ES_info_length : 0x%02x \n", iLoopTime, pstTS_PMT->stPMT_Stream[iLoopTime].uiES_info_length);
+		DUBUGPRINTF("PMT->PMT_Stream[%d].Stream_type : 0x%02x \n", iLoopTime, pstTS_PMT->stPMT_Stream[iLoopTime].uiStream_type);
+		DUBUGPRINTF("PMT->PMT_Stream[%d].Reserved_fifth : 0x%02x \n", iLoopTime, pstTS_PMT->stPMT_Stream[iLoopTime].uiReserved_fifth);
+		DUBUGPRINTF("PMT->PMT_Stream[%d].Elementary_PID : 0x%02x \n", iLoopTime, pstTS_PMT->stPMT_Stream[iLoopTime].uiElementary_PID);
+		DUBUGPRINTF("PMT->PMT_Stream[%d].Reserved_sixth : 0x%02x \n", iLoopTime, pstTS_PMT->stPMT_Stream[iLoopTime].uiReserved_sixth);
+		DUBUGPRINTF("PMT->PMT_Stream[%d].ES_info_length : 0x%02x \n", iLoopTime, pstTS_PMT->stPMT_Stream[iLoopTime].uiES_info_length);
 		if (0 != pstTS_PMT->stPMT_Stream[iLoopTime].uiES_info_length)
 		{
 			memset(acOutputPrefix, 0, OUTPUT_PREFIX_SIZE);
@@ -183,7 +184,7 @@ void PrintPMT(TS_PMT_T *pstTS_PMT, int iStreamCount)
 			ParseDescriptor(pstTS_PMT->stPMT_Stream[iLoopTime].aucDescriptor, pstTS_PMT->stPMT_Stream[iLoopTime].uiES_info_length, acOutputPrefix);
 		}
 	}
-	printf("-------------PMT info end-------------\n\n");
+	DUBUGPRINTF("-------------PMT info end-------------\n\n");
 }
 
 /******************************************
@@ -196,7 +197,7 @@ int ParseECM(FILE *pfTsFile, int iTsLength, unsigned char *pucSectionBuffer, uns
 	int iTemp = 0;
 	
 	iTemp = GetOneSectionByPID(pfTsFile, iTsLength, pucSectionBuffer, uiPID, puiVersion);
-	printf("========================ParseECM iTemp = %d========================\n", iTemp);
+	DUBUGPRINTF("========================ParseECM iTemp = %d========================\n", iTemp);
 	return 1;
 }
 
@@ -207,7 +208,7 @@ int ParseECM(FILE *pfTsFile, int iTsLength, unsigned char *pucSectionBuffer, uns
  ******************************************/
 int ParsePMT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength, unsigned int uiPMTPid, PMT_INFO_T *pstPMT_Info)
 {
-	printf("\n\n=================================ParsePMT_Table Start================================= \n");
+	DUBUGPRINTF("\n\n=================================ParsePMT_Table Start================================= \n");
 	int iTemp = 0;
 	int iAudioCount = 0;
 	int iStreamCount = 0;
@@ -221,7 +222,7 @@ int ParsePMT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength, unsigned int 
 	memset(pstPMT_Info, 0, sizeof(PMT_INFO_T));
 	if (-1 == fseek(pfTsFile, iTsPosition, SEEK_SET))
 	{
-		printf("Parse one PMT error, error PID is %d\n", uiPMTPid);
+		DUBUGPRINTF("Parse one PMT error, error PID is %d\n", uiPMTPid);
 		return -1;
 	}
 
@@ -231,7 +232,7 @@ int ParsePMT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength, unsigned int 
 
 		if (0 == iTemp)
 		{
-			//printf("Enter if (0 == iTemp) in PARSE_PMT\n");
+			//DUBUGPRINTF("Enter if (0 == iTemp) in PARSE_PMT\n");
 			uiVersion = INITIAL_VERSION;
 			memset(uiRecordSectionNumber, 0, sizeof(char) * SECTION_COUNT_256);
 			fseek(pfTsFile, 0 - iTsLength, SEEK_CUR);
@@ -241,7 +242,7 @@ int ParsePMT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength, unsigned int 
 		{
 			if (0 == IsSectionGetBefore(ucSectionBuffer, uiRecordSectionNumber))
 			{
-				printf("Enter if (0 == IsSectionGetBefore) in PARSE_PMT\n");
+				DUBUGPRINTF("Enter if (0 == IsSectionGetBefore) in PARSE_PMT\n");
 				iStreamCount = ParsePMT_Section(&stTS_PMT, ucSectionBuffer, stPMT_CAT_Info);
 				GetPMT_Info(&stTS_PMT, iStreamCount, pstPMT_Info, &iAudioCount);
 				//GetPMT_CAT_Info(pstTS_PMT, iCA_DescriptorCount, pstPMT_CAT_Info);
@@ -255,23 +256,23 @@ int ParsePMT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength, unsigned int 
 			}
 			if (1 == IsAllSectionOver(ucSectionBuffer, uiRecordSectionNumber))
 			{
-				printf("Enter if (1 == IsAllSectionOver) in PARSE_PMT\n");
-				printf("return iAudioCount, iAudioCount is: %d\n", iAudioCount);
-				printf("\n=================================ParsePMT_Table END=================================== \n\n");
+				DUBUGPRINTF("Enter if (1 == IsAllSectionOver) in PARSE_PMT\n");
+				DUBUGPRINTF("return iAudioCount, iAudioCount is: %d\n", iAudioCount);
+				DUBUGPRINTF("\n=================================ParsePMT_Table END=================================== \n\n");
 				return iAudioCount;
 			}
 		}
 		if (-1 == iTemp)
 		{
-			printf("Enter if (-1 == iTemp) in PARSE_PMT\n");
-			printf("PMTPid %x is not a PMT table \n", uiPMTPid);
-			printf("return 0\n");
-			printf("\n=================================ParsePMT_Table END=================================== \n\n");
+			DUBUGPRINTF("Enter if (-1 == iTemp) in PARSE_PMT\n");
+			DUBUGPRINTF("PMTPid %x is not a PMT table \n", uiPMTPid);
+			DUBUGPRINTF("return 0\n");
+			DUBUGPRINTF("\n=================================ParsePMT_Table END=================================== \n\n");
 			return 0;
 		}
 	}
-	printf("return 0\n");
-	printf("\n=================================ParsePMT_Table END=================================== \n\n");
+	DUBUGPRINTF("return 0\n");
+	DUBUGPRINTF("\n=================================ParsePMT_Table END=================================== \n\n");
 	return 0;
 }
 

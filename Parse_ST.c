@@ -2,6 +2,8 @@
 #include <string.h>
 
 #include "Parse_ST.h"
+#include "TsParser.h"
+#include "Get_Section.h"
 
 #define ST_PID 0x0013
 #define ST_TABLE_ID 0x71
@@ -36,20 +38,19 @@ void ParseST_Section(TS_ST_T *pstTS_ST, unsigned char *pucSectionBuffer)
  ******************************************/
 void PrintST(TS_ST_T *pstTS_ST)
 {
-	int iLoopTime = 0;
-	printf("\n-------------ST info start-------------\n");
+	DUBUGPRINTF("\n-------------ST info start-------------\n");
 
-	printf("ST->table_id: %02x\n", pstTS_ST->uitable_id);
-	printf("ST->uiSection_syntax_indicator: %02x\n", pstTS_ST->uiSection_syntax_indicator);
-	printf("ST->uiReserved_future_use_fiST: %02x\n", pstTS_ST->uiReserved_future_use);
-	printf("ST->uiReserved: %02x\n", pstTS_ST->uiReserved);
-	printf("ST->uiSection_length: %02x\n", pstTS_ST->uiSection_length);
+	DUBUGPRINTF("ST->table_id: %02x\n", pstTS_ST->uitable_id);
+	DUBUGPRINTF("ST->uiSection_syntax_indicator: %02x\n", pstTS_ST->uiSection_syntax_indicator);
+	DUBUGPRINTF("ST->uiReserved_future_use_fiST: %02x\n", pstTS_ST->uiReserved_future_use);
+	DUBUGPRINTF("ST->uiReserved: %02x\n", pstTS_ST->uiReserved);
+	DUBUGPRINTF("ST->uiSection_length: %02x\n", pstTS_ST->uiSection_length);
 	if (pstTS_ST->uiSection_length > 0)
 	{
-		printf("ST->ST_data: %s\n", pstTS_ST->aucST_data);
+		DUBUGPRINTF("ST->ST_data: %s\n", pstTS_ST->aucST_data);
 	}
 	
-	printf("\n-------------ST info end-------------\n");
+	DUBUGPRINTF("\n-------------ST info end-------------\n");
 }
 
 /******************************************
@@ -59,9 +60,8 @@ void PrintST(TS_ST_T *pstTS_ST)
  ******************************************/
 int ParseST_Table(FILE *pfTsFile, int iTsPosition, int iTsLength)
 {
-	printf("\n\n=================================ParseST_Table Start================================= \n");
+	DUBUGPRINTF("\n\n=================================ParseST_Table Start================================= \n");
 	int iTemp = 0;
-	int iST_LoopCount = 0;
 	TS_ST_T stTS_ST = { 0 };
 	unsigned int uiVersion = INITIAL_VERSION;
 	unsigned char ucSectionBuffer[SECTION_MAX_LENGTH_4092] = { 0 };
@@ -69,7 +69,7 @@ int ParseST_Table(FILE *pfTsFile, int iTsPosition, int iTsLength)
 
 	if (-1 == fseek(pfTsFile, iTsPosition, SEEK_SET))
 	{
-		printf("Parse ST error\n");
+		DUBUGPRINTF("Parse ST error\n");
 		return -1;
 	}
 	
@@ -93,19 +93,19 @@ int ParseST_Table(FILE *pfTsFile, int iTsPosition, int iTsLength)
 			}
 			if (1 == IsAllSectionOver(ucSectionBuffer, uiRecordGetSection))
 			{
-				printf("\n=================================ParseST_Table END=================================== \n\n");
+				DUBUGPRINTF("\n=================================ParseST_Table END=================================== \n\n");
 				return 1;
 			}
 		}
 		
 		if (-1 == iTemp)
 		{
-			printf("\n\n=================================ParseST_Table End================================= \n");
+			DUBUGPRINTF("\n\n=================================ParseST_Table End================================= \n");
 			return 1;
 		}
 	}
 
-	printf("\n\n=================================ParseST_Table End================================= \n");
+	DUBUGPRINTF("\n\n=================================ParseST_Table End================================= \n");
 	return -1;
 }
 

@@ -3,5 +3,6 @@
 
 int ParseTsLength(FILE *pfTsFile, int *piTsPosition);
 
+int JudgmentPackageTenTimes(FILE *pfTsFile, int iTsPosition, int iTsLength);
 #endif /* PARSETS_LENGTH_H_ */
 

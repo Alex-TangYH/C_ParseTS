@@ -5,6 +5,8 @@
 #include "Parse_Descriptor.h"
 #include "Get_Section.h"
 #include "Parse_DesciptorStream.h"
+#include "TsParser.h"
+
 
 #define NIT_PID 0x0010
 #define NIT_TABLE_ID 0x40
@@ -82,20 +84,20 @@ void PrintNIT(TS_NIT_T * pstTS_NIT, int iNIT_TransportStreamCount)
 {
 	int iLoopTime = 0;
 	char acOutputPrefix[OUTPUT_PREFIX_SIZE] = { 0 };
-	printf("\n");
-	printf("-------------NIT info start-------------\n");
-	printf("NIT->Table_id : 0x%02x \n", pstTS_NIT->uiTable_id);
-	printf("NIT->Section_syntax_indicator : 0x%02x \n", pstTS_NIT->uiSection_sytax_indicator);
-	printf("NIT->Reserved_future_use_first : 0x%02x \n", pstTS_NIT->uiReserved_future_use_first);
-	printf("NIT->Reserved_first : 0x%02x \n", pstTS_NIT->uiReserved_first);
-	printf("NIT->Section_length : 0x%02x \n", pstTS_NIT->uiSection_length);
-	printf("NIT->Network_id : 0x%02x \n", pstTS_NIT->uiNetwork_id);
-	printf("NIT->Reserved_second : 0x%02x \n", pstTS_NIT->uiReserved_second);
-	printf("NIT->Version_number : 0x%02x \n", pstTS_NIT->uiVersion_number);
-	printf("NIT->Current_next_indicator : 0x%02x \n", pstTS_NIT->uiCurrent_next_indicator);
-	printf("NIT->Section_number : 0x%02x \n", pstTS_NIT->uiSection_number);
-	printf("NIT->Last_section_number : 0x%02x \n", pstTS_NIT->uiLast_section_number);
-	printf("NIT->Network_descriptor_length : 0x%02x \n", pstTS_NIT->uiNetwork_descriptor_length);
+	DUBUGPRINTF("\n");
+	DUBUGPRINTF("-------------NIT info start-------------\n");
+	DUBUGPRINTF("NIT->Table_id : 0x%02x \n", pstTS_NIT->uiTable_id);
+	DUBUGPRINTF("NIT->Section_syntax_indicator : 0x%02x \n", pstTS_NIT->uiSection_sytax_indicator);
+	DUBUGPRINTF("NIT->Reserved_future_use_first : 0x%02x \n", pstTS_NIT->uiReserved_future_use_first);
+	DUBUGPRINTF("NIT->Reserved_first : 0x%02x \n", pstTS_NIT->uiReserved_first);
+	DUBUGPRINTF("NIT->Section_length : 0x%02x \n", pstTS_NIT->uiSection_length);
+	DUBUGPRINTF("NIT->Network_id : 0x%02x \n", pstTS_NIT->uiNetwork_id);
+	DUBUGPRINTF("NIT->Reserved_second : 0x%02x \n", pstTS_NIT->uiReserved_second);
+	DUBUGPRINTF("NIT->Version_number : 0x%02x \n", pstTS_NIT->uiVersion_number);
+	DUBUGPRINTF("NIT->Current_next_indicator : 0x%02x \n", pstTS_NIT->uiCurrent_next_indicator);
+	DUBUGPRINTF("NIT->Section_number : 0x%02x \n", pstTS_NIT->uiSection_number);
+	DUBUGPRINTF("NIT->Last_section_number : 0x%02x \n", pstTS_NIT->uiLast_section_number);
+	DUBUGPRINTF("NIT->Network_descriptor_length : 0x%02x \n", pstTS_NIT->uiNetwork_descriptor_length);
 
 	if (pstTS_NIT->uiNetwork_descriptor_length > 0)
 	{
@@ -103,18 +105,18 @@ void PrintNIT(TS_NIT_T * pstTS_NIT, int iNIT_TransportStreamCount)
 		sprintf(acOutputPrefix, "NIT->");
 		ParseDescriptor(pstTS_NIT->ucDescriptor, pstTS_NIT->uiNetwork_descriptor_length, acOutputPrefix);
 	}
-	printf("NIT->Reserved_future_use_second : 0x%02x \n", pstTS_NIT->uiReserved_future_use_second);
-	printf("NIT->Transport_stream_loop_Length : 0x%02x \n", pstTS_NIT->uiTransport_stream_loop_Length);
-	printf("NIT->CRC_32 : 0x%02x \n", pstTS_NIT->uiCRC_32);
+	DUBUGPRINTF("NIT->Reserved_future_use_second : 0x%02x \n", pstTS_NIT->uiReserved_future_use_second);
+	DUBUGPRINTF("NIT->Transport_stream_loop_Length : 0x%02x \n", pstTS_NIT->uiTransport_stream_loop_Length);
+	DUBUGPRINTF("NIT->CRC_32 : 0x%02x \n", pstTS_NIT->uiCRC_32);
 
 	if (0 != pstTS_NIT->uiTransport_stream_loop_Length)
 	{
 		for (iLoopTime = 0; iLoopTime < iNIT_TransportStreamCount; iLoopTime++)
 		{
-			printf("NIT->NIT_stream[%d].Transport_stream_id : 0x%02x \n", iLoopTime, pstTS_NIT->stNIT_stream[iLoopTime].uiTransport_stream_id);
-			printf("NIT->NIT_stream[%d].Original_network_id : 0x%02x \n", iLoopTime, pstTS_NIT->stNIT_stream[iLoopTime].uiOriginal_network_id);
-			printf("NIT->NIT_stream[%d].Reserved_future_use_fourth : 0x%02x \n", iLoopTime, pstTS_NIT->stNIT_stream[iLoopTime].uiReserved_future_use_fourth);
-			printf("NIT->NIT_stream[%d].uiTransport_descriport_length : 0x%02x \n", iLoopTime, pstTS_NIT->stNIT_stream[iLoopTime].uiTransport_descriport_length);
+			DUBUGPRINTF("NIT->NIT_stream[%d].Transport_stream_id : 0x%02x \n", iLoopTime, pstTS_NIT->stNIT_stream[iLoopTime].uiTransport_stream_id);
+			DUBUGPRINTF("NIT->NIT_stream[%d].Original_network_id : 0x%02x \n", iLoopTime, pstTS_NIT->stNIT_stream[iLoopTime].uiOriginal_network_id);
+			DUBUGPRINTF("NIT->NIT_stream[%d].Reserved_future_use_fourth : 0x%02x \n", iLoopTime, pstTS_NIT->stNIT_stream[iLoopTime].uiReserved_future_use_fourth);
+			DUBUGPRINTF("NIT->NIT_stream[%d].uiTransport_descriport_length : 0x%02x \n", iLoopTime, pstTS_NIT->stNIT_stream[iLoopTime].uiTransport_descriport_length);
 			if (pstTS_NIT->stNIT_stream[iLoopTime].uiTransport_descriport_length > 0)
 			{
 				memset(acOutputPrefix, 0, OUTPUT_PREFIX_SIZE);
@@ -124,7 +126,7 @@ void PrintNIT(TS_NIT_T * pstTS_NIT, int iNIT_TransportStreamCount)
 		}
 	}
 
-	printf("-------------NIT info end-------------\n\n");
+	DUBUGPRINTF("-------------NIT info end-------------\n\n");
 }
 
 /******************************************
@@ -134,7 +136,7 @@ void PrintNIT(TS_NIT_T * pstTS_NIT, int iNIT_TransportStreamCount)
  ******************************************/
 int ParseNIT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength)
 {
-	printf("\n\n=================================ParseNIT_Table Start================================= \n");
+	DUBUGPRINTF("\n\n=================================ParseNIT_Table Start================================= \n");
 	TS_NIT_T stTS_NIT = { 0 };
 	unsigned char ucSectionBuffer[SECTION_MAX_LENGTH_4096] = { 0 };
 	unsigned int uiRecordGetSection[SECTION_COUNT_256] = { 0 };
@@ -144,7 +146,7 @@ int ParseNIT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength)
 
 	if (-1 == fseek(pfTsFile, iTsPosition, SEEK_SET))
 	{
-		printf("ParseNIT_Table error when fseek(pfTsFile, iTsPosition, SEEK_SET)\n");
+		DUBUGPRINTF("ParseNIT_Table error when fseek(pfTsFile, iTsPosition, SEEK_SET)\n");
 		return -1;
 	}
 
@@ -167,18 +169,18 @@ int ParseNIT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength)
 			}
 			if (1 == IsAllSectionOver(ucSectionBuffer, uiRecordGetSection))
 			{
-				printf("\n=================================ParseNIT_Table END=================================== \n\n");
+				DUBUGPRINTF("\n=================================ParseNIT_Table END=================================== \n\n");
 				return 1;
 			}
 		}
 		if (-1 == iTemp)
 		{
-			printf("There is not NIT table in the transport stream \n ");
-			printf("\n=================================ParseNIT_Table END=================================== \n\n");
+			DUBUGPRINTF("There is not NIT table in the transport stream \n ");
+			DUBUGPRINTF("\n=================================ParseNIT_Table END=================================== \n\n");
 			return 0;
 		}
 	}
 	
-	printf("\n=================================ParseNIT_Table END=================================== \n\n");
+	DUBUGPRINTF("\n=================================ParseNIT_Table END=================================== \n\n");
 	return 1;
 }

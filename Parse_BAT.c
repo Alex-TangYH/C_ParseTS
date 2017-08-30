@@ -5,6 +5,8 @@
 #include "Parse_Descriptor.h"
 #include "Parse_DesciptorStream.h"
 #include "Get_Section.h"
+#include "TsParser.h"
+
 
 #define BAT_PID 0x0011
 #define BAT_TABLE_ID 0x4A
@@ -88,21 +90,21 @@ void PrintBAT(TS_BAT_T *pstTS_BAT, int iBAT_InfoCount)
 	int iLoopTime = 0;
 	char acOutputPrefix[OUTPUT_PREFIX_SIZE] = { 0 };
 	
-	printf("\n-------------BAT info start-------------\n");
+	DUBUGPRINTF("\n-------------BAT info start-------------\n");
 	
-	printf("BAT->table_id: 0x%02x\n", pstTS_BAT->uitable_id);
-	printf("BAT->Section_syntax_indicator: 0x%02x\n", pstTS_BAT->uiSection_syntax_indicator);
-	printf("BAT->Reserved_future_use_first: 0x%02x\n", pstTS_BAT->uiReserved_future_use_first);
-	printf("BAT->Reserved_first: 0x%02x\n", pstTS_BAT->uiReserved_first);
-	printf("BAT->Section_length: 0x%02x\n", pstTS_BAT->uiSection_length);
-	printf("BAT->Boquet_id: 0x%02x\n", pstTS_BAT->uiBoquet_id);
-	printf("BAT->Reserved_second: 0x%02x\n", pstTS_BAT->uiReserved_second);
-	printf("BAT->Version_number: 0x%02x\n", pstTS_BAT->uiVersion_number);
-	printf("BAT->Current_next_indicator: 0x%02x\n", pstTS_BAT->uiCurrent_next_indicator);
-	printf("BAT->Section_number: 0x%02x\n", pstTS_BAT->uiSection_number);
-	printf("BAT->Last_section_number: 0x%02x\n", pstTS_BAT->uiLast_section_number);
-	printf("BAT->Reserved_future_use_second: 0x%02x\n", pstTS_BAT->uiReserved_future_use_second);
-	printf("BAT->Boquet_descriptor_length: 0x%02x\n", pstTS_BAT->uiBoquet_descriptor_length);
+	DUBUGPRINTF("BAT->table_id: 0x%02x\n", pstTS_BAT->uitable_id);
+	DUBUGPRINTF("BAT->Section_syntax_indicator: 0x%02x\n", pstTS_BAT->uiSection_syntax_indicator);
+	DUBUGPRINTF("BAT->Reserved_future_use_first: 0x%02x\n", pstTS_BAT->uiReserved_future_use_first);
+	DUBUGPRINTF("BAT->Reserved_first: 0x%02x\n", pstTS_BAT->uiReserved_first);
+	DUBUGPRINTF("BAT->Section_length: 0x%02x\n", pstTS_BAT->uiSection_length);
+	DUBUGPRINTF("BAT->Boquet_id: 0x%02x\n", pstTS_BAT->uiBoquet_id);
+	DUBUGPRINTF("BAT->Reserved_second: 0x%02x\n", pstTS_BAT->uiReserved_second);
+	DUBUGPRINTF("BAT->Version_number: 0x%02x\n", pstTS_BAT->uiVersion_number);
+	DUBUGPRINTF("BAT->Current_next_indicator: 0x%02x\n", pstTS_BAT->uiCurrent_next_indicator);
+	DUBUGPRINTF("BAT->Section_number: 0x%02x\n", pstTS_BAT->uiSection_number);
+	DUBUGPRINTF("BAT->Last_section_number: 0x%02x\n", pstTS_BAT->uiLast_section_number);
+	DUBUGPRINTF("BAT->Reserved_future_use_second: 0x%02x\n", pstTS_BAT->uiReserved_future_use_second);
+	DUBUGPRINTF("BAT->Boquet_descriptor_length: 0x%02x\n", pstTS_BAT->uiBoquet_descriptor_length);
 	
 	if (pstTS_BAT->uiBoquet_descriptor_length > 0)
 	{
@@ -111,16 +113,16 @@ void PrintBAT(TS_BAT_T *pstTS_BAT, int iBAT_InfoCount)
 		ParseDescriptor(pstTS_BAT->aucDescriptor, pstTS_BAT->uiBoquet_descriptor_length, acOutputPrefix);
 	}
 	
-	printf("BAT->Reserved_future_use_second: 0x%02x\n", pstTS_BAT->uiReserved_future_use_second);
-	printf("BAT->Transport_stream_loop_lenth: 0x%02x\n", pstTS_BAT->uiTransport_stream_loop_lenth);
-	printf("BAT->CRC_32: 0x%02x\n", pstTS_BAT->uiCRC_32);
+	DUBUGPRINTF("BAT->Reserved_future_use_second: 0x%02x\n", pstTS_BAT->uiReserved_future_use_second);
+	DUBUGPRINTF("BAT->Transport_stream_loop_lenth: 0x%02x\n", pstTS_BAT->uiTransport_stream_loop_lenth);
+	DUBUGPRINTF("BAT->CRC_32: 0x%02x\n", pstTS_BAT->uiCRC_32);
 
 	for (iLoopTime = 0; iLoopTime < iBAT_InfoCount; iLoopTime++)
 	{
-		printf("BAT->BAT_info[%d].Transport_stream_id: 0x%02x\n", iLoopTime, pstTS_BAT->stBAT_info[iLoopTime].uiTransport_stream_id);
-		printf("BAT->BAT_info[%d].Original_network_id: 0x%02x\n", iLoopTime, pstTS_BAT->stBAT_info[iLoopTime].uiOriginal_network_id);
-		printf("BAT->BAT_info[%d].Reserved_future_use_third: 0x%02x\n", iLoopTime, pstTS_BAT->stBAT_info[iLoopTime].uiReserved_future_use_third);
-		printf("BAT->BAT_info[%d].Transport_descriptor_length: 0x%02x\n", iLoopTime, pstTS_BAT->stBAT_info[iLoopTime].uiTransport_descriptor_length);
+		DUBUGPRINTF("BAT->BAT_info[%d].Transport_stream_id: 0x%02x\n", iLoopTime, pstTS_BAT->stBAT_info[iLoopTime].uiTransport_stream_id);
+		DUBUGPRINTF("BAT->BAT_info[%d].Original_network_id: 0x%02x\n", iLoopTime, pstTS_BAT->stBAT_info[iLoopTime].uiOriginal_network_id);
+		DUBUGPRINTF("BAT->BAT_info[%d].Reserved_future_use_third: 0x%02x\n", iLoopTime, pstTS_BAT->stBAT_info[iLoopTime].uiReserved_future_use_third);
+		DUBUGPRINTF("BAT->BAT_info[%d].Transport_descriptor_length: 0x%02x\n", iLoopTime, pstTS_BAT->stBAT_info[iLoopTime].uiTransport_descriptor_length);
 		
 		if (pstTS_BAT->uiBoquet_descriptor_length > 0)
 		{
@@ -129,7 +131,7 @@ void PrintBAT(TS_BAT_T *pstTS_BAT, int iBAT_InfoCount)
 			ParseDescriptor(pstTS_BAT->stBAT_info[iLoopTime].aucDescriptor, pstTS_BAT->stBAT_info[iLoopTime].uiTransport_descriptor_length, acOutputPrefix);
 		}
 	}
-	printf("\n-------------BAT info end-------------\n");
+	DUBUGPRINTF("\n-------------BAT info end-------------\n");
 }
 
 /******************************************
@@ -139,7 +141,7 @@ void PrintBAT(TS_BAT_T *pstTS_BAT, int iBAT_InfoCount)
  ******************************************/
 int ParseBAT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength)
 {
-	printf("\n\n=================================ParseBAT_Table Start================================= \n");
+	DUBUGPRINTF("\n\n=================================ParseBAT_Table Start================================= \n");
 	int iTemp = 0;
 	int iBAT_InfoCount = 0;
 	TS_BAT_T stTS_BAT = { 0 };
@@ -149,7 +151,7 @@ int ParseBAT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength)
 	
 	if (-1 == fseek(pfTsFile, iTsPosition, SEEK_SET))
 	{
-		printf("Parse BAT error\n");
+		DUBUGPRINTF("Parse BAT error\n");
 		return -1;
 	}
 	
@@ -173,19 +175,19 @@ int ParseBAT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength)
 			}
 			if (1 == IsAllSectionOver(ucSectionBuffer, uiRecordGetSection))
 			{
-				printf("\n=================================ParseBAT_Table END=================================== \n\n");
+				DUBUGPRINTF("\n=================================ParseBAT_Table END=================================== \n\n");
 				return 1;
 			}
 		}
 		
 		if (-1 == iTemp)
 		{
-			printf("\n=================================ParseBAT_Table END=================================== \n\n");
+			DUBUGPRINTF("\n=================================ParseBAT_Table END=================================== \n\n");
 			return 1;
 		}
 	}
 
-	printf("\n\n=================================ParseBAT_Table End================================= \n");
+	DUBUGPRINTF("\n\n=================================ParseBAT_Table End================================= \n");
 	return -1;
 }
 

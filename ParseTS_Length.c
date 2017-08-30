@@ -18,6 +18,7 @@
 #include <stdio.h>
 
 #include "ParseTS_Length.h"
+#include "TsParser.h"
 
 #define PACKET_LENGTH_188 188
 #define PACKET_LENGTH_204 204
@@ -48,11 +49,11 @@ int ParseTsLength(FILE *pfTsFile, int *piTsPosition)
 
 		if (-1 == fseek(pfTsFile, *piTsPosition, SEEK_SET))
 		{
-			printf("The file error\n");
+			DUBUGPRINTF("The file error\n");
 			return -1;
 		}
 	}
-	printf("The file is not the transport stream\n");
+	DUBUGPRINTF("The file is not the transport stream\n");
 	return -1;
 }
 
@@ -60,7 +61,7 @@ int ParseTsLength(FILE *pfTsFile, int *piTsPosition)
  * JudgmentPackageTenTimes(FILE *pfTsFile, int iTsPosition, int iTsLength)
  **************************************************/
 
-JudgmentPackageTenTimes(FILE *pfTsFile, int iTsPosition, int iTsLength)
+int JudgmentPackageTenTimes(FILE *pfTsFile, int iTsPosition, int iTsLength)
 {
 	int iLoopTime = 0;
 	int iFirstPackageByte = 0;

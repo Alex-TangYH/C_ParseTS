@@ -1,6 +1,8 @@
 #include <string.h>
 #include <stdio.h>
 #include "Parse_PAT.h"
+#include "TsParser.h"
+#include "Get_Section.h"
 
 #define INITIAL_VERSION 0xff
 
@@ -54,7 +56,7 @@ int ParsePAT_Section(TS_PAT_T *pstTS_PAT, unsigned char *pucSectionBuffer)
 		if (0x00 == ((pucSectionBuffer[iPATProgramPosition] << 8) | pucSectionBuffer[1 + iPATProgramPosition]))
 		{
 			pstTS_PAT->uiNetwork_PID = ((pucSectionBuffer[2 + iPATProgramPosition] & 0x1f) << 8) | pucSectionBuffer[3 + iPATProgramPosition];
-			printf("*********************The network_PID is 0x%02x*******************\n", pstTS_PAT->uiNetwork_PID);
+			DUBUGPRINTF("*********************The network_PID is 0x%02x*******************\n", pstTS_PAT->uiNetwork_PID);
 		}
 		else
 		{
@@ -103,36 +105,36 @@ void CleanPAT_Info(PAT_INFO_T *pstPAT_Info, int *piInfoCount)
  ******************************************/
 void PrintPAT(TS_PAT_T *pstTS_PAT_T, int iPAT_ProgramCount)
 {
-	printf("\n\n\n");
-	printf("-------------PAT info start-------------\n");
-	printf("PAT->Table_id: 0x%02x\n", pstTS_PAT_T->uiTable_id);
-	printf("PAT->Section_syntax_indicator: 0x%02x\n", pstTS_PAT_T->uiSection_syntax_indicator);
-	printf("PAT->Zero: 0x%02x\n", pstTS_PAT_T->uiZero);
-	printf("PAT->Reserved_first: 0x%02x\n", pstTS_PAT_T->uiReserved_first);
-	printf("PAT->Section_length: 0x%02x\n", pstTS_PAT_T->uiSection_length);
-	printf("PAT->Transport_stream_id: 0x%02x\n", pstTS_PAT_T->uiTransport_stream_id);
-	printf("PAT->Reserved_second: 0x%02x\n", pstTS_PAT_T->uiReserved_second);
-	printf("PAT->Version_number: 0x%02x\n", pstTS_PAT_T->uiVersion_number);
-	printf("PAT->Current_next_indicator: 0x%02x\n", pstTS_PAT_T->uiCurrent_next_indicator);
-	printf("PAT->Section_number: 0x%02x\n", pstTS_PAT_T->uiSection_number);
-	printf("PAT->Last_section_number: 0x%02x\n", pstTS_PAT_T->uiLast_section_number);
-	printf("PAT->CRC_32: 0x%02x\n", pstTS_PAT_T->uiCRC_32);
+	DUBUGPRINTF("\n\n\n");
+	DUBUGPRINTF("-------------PAT info start-------------\n");
+	DUBUGPRINTF("PAT->Table_id: 0x%02x\n", pstTS_PAT_T->uiTable_id);
+	DUBUGPRINTF("PAT->Section_syntax_indicator: 0x%02x\n", pstTS_PAT_T->uiSection_syntax_indicator);
+	DUBUGPRINTF("PAT->Zero: 0x%02x\n", pstTS_PAT_T->uiZero);
+	DUBUGPRINTF("PAT->Reserved_first: 0x%02x\n", pstTS_PAT_T->uiReserved_first);
+	DUBUGPRINTF("PAT->Section_length: 0x%02x\n", pstTS_PAT_T->uiSection_length);
+	DUBUGPRINTF("PAT->Transport_stream_id: 0x%02x\n", pstTS_PAT_T->uiTransport_stream_id);
+	DUBUGPRINTF("PAT->Reserved_second: 0x%02x\n", pstTS_PAT_T->uiReserved_second);
+	DUBUGPRINTF("PAT->Version_number: 0x%02x\n", pstTS_PAT_T->uiVersion_number);
+	DUBUGPRINTF("PAT->Current_next_indicator: 0x%02x\n", pstTS_PAT_T->uiCurrent_next_indicator);
+	DUBUGPRINTF("PAT->Section_number: 0x%02x\n", pstTS_PAT_T->uiSection_number);
+	DUBUGPRINTF("PAT->Last_section_number: 0x%02x\n", pstTS_PAT_T->uiLast_section_number);
+	DUBUGPRINTF("PAT->CRC_32: 0x%02x\n", pstTS_PAT_T->uiCRC_32);
 	
 	int iLoopTime = 0;
 	for (iLoopTime = 0; iLoopTime < iPAT_ProgramCount; iLoopTime++)
 	{
-		printf("PAT->PAT_Program[%d].Program_number: 0x%02x\n", iLoopTime, pstTS_PAT_T->stPAT_Program[iLoopTime].uiProgram_number);
+		DUBUGPRINTF("PAT->PAT_Program[%d].Program_number: 0x%02x\n", iLoopTime, pstTS_PAT_T->stPAT_Program[iLoopTime].uiProgram_number);
 		if (0 == pstTS_PAT_T->stPAT_Program[iLoopTime].uiProgram_number)
 		{
-			printf("PAT->uiNetwork_PID: 0x%02x\n", pstTS_PAT_T->uiNetwork_PID);
+			DUBUGPRINTF("PAT->uiNetwork_PID: 0x%02x\n", pstTS_PAT_T->uiNetwork_PID);
 		}
 		else
 		{
-			printf("PAT->PAT_Program[%d].Reserved_third: 0x%02x\n", iLoopTime, pstTS_PAT_T->stPAT_Program[iLoopTime].uiReserved_third);
-			printf("PAT->PAT_Program[%d].Program_map_PID: 0x%02x\n", iLoopTime, pstTS_PAT_T->stPAT_Program[iLoopTime].uiProgram_map_PID);
+			DUBUGPRINTF("PAT->PAT_Program[%d].Reserved_third: 0x%02x\n", iLoopTime, pstTS_PAT_T->stPAT_Program[iLoopTime].uiReserved_third);
+			DUBUGPRINTF("PAT->PAT_Program[%d].Program_map_PID: 0x%02x\n", iLoopTime, pstTS_PAT_T->stPAT_Program[iLoopTime].uiProgram_map_PID);
 		}
 	}
-	printf("-------------PAT info end-------------\n\n");
+	DUBUGPRINTF("-------------PAT info end-------------\n\n");
 }
 
 /******************************************
@@ -142,7 +144,7 @@ void PrintPAT(TS_PAT_T *pstTS_PAT_T, int iPAT_ProgramCount)
  ******************************************/
 int ParsePAT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength, PAT_INFO_T *pstPAT_Info_T)
 {
-	printf("\n=================================ParsePAT_Table Start================================= \n");
+	DUBUGPRINTF("\n=================================ParsePAT_Table Start================================= \n");
 	int iTemp = 0;
 	int iInfoCount = 0;
 	int iPATProgramCount = 0;
@@ -153,7 +155,7 @@ int ParsePAT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength, PAT_INFO_T *p
 
 	if (-1 == fseek(pfTsFile, iTsPosition, SEEK_SET))
 	{
-		printf("Parse table error\n");
+		DUBUGPRINTF("Parse table error\n");
 		return -1;
 	}
 
@@ -162,7 +164,7 @@ int ParsePAT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength, PAT_INFO_T *p
 		iTemp = GetOneSection(pfTsFile, iTsLength, ucSectionBuffer, PAT_PID, PAT_TABLE_ID, &uiVersion);
 		if (0 == iTemp)
 		{
-			printf("Enter if (0 == iTemp) in PARSE_PAT\n");
+			DUBUGPRINTF("Enter if (0 == iTemp) in PARSE_PAT\n");
 			uiVersion = INITIAL_VERSION;
 			memset(uiRecordSectionNumber, 0, sizeof(char) * SECTION_COUNT_256);
 			fseek(pfTsFile, 0 - iTsLength, SEEK_CUR);
@@ -170,10 +172,10 @@ int ParsePAT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength, PAT_INFO_T *p
 		}
 		if (1 == iTemp)
 		{
-			printf("Enter if (1 == iTemp) in PARSE_PAT\n");
+			DUBUGPRINTF("Enter if (1 == iTemp) in PARSE_PAT\n");
 			if (0 == IsSectionGetBefore(ucSectionBuffer, uiRecordSectionNumber))
 			{
-				printf("Enter if (0 == IsSectionGetBefore) in PARSE_PAT\n");
+				DUBUGPRINTF("Enter if (0 == IsSectionGetBefore) in PARSE_PAT\n");
 				iPATProgramCount = ParsePAT_Section(&stTS_PAT_T, ucSectionBuffer);
 				
 				GetPAT_Info(&stTS_PAT_T, iPATProgramCount, pstPAT_Info_T, &iInfoCount);
@@ -184,21 +186,21 @@ int ParsePAT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength, PAT_INFO_T *p
 			}
 			if (1 == IsAllSectionOver(ucSectionBuffer, uiRecordSectionNumber))
 			{
-				printf("Enter if (1 == IsAllSectionOver) in PARSE_PAT\n");
-				printf("return iInfoCount, iInfoCount is: %d\n", iInfoCount);
-				printf("\n\n=================================ParsePAT_Table End=================================== \n\n");
+				DUBUGPRINTF("Enter if (1 == IsAllSectionOver) in PARSE_PAT\n");
+				DUBUGPRINTF("return iInfoCount, iInfoCount is: %d\n", iInfoCount);
+				DUBUGPRINTF("\n\n=================================ParsePAT_Table End=================================== \n\n");
 				return iInfoCount;
 			}
 		}
 		if (-1 == iTemp)
 		{
-			printf("Enter if (-1 == iTemp) in PARSE_PAT\n");
-			printf("return iInfoCount, iInfoCount is: %d\n", iInfoCount);
-			printf("\n\n=================================ParsePAT_Table End=================================== \n\n");
+			DUBUGPRINTF("Enter if (-1 == iTemp) in PARSE_PAT\n");
+			DUBUGPRINTF("return iInfoCount, iInfoCount is: %d\n", iInfoCount);
+			DUBUGPRINTF("\n\n=================================ParsePAT_Table End=================================== \n\n");
 			return iInfoCount;
 		}
 	}
-	printf("return 0\n");
-	printf("\n=================================ParsePAT_Table End===================================\n\n");
+	DUBUGPRINTF("return 0\n");
+	DUBUGPRINTF("\n=================================ParsePAT_Table End===================================\n\n");
 	return 0;
 }

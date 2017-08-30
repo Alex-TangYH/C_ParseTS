@@ -5,6 +5,7 @@
 #include "Parse_Descriptor.h"
 #include "Parse_DesciptorStream.h"
 #include "Get_Section.h"
+#include "TsParser.h"
 
 #define CAT_PID 0x0001
 #define CAT_TABLE_ID 0x01
@@ -74,18 +75,18 @@ void ParseCAT_Section(TS_CAT_T *pstTS_CAT, unsigned char *pucSectionBuffer)
 void PrintCAT(TS_CAT_T *pstTS_CAT)
 {
 	char acOutputPrefix[OUTPUT_PREFIX_SIZE] = { 0 };
-	printf("\n-------------CAT info start-------------\n");
-	printf("CAT->Table_id: 0x%02x\n", pstTS_CAT->uiTable_id);
-	printf("CAT->Section_syntax_indicatior: 0x%02x\n", pstTS_CAT->uiSection_syntax_indicatior);
-	printf("CAT->Zero: 0x%02x\n", pstTS_CAT->uiZero);
-	printf("CAT->Resrved_first: 0x%02x\n", pstTS_CAT->uiResrved_first);
-	printf("CAT->Section_length: 0x%02x\n", pstTS_CAT->uiSection_length);
-	printf("CAT->Resrved_second: 0x%02x\n", pstTS_CAT->uiResrved_second);
-	printf("CAT->Version_number: 0x%02x\n", pstTS_CAT->uiVersion_number);
-	printf("CAT->Current_next_indicator: 0x%02x\n", pstTS_CAT->uiCurrent_next_indicator);
-	printf("CAT->Section_number: 0x%02x\n", pstTS_CAT->uiSection_number);
-	printf("CAT->Last_section_number: 0x%02x\n", pstTS_CAT->uiLast_section_number);
-	printf("CAT->CRC_32: 0x%02x\n", pstTS_CAT->uiCRC_32);
+	DUBUGPRINTF("\n-------------CAT info start-------------\n");
+	DUBUGPRINTF("CAT->Table_id: 0x%02x\n", pstTS_CAT->uiTable_id);
+	DUBUGPRINTF("CAT->Section_syntax_indicatior: 0x%02x\n", pstTS_CAT->uiSection_syntax_indicatior);
+	DUBUGPRINTF("CAT->Zero: 0x%02x\n", pstTS_CAT->uiZero);
+	DUBUGPRINTF("CAT->Resrved_first: 0x%02x\n", pstTS_CAT->uiResrved_first);
+	DUBUGPRINTF("CAT->Section_length: 0x%02x\n", pstTS_CAT->uiSection_length);
+	DUBUGPRINTF("CAT->Resrved_second: 0x%02x\n", pstTS_CAT->uiResrved_second);
+	DUBUGPRINTF("CAT->Version_number: 0x%02x\n", pstTS_CAT->uiVersion_number);
+	DUBUGPRINTF("CAT->Current_next_indicator: 0x%02x\n", pstTS_CAT->uiCurrent_next_indicator);
+	DUBUGPRINTF("CAT->Section_number: 0x%02x\n", pstTS_CAT->uiSection_number);
+	DUBUGPRINTF("CAT->Last_section_number: 0x%02x\n", pstTS_CAT->uiLast_section_number);
+	DUBUGPRINTF("CAT->CRC_32: 0x%02x\n", pstTS_CAT->uiCRC_32);
 
 	int iDescriptorLength = pstTS_CAT->uiSection_length - 4 - 5;
 	
@@ -95,7 +96,7 @@ void PrintCAT(TS_CAT_T *pstTS_CAT)
 		sprintf(acOutputPrefix, "CAT->Descriptor.");
 		ParseDescriptor(pstTS_CAT->aucDescriptor, iDescriptorLength, acOutputPrefix);
 	}
-	printf("-------------CAT info end---------------\n");
+	DUBUGPRINTF("-------------CAT info end---------------\n");
 }
 
 /******************************************
@@ -122,7 +123,7 @@ void GetCAT_Info(CA_DESCRIPTOR_T *pstCA_Descriptor, int iDescriptorCount, CAT_IN
  ******************************************/
 int ParseCAT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength, CAT_INFO_T *pstCAT_Info)
 {
-	printf("\n\n=================================ParseCAT_Table Start================================= \n");
+	DUBUGPRINTF("\n\n=================================ParseCAT_Table Start================================= \n");
 	int iTemp = 0;
 	TS_CAT_T stTS_CAT = { 0 };
 	int iInfoCount = 0;
@@ -133,7 +134,7 @@ int ParseCAT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength, CAT_INFO_T *p
 
 	if (-1 == fseek(pfTsFile, iTsPosition, SEEK_SET))
 	{
-		printf("Parse CAT error\n");
+		DUBUGPRINTF("Parse CAT error\n");
 		return -1;
 	}
 	memset(pstCAT_Info, 0, sizeof(CAT_INFO_T));
@@ -145,7 +146,7 @@ int ParseCAT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength, CAT_INFO_T *p
 
 		if (0 == iTemp)
 		{
-			printf("Enter if (0 == iTemp) in PARSE_CAT\n");
+			DUBUGPRINTF("Enter if (0 == iTemp) in PARSE_CAT\n");
 			uiVersion = INITIAL_VERSION;
 			memset(uiRecordSectionNumber, 0, sizeof(char) * SECTION_COUNT_256);
 			fseek(pfTsFile, 0 - iTsLength, SEEK_CUR);
@@ -155,7 +156,7 @@ int ParseCAT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength, CAT_INFO_T *p
 		{
 			if (0 == IsSectionGetBefore(ucSectionBuffer, uiRecordSectionNumber))
 			{
-				printf("Enter if (0 == IsSectionGetBefore) in PARSE_CAT\n");
+				DUBUGPRINTF("Enter if (0 == IsSectionGetBefore) in PARSE_CAT\n");
 				ParseCAT_Section(&stTS_CAT, ucSectionBuffer);
 				//GetCAT_Info(&stTS_CAT, iDescriptorCount, pstCAT_Info, &iInfoCount);
 				if (1 == PRINTFCAT_INFO)
@@ -165,21 +166,21 @@ int ParseCAT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength, CAT_INFO_T *p
 			}
 			if (1 == IsAllSectionOver(ucSectionBuffer, uiRecordSectionNumber))
 			{
-				printf("Enter if (1 == IsAllSectionOver) in PARSE_CAT\n");
-				printf("\n=================================ParseCAT_Table END=================================== \n\n");
+				DUBUGPRINTF("Enter if (1 == IsAllSectionOver) in PARSE_CAT\n");
+				DUBUGPRINTF("\n=================================ParseCAT_Table END=================================== \n\n");
 				return iInfoCount;
 			}
 		}
 		if (-1 == iTemp)
 		{
-			printf("Enter if (-1 == iTemp) in PARSE_CAT\n");
-			printf("return 0\n");
-			printf("\n=================================ParseCAT_Table END=================================== \n\n");
+			DUBUGPRINTF("Enter if (-1 == iTemp) in PARSE_CAT\n");
+			DUBUGPRINTF("return 0\n");
+			DUBUGPRINTF("\n=================================ParseCAT_Table END=================================== \n\n");
 			return 0;
 		}
 	}
-	printf("return 0\n");
-	printf("\n=================================ParseCAT_Table END=================================== \n\n");
+	DUBUGPRINTF("return 0\n");
+	DUBUGPRINTF("\n=================================ParseCAT_Table END=================================== \n\n");
 	return 0;
 }
 

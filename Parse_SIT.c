@@ -4,7 +4,7 @@
 #include "Parse_SIT.h"
 #include "Parse_DesciptorStream.h"
 #include "Get_Section.h"
-
+#include "TsParser.h"
 
 #define SIT_PID 0x001E
 #define SIT_TABLE_ID 0x7E
@@ -52,29 +52,29 @@ void ParseSIT_Section(TS_SIT_T *pstTS_SIT, unsigned char *pucSectionBuffer)
 void PrintSIT(TS_SIT_T *pstTS_SIT)
 {
 	char acOutputPrefix[OUTPUT_PREFIX_SIZE] = { 0 };
-	printf("\n-------------SIT info SITart-------------\n");
+	DUBUGPRINTF("\n-------------SIT info SITart-------------\n");
 
-	printf("SIT->table_id: %02x\n", pstTS_SIT->uitable_id);
-	printf("SIT->Section_syntax_indicator: %02x\n", pstTS_SIT->uiSection_syntax_indicator);
-	printf("SIT->DVB_Reserved_future_use_first: %02x\n", pstTS_SIT->uiDVB_Reserved_future_use_first);
-	printf("SIT->ISO_Reserved_first: %02x\n", pstTS_SIT->uiISO_Reserved_first);
-	printf("SIT->Section_length: %02x\n", pstTS_SIT->uiSection_length);
-	printf("SIT->DVB_Reserved_future_use_second: %02x\n", pstTS_SIT->uiDVB_Reserved_future_use_second);
-	printf("SIT->ISO_Reserved_second: %02x\n", pstTS_SIT->uiISO_Reserved_second);
-	printf("SIT->Version_number: %02x\n", pstTS_SIT->uiVersion_number);
-	printf("SIT->Current_next_indicator: %02x\n", pstTS_SIT->uiCurrent_next_indicator);
-	printf("SIT->Section_number: %02x\n", pstTS_SIT->uiSection_number);
-	printf("SIT->Last_section_number: %02x\n", pstTS_SIT->uiLast_section_number);
-	printf("SIT->DVB_Reserved_future_use_third: %02x\n", pstTS_SIT->uiDVB_Reserved_future_use_third);
-	printf("SIT->Transmission_info_loop_length: %02x\n", pstTS_SIT->uiTransmission_info_loop_length);
+	DUBUGPRINTF("SIT->table_id: %02x\n", pstTS_SIT->uitable_id);
+	DUBUGPRINTF("SIT->Section_syntax_indicator: %02x\n", pstTS_SIT->uiSection_syntax_indicator);
+	DUBUGPRINTF("SIT->DVB_Reserved_future_use_first: %02x\n", pstTS_SIT->uiDVB_Reserved_future_use_first);
+	DUBUGPRINTF("SIT->ISO_Reserved_first: %02x\n", pstTS_SIT->uiISO_Reserved_first);
+	DUBUGPRINTF("SIT->Section_length: %02x\n", pstTS_SIT->uiSection_length);
+	DUBUGPRINTF("SIT->DVB_Reserved_future_use_second: %02x\n", pstTS_SIT->uiDVB_Reserved_future_use_second);
+	DUBUGPRINTF("SIT->ISO_Reserved_second: %02x\n", pstTS_SIT->uiISO_Reserved_second);
+	DUBUGPRINTF("SIT->Version_number: %02x\n", pstTS_SIT->uiVersion_number);
+	DUBUGPRINTF("SIT->Current_next_indicator: %02x\n", pstTS_SIT->uiCurrent_next_indicator);
+	DUBUGPRINTF("SIT->Section_number: %02x\n", pstTS_SIT->uiSection_number);
+	DUBUGPRINTF("SIT->Last_section_number: %02x\n", pstTS_SIT->uiLast_section_number);
+	DUBUGPRINTF("SIT->DVB_Reserved_future_use_third: %02x\n", pstTS_SIT->uiDVB_Reserved_future_use_third);
+	DUBUGPRINTF("SIT->Transmission_info_loop_length: %02x\n", pstTS_SIT->uiTransmission_info_loop_length);
 	if (pstTS_SIT->uiTransmission_info_loop_length > 0)
 	{
 		memset(acOutputPrefix, 0, OUTPUT_PREFIX_SIZE);
 		sprintf(acOutputPrefix, "SIT->.");
 		ParseDescriptor(pstTS_SIT->aucSIT_info_descriptor, pstTS_SIT->uiTransmission_info_loop_length, acOutputPrefix);
 	}
-	printf("SIT->CRC32: %02x\n", pstTS_SIT->uiCRC32);
-	printf("\n-------------SIT info end-------------\n");
+	DUBUGPRINTF("SIT->CRC32: %02x\n", pstTS_SIT->uiCRC32);
+	DUBUGPRINTF("\n-------------SIT info end-------------\n");
 
 }
 
@@ -85,7 +85,7 @@ void PrintSIT(TS_SIT_T *pstTS_SIT)
  ******************************************/
 int ParseSIT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength)
 {
-	printf("\n\n=================================ParseSIT_Table SITart================================= \n");
+	DUBUGPRINTF("\n\n=================================ParseSIT_Table SITart================================= \n");
 	int iTemp = 0;
 	TS_SIT_T stTS_SIT = { 0 };
 	unsigned int uiVersion = INITIAL_VERSION;
@@ -94,7 +94,7 @@ int ParseSIT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength)
 
 	if (-1 == fseek(pfTsFile, iTsPosition, SEEK_SET))
 	{
-		printf("Parse SIT error\n");
+		DUBUGPRINTF("Parse SIT error\n");
 		return -1;
 	}
 	
@@ -118,19 +118,19 @@ int ParseSIT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength)
 			}
 			if (1 == IsAllSectionOver(ucSectionBuffer, uiRecordGetSection))
 			{
-				printf("\n=================================ParseSIT_Table END=================================== \n\n");
+				DUBUGPRINTF("\n=================================ParseSIT_Table END=================================== \n\n");
 				return 1;
 			}
 		}
 		
 		if (-1 == iTemp)
 		{
-			printf("\n\n=================================ParseSIT_Table End================================= \n");
+			DUBUGPRINTF("\n\n=================================ParseSIT_Table End================================= \n");
 			return 1;
 		}
 	}
 
-	printf("\n\n=================================ParseSIT_Table End================================= \n");
+	DUBUGPRINTF("\n\n=================================ParseSIT_Table End================================= \n");
 	return -1;
 }
 

@@ -2,6 +2,8 @@
 #include <string.h>
 
 #include "Parse_RST.h"
+#include "TsParser.h"
+#include "Get_Section.h"
 
 #define RST_PID 0x0013
 #define RST_TABLE_ID 0x71
@@ -50,27 +52,27 @@ int ParseRST_Section(TS_RST_T *pstTS_RST, unsigned char *pucSectionBuffer)
 void PrintRST(TS_RST_T *pstTS_RST, int iRST_LoopCount)
 {
 	int iLoopTime = 0;
-	printf("\n-------------RST info start-------------\n");
+	DUBUGPRINTF("\n-------------RST info start-------------\n");
 
-	printf("RST->table_id: %02x\n", pstTS_RST->uitable_id);
-	printf("RST->uiSection_syntax_indicator: %02x\n", pstTS_RST->uiSection_syntax_indicator);
-	printf("RST->uiReserved_future_use_first: %02x\n", pstTS_RST->uiReserved_future_use_first);
-	printf("RST->uiReserved: %02x\n", pstTS_RST->uiReserved);
-	printf("RST->uiSection_length: %02x\n", pstTS_RST->uiSection_length);
+	DUBUGPRINTF("RST->table_id: %02x\n", pstTS_RST->uitable_id);
+	DUBUGPRINTF("RST->uiSection_syntax_indicator: %02x\n", pstTS_RST->uiSection_syntax_indicator);
+	DUBUGPRINTF("RST->uiReserved_future_use_first: %02x\n", pstTS_RST->uiReserved_future_use_first);
+	DUBUGPRINTF("RST->uiReserved: %02x\n", pstTS_RST->uiReserved);
+	DUBUGPRINTF("RST->uiSection_length: %02x\n", pstTS_RST->uiSection_length);
 	if (pstTS_RST->uiSection_length > 0)
 	{
 		for (iLoopTime = 0; iLoopTime < iRST_LoopCount; iLoopTime++)
 		{
-			printf("RST->RST_info[%d].uiTransport_stream_id: %02x\n", iLoopTime, pstTS_RST->astRST_info[iLoopTime].uiTransport_stream_id);
-			printf("RST->RST_info[%d].uiOriginal_network_id: %02x\n", iLoopTime, pstTS_RST->astRST_info[iLoopTime].uiOriginal_network_id);
-			printf("RST->RST_info[%d].uiService_id: %02x\n", iLoopTime, pstTS_RST->astRST_info[iLoopTime].uiService_id);
-			printf("RST->RST_info[%d].uiEvent_id: %02x\n", iLoopTime, pstTS_RST->astRST_info[iLoopTime].uiEvent_id);
-			printf("RST->RST_info[%d].uiReserved_future_use_second: %02x\n", iLoopTime, pstTS_RST->astRST_info[iLoopTime].uiReserved_future_use_second);
-			printf("RST->RST_info[%d].uiRunning_status: %02x\n", iLoopTime, pstTS_RST->astRST_info[iLoopTime].uiRunning_status);
+			DUBUGPRINTF("RST->RST_info[%d].uiTransport_stream_id: %02x\n", iLoopTime, pstTS_RST->astRST_info[iLoopTime].uiTransport_stream_id);
+			DUBUGPRINTF("RST->RST_info[%d].uiOriginal_network_id: %02x\n", iLoopTime, pstTS_RST->astRST_info[iLoopTime].uiOriginal_network_id);
+			DUBUGPRINTF("RST->RST_info[%d].uiService_id: %02x\n", iLoopTime, pstTS_RST->astRST_info[iLoopTime].uiService_id);
+			DUBUGPRINTF("RST->RST_info[%d].uiEvent_id: %02x\n", iLoopTime, pstTS_RST->astRST_info[iLoopTime].uiEvent_id);
+			DUBUGPRINTF("RST->RST_info[%d].uiReserved_future_use_second: %02x\n", iLoopTime, pstTS_RST->astRST_info[iLoopTime].uiReserved_future_use_second);
+			DUBUGPRINTF("RST->RST_info[%d].uiRunning_status: %02x\n", iLoopTime, pstTS_RST->astRST_info[iLoopTime].uiRunning_status);
 		}
 	}
 	
-	printf("\n-------------RST info end-------------\n");
+	DUBUGPRINTF("\n-------------RST info end-------------\n");
 }
 
 /******************************************
@@ -80,7 +82,7 @@ void PrintRST(TS_RST_T *pstTS_RST, int iRST_LoopCount)
  ******************************************/
 int ParseRST_Table(FILE *pfTsFile, int iTsPosition, int iTsLength)
 {
-	printf("\n\n=================================ParseRST_Table Start================================= \n");
+	DUBUGPRINTF("\n\n=================================ParseRST_Table Start================================= \n");
 	int iTemp = 0;
 	int iRST_LoopCount = 0;
 	TS_RST_T stTS_RST = { 0 };
@@ -90,7 +92,7 @@ int ParseRST_Table(FILE *pfTsFile, int iTsPosition, int iTsLength)
 
 	if (-1 == fseek(pfTsFile, iTsPosition, SEEK_SET))
 	{
-		printf("Parse RST error\n");
+		DUBUGPRINTF("Parse RST error\n");
 		return -1;
 	}
 	
@@ -114,19 +116,19 @@ int ParseRST_Table(FILE *pfTsFile, int iTsPosition, int iTsLength)
 			}
 			if (1 == IsAllSectionOver(ucSectionBuffer, uiRecordGetSection))
 			{
-				printf("\n=================================ParseRST_Table END=================================== \n\n");
+				DUBUGPRINTF("\n=================================ParseRST_Table END=================================== \n\n");
 				return 1;
 			}
 		}
 		
 		if (-1 == iTemp)
 		{
-			printf("\n\n=================================ParseRST_Table End================================= \n");
+			DUBUGPRINTF("\n\n=================================ParseRST_Table End================================= \n");
 			return 1;
 		}
 	}
 
-	printf("\n\n=================================ParseRST_Table End================================= \n");
+	DUBUGPRINTF("\n\n=================================ParseRST_Table End================================= \n");
 	return -1;
 }
 

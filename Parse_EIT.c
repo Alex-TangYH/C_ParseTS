@@ -6,7 +6,7 @@
 #include "FormatUtils.h"
 #include "Parse_DesciptorStream.h"
 #include "Get_Section.h"
-
+#include "TsParser.h"
 
 #define EIT_PID 0x0012
 #define INITIAL_VERSION 0xff
@@ -94,34 +94,34 @@ void PrintEIT(TS_EIT_T *pstTS_EIT, int iEIT_InfoCount)
 	int iLoopTime = 0;
 	char acOutputPrefix[OUTPUT_PREFIX_SIZE] = { 0 };
 	
-	printf("\n-------------EIT info start-------------\n");
+	DUBUGPRINTF("\n-------------EIT info start-------------\n");
 	
-	printf("EIT->table_id: 0x%02x\n", pstTS_EIT->uiTable_id);
-	printf("EIT->Section_syntax_indicator: 0x%02x\n", pstTS_EIT->uiSection_syntax_indicator);
-	printf("EIT->Reserved_future_use_first: 0x%02x\n", pstTS_EIT->uiReserved_future_use_first);
-	printf("EIT->Reserved_first: 0x%02x\n", pstTS_EIT->uiReserved_first);
-	printf("EIT->Section_length: 0x%02x\n", pstTS_EIT->uiSection_length);
-	printf("EIT->Service_id: 0x%02x\n", pstTS_EIT->uiService_id);
-	printf("EIT->Reserved_second: 0x%02x\n", pstTS_EIT->uiReserved_second);
-	printf("EIT->Version_number: 0x%02x\n", pstTS_EIT->uiVersion_number);
-	printf("EIT->Current_next_indicator: 0x%02x\n", pstTS_EIT->uiCurrent_next_indicator);
-	printf("EIT->Section_number: 0x%02x\n", pstTS_EIT->uiSection_number);
-	printf("EIT->Last_section_number: 0x%02x\n", pstTS_EIT->uiLast_section_number);
-	printf("EIT->Transport_stream_id: 0x%02x\n", pstTS_EIT->uiTransport_stream_id);
-	printf("EIT->Original_network_id: 0x%02x\n", pstTS_EIT->uiOriginal_network_id);
-	printf("EIT->Segment_last_section_number: 0x%02x\n", pstTS_EIT->uiSegment_last_section_number);
-	printf("EIT->Last_table_id: 0x%02x\n", pstTS_EIT->uiLast_table_id);
-	printf("EIT->CRC_32: 0x%02x\n", pstTS_EIT->uiCRC_32);
+	DUBUGPRINTF("EIT->table_id: 0x%02x\n", pstTS_EIT->uiTable_id);
+	DUBUGPRINTF("EIT->Section_syntax_indicator: 0x%02x\n", pstTS_EIT->uiSection_syntax_indicator);
+	DUBUGPRINTF("EIT->Reserved_future_use_first: 0x%02x\n", pstTS_EIT->uiReserved_future_use_first);
+	DUBUGPRINTF("EIT->Reserved_first: 0x%02x\n", pstTS_EIT->uiReserved_first);
+	DUBUGPRINTF("EIT->Section_length: 0x%02x\n", pstTS_EIT->uiSection_length);
+	DUBUGPRINTF("EIT->Service_id: 0x%02x\n", pstTS_EIT->uiService_id);
+	DUBUGPRINTF("EIT->Reserved_second: 0x%02x\n", pstTS_EIT->uiReserved_second);
+	DUBUGPRINTF("EIT->Version_number: 0x%02x\n", pstTS_EIT->uiVersion_number);
+	DUBUGPRINTF("EIT->Current_next_indicator: 0x%02x\n", pstTS_EIT->uiCurrent_next_indicator);
+	DUBUGPRINTF("EIT->Section_number: 0x%02x\n", pstTS_EIT->uiSection_number);
+	DUBUGPRINTF("EIT->Last_section_number: 0x%02x\n", pstTS_EIT->uiLast_section_number);
+	DUBUGPRINTF("EIT->Transport_stream_id: 0x%02x\n", pstTS_EIT->uiTransport_stream_id);
+	DUBUGPRINTF("EIT->Original_network_id: 0x%02x\n", pstTS_EIT->uiOriginal_network_id);
+	DUBUGPRINTF("EIT->Segment_last_section_number: 0x%02x\n", pstTS_EIT->uiSegment_last_section_number);
+	DUBUGPRINTF("EIT->Last_table_id: 0x%02x\n", pstTS_EIT->uiLast_table_id);
+	DUBUGPRINTF("EIT->CRC_32: 0x%02x\n", pstTS_EIT->uiCRC_32);
 	for (iLoopTime = 0; iLoopTime < iEIT_InfoCount; iLoopTime++)
 	{
 		char acUTC_time[50] = { 0 };
-		printf("EIT->EIT_info[%d].Event_id: 0x%02x\n", iLoopTime, pstTS_EIT->astEIT_info[iLoopTime].uiEvent_id);
+		DUBUGPRINTF("EIT->EIT_info[%d].Event_id: 0x%02x\n", iLoopTime, pstTS_EIT->astEIT_info[iLoopTime].uiEvent_id);
 		FormatUTC_TimeFormMJD(acUTC_time, pstTS_EIT->astEIT_info[iLoopTime].auiStart_time);
-		printf("EIT->EIT_info[%d].Start_time: %s\n", iLoopTime, acUTC_time);
-		printf("EIT->EIT_info[%d].Duration: %02x:%02x:%02x\n", iLoopTime, pstTS_EIT->astEIT_info[iLoopTime].uiDuration[0], pstTS_EIT->astEIT_info[iLoopTime].uiDuration[1], pstTS_EIT->astEIT_info[iLoopTime].uiDuration[2]);
-		printf("EIT->EIT_info[%d].Running_status: 0x%02x\n", iLoopTime, pstTS_EIT->astEIT_info[iLoopTime].uiRunning_status);
-		printf("EIT->EIT_info[%d].Free_CA_mode: 0x%02x\n", iLoopTime, pstTS_EIT->astEIT_info[iLoopTime].uiFree_CA_mode);
-		printf("EIT->EIT_info[%d].Descriptors_loop_length: 0x%02x\n", iLoopTime, pstTS_EIT->astEIT_info[iLoopTime].uiDescriptors_loop_length);
+		DUBUGPRINTF("EIT->EIT_info[%d].Start_time: %s\n", iLoopTime, acUTC_time);
+		DUBUGPRINTF("EIT->EIT_info[%d].Duration: %02x:%02x:%02x\n", iLoopTime, pstTS_EIT->astEIT_info[iLoopTime].uiDuration[0], pstTS_EIT->astEIT_info[iLoopTime].uiDuration[1], pstTS_EIT->astEIT_info[iLoopTime].uiDuration[2]);
+		DUBUGPRINTF("EIT->EIT_info[%d].Running_status: 0x%02x\n", iLoopTime, pstTS_EIT->astEIT_info[iLoopTime].uiRunning_status);
+		DUBUGPRINTF("EIT->EIT_info[%d].Free_CA_mode: 0x%02x\n", iLoopTime, pstTS_EIT->astEIT_info[iLoopTime].uiFree_CA_mode);
+		DUBUGPRINTF("EIT->EIT_info[%d].Descriptors_loop_length: 0x%02x\n", iLoopTime, pstTS_EIT->astEIT_info[iLoopTime].uiDescriptors_loop_length);
 		if (pstTS_EIT->astEIT_info[iLoopTime].uiDescriptors_loop_length > 0)
 		{
 			memset(acOutputPrefix, 0, OUTPUT_PREFIX_SIZE);
@@ -129,7 +129,7 @@ void PrintEIT(TS_EIT_T *pstTS_EIT, int iEIT_InfoCount)
 			ParseDescriptor(pstTS_EIT->astEIT_info[iLoopTime].aucDescriptor, pstTS_EIT->astEIT_info[iLoopTime].uiDescriptors_loop_length, acOutputPrefix);
 		}
 	}
-	printf("\n-------------EIT info end-------------\n");
+	DUBUGPRINTF("\n-------------EIT info end-------------\n");
 }
 
 /******************************************
@@ -169,7 +169,7 @@ int IsEITSectionGetBefore(unsigned char *pucSectionBuffer, EIT_IDENTIFICATION_IN
  ******************************************/
 int ParseEIT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength, int iEIT_table_id)
 {
-	printf("\n\n=================================ParseEIT_Table Start================================= \n");
+	DUBUGPRINTF("\n\n=================================ParseEIT_Table Start================================= \n");
 	int iTemp = 0;
 	int iEIT_InfoCount = 0;
 	unsigned int uiVersion = INITIAL_VERSION;
@@ -181,7 +181,7 @@ int ParseEIT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength, int iEIT_tabl
 	
 	if (-1 == fseek(pfTsFile, iTsPosition, SEEK_SET))
 	{
-		printf("Parse EIT error\n");
+		DUBUGPRINTF("Parse EIT error\n");
 		return -1;
 	}
 	
@@ -210,13 +210,13 @@ int ParseEIT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength, int iEIT_tabl
 		}
 		if (-1 == iTemp)
 		{
-			printf("iEITCount : %d\n", iEITCount);
-			printf("\n=================================ParseEIT_Table END=================================== \n\n");
+			DUBUGPRINTF("iEITCount : %d\n", iEITCount);
+			DUBUGPRINTF("\n=================================ParseEIT_Table END=================================== \n\n");
 			return 1;
 		}
 	}
 
-	printf("\n\n=================================ParseEIT_Table End================================= \n");
+	DUBUGPRINTF("\n\n=================================ParseEIT_Table End================================= \n");
 	return -1;
 }
 

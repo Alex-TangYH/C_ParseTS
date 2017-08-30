@@ -4,7 +4,7 @@
 #include "Parse_TOT.h"
 #include "Get_Section.h"
 #include "FormatUtils.h"
-
+#include "TsParser.h"
 
 #define TOT_PID 0x0014
 #define TOT_TABLE_ID 0x73
@@ -37,26 +37,26 @@ void ParseTOT_Section(TS_TOT_T *pstTS_TOT, unsigned char *pucSectionBuffer)
 
 void PrintTOT(TS_TOT_T *pstTS_TOT)
 {
-	printf("\n-------------TOT info start-------------\n");
-	printf("TOT->table_id: 0x%02x\n", pstTS_TOT->uitable_id);
-	printf("TOT->Section_syntax_indicator: 0x%02x\n", pstTS_TOT->uiSection_syntax_indicator);
-	printf("TOT->Reserved_future_use: 0x%02x\n", pstTS_TOT->uiReserved_future_use);
-	printf("TOT->Reserved_first: 0x%02x\n", pstTS_TOT->uiReserved_first);
-	printf("TOT->Section_length: 0x%02x\n", pstTS_TOT->uiSection_length);
+	DUBUGPRINTF("\n-------------TOT info start-------------\n");
+	DUBUGPRINTF("TOT->table_id: 0x%02x\n", pstTS_TOT->uitable_id);
+	DUBUGPRINTF("TOT->Section_syntax_indicator: 0x%02x\n", pstTS_TOT->uiSection_syntax_indicator);
+	DUBUGPRINTF("TOT->Reserved_future_use: 0x%02x\n", pstTS_TOT->uiReserved_future_use);
+	DUBUGPRINTF("TOT->Reserved_first: 0x%02x\n", pstTS_TOT->uiReserved_first);
+	DUBUGPRINTF("TOT->Section_length: 0x%02x\n", pstTS_TOT->uiSection_length);
 	
 	char acUTC_time[50] = { 0 };
 	FormatUTC_TimeFormMJD(acUTC_time, pstTS_TOT->uiUTC_time);
-	printf("TOT->UTC_time: %s\n", acUTC_time);
-	printf("TOT->Reserved_second: 0x%02x\n", pstTS_TOT->uiReserved_second);
-	printf("TOT->Descriptors_loop_length: 0x%02x\n", pstTS_TOT->uiDescriptors_loop_length);
-	// TODO: printf("TOT->Descriptor: %s\n", pstTS_TOT->ucDescriptor);
-	printf("TOT->CRC_32: 0x%02x\n", pstTS_TOT->uiCRC_32);
-	printf("\n-------------TOT info end-------------\n");
+	DUBUGPRINTF("TOT->UTC_time: %s\n", acUTC_time);
+	DUBUGPRINTF("TOT->Reserved_second: 0x%02x\n", pstTS_TOT->uiReserved_second);
+	DUBUGPRINTF("TOT->Descriptors_loop_length: 0x%02x\n", pstTS_TOT->uiDescriptors_loop_length);
+	// TODO: DUBUGPRINTF("TOT->Descriptor: %s\n", pstTS_TOT->ucDescriptor);
+	DUBUGPRINTF("TOT->CRC_32: 0x%02x\n", pstTS_TOT->uiCRC_32);
+	DUBUGPRINTF("\n-------------TOT info end-------------\n");
 }
 
 int ParseTOT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength)
 {
-	printf("\n\n=================================ParseTOT_Table Start================================= \n");
+	DUBUGPRINTF("\n\n=================================ParseTOT_Table Start================================= \n");
 	int iTemp = 0;
 	TS_TOT_T stTS_TOT = { 0 };
 	unsigned int uiVersion = INITIAL_VERSION;
@@ -65,7 +65,7 @@ int ParseTOT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength)
 	
 	if (-1 == fseek(pfTsFile, iTsPosition, SEEK_SET))
 	{
-		printf("Parse TOT error\n");
+		DUBUGPRINTF("Parse TOT error\n");
 		return -1;
 	}
 	
@@ -86,19 +86,19 @@ int ParseTOT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength)
 			{
 				ParseTOT_Section(&stTS_TOT, ucSectionBuffer);
 				PrintTOT(&stTS_TOT);
-				printf("\n=================================ParseTOT_Table END=================================== \n\n");
+				DUBUGPRINTF("\n=================================ParseTOT_Table END=================================== \n\n");
 				return 1;
 			}
 		}
 		
 		if (-1 == iTemp)
 		{
-			printf("\n=================================ParseTOT_Table END=================================== \n\n");
+			DUBUGPRINTF("\n=================================ParseTOT_Table END=================================== \n\n");
 			return 1;
 		}
 	}
 
-	printf("\n\n=================================ParseTOT_Table End================================= \n");
+	DUBUGPRINTF("\n\n=================================ParseTOT_Table End================================= \n");
 	return -1;
 }
 

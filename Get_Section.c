@@ -2,6 +2,7 @@
 #include <string.h>
 
 #include "Get_Section.h"
+#include "TsParser.h"
 
 #define PACKAGE_MAX_LENGTH_204 204
 #define PRINTFTS_HEAD 0
@@ -176,14 +177,14 @@ static int CheckIndicateOfPackageHead(TS_PACKAGE_HEAD_T stTS_PackageHead)
  *********************************************/
 static void PrintTS_HEAD(TS_PACKAGE_HEAD_T stTS_PackageHead)
 {
-	printf("TS_PackageHead.Sync_byte: 0x%02x\n", stTS_PackageHead.uiSync_byte);
-	printf("TS_PackageHead.Transport_error_indicator: 0x%02x\n", stTS_PackageHead.uiTransport_error_indicator);
-	printf("TS_PackageHead.Payload_unit_start_indicator: 0x%02x\n", stTS_PackageHead.uiPayload_unit_start_indicator);
-	printf("TS_PackageHead.Transport_priority: 0x%02x\n", stTS_PackageHead.uiTransport_priority);
-	printf("TS_PackageHead.PID: 0x%02x\n", stTS_PackageHead.uiPID);
-	printf("TS_PackageHead.Transport_scrambling_control: 0x%02x\n", stTS_PackageHead.uiTransport_scrambling_control);
-	printf("TS_PackageHead.Adapptation_field_control: 0x%02x\n", stTS_PackageHead.uiAdapptation_field_control);
-	printf("TS_PackageHead.Continuity_counter: 0x%02x\n", stTS_PackageHead.uiContinuity_counter);
+	DUBUGPRINTF("TS_PackageHead.Sync_byte: 0x%02x\n", stTS_PackageHead.uiSync_byte);
+	DUBUGPRINTF("TS_PackageHead.Transport_error_indicator: 0x%02x\n", stTS_PackageHead.uiTransport_error_indicator);
+	DUBUGPRINTF("TS_PackageHead.Payload_unit_start_indicator: 0x%02x\n", stTS_PackageHead.uiPayload_unit_start_indicator);
+	DUBUGPRINTF("TS_PackageHead.Transport_priority: 0x%02x\n", stTS_PackageHead.uiTransport_priority);
+	DUBUGPRINTF("TS_PackageHead.PID: 0x%02x\n", stTS_PackageHead.uiPID);
+	DUBUGPRINTF("TS_PackageHead.Transport_scrambling_control: 0x%02x\n", stTS_PackageHead.uiTransport_scrambling_control);
+	DUBUGPRINTF("TS_PackageHead.Adapptation_field_control: 0x%02x\n", stTS_PackageHead.uiAdapptation_field_control);
+	DUBUGPRINTF("TS_PackageHead.Continuity_counter: 0x%02x\n", stTS_PackageHead.uiContinuity_counter);
 }
 
 /*********************************************

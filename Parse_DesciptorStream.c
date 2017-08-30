@@ -3,6 +3,8 @@
 #include "Parse_Descriptor.h"
 #include "Print_Descriptor.h"
 #include "Parse_DesciptorStream.h"
+#include "TsParser.h"
+
 
 #define VIDEO_STREAM_DESCRIPTOR_TAG 0x02
 #define AUDIO_STREAM_DESCRIPTOR_TAG 0x03
@@ -143,7 +145,7 @@ int ParseDescriptor(unsigned char *pucDescriptorBuffer, int iDescriptorBufferLen
 				Print_FrequencyListDescriptor(&stFrequencyListDescriptor, pacOutputPrefix);
 				break;
 			default:
-				printf("unKnownTag: %d; iDescriptorPosition: %d\n", iTag, iDescriptorPosition);
+				DUBUGPRINTF("unKnownTag: %d; iDescriptorPosition: %d\n", iTag, iDescriptorPosition);
 				break;
 		}
 		iDescriptorPosition += pucDescriptorBuffer[iDescriptorPosition + 1] + 2;

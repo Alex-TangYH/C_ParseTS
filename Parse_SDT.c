@@ -5,6 +5,7 @@
 #include "Parse_Descriptor.h"
 #include "Parse_DesciptorStream.h"
 #include "Get_Section.h"
+#include "TsParser.h"
 
 #define SECTION_MAX_LENGTH_4096 1024*4
 #define INITIAL_VERSION 0xff
@@ -88,30 +89,30 @@ void PrintSDT(TS_SDT_T *pstTS_SDT, int iServiceCount)
 	int iServiceLoopTime = 0;
 	char acOutputPrefix[OUTPUT_PREFIX_SIZE] = { 0 };
 	
-	printf("SDT.Table_id: 0x%02x\n", pstTS_SDT->uiTable_id);
-	printf("SDT.Section_syntax_indicator: 0x%02x\n", pstTS_SDT->uiSection_syntax_indicator);
-	printf("SDT.Reserved_future_use_first: 0x%02x\n", pstTS_SDT->uiReserved_future_use_first);
-	printf("SDT.Reserved_first: 0x%02x\n", pstTS_SDT->uiReserved_first);
-	printf("SDT.Section_length: 0x%02x\n", pstTS_SDT->uiSection_length);
-	printf("SDT.Transport_stream_id: 0x%02x\n", pstTS_SDT->uiTransport_stream_id);
-	printf("SDT.Reserved_second: 0x%02x\n", pstTS_SDT->uiReserved_second);
-	printf("SDT.Version_number: 0x%02x\n", pstTS_SDT->uiVersion_number);
-	printf("SDT.Current_next_indicator: 0x%02x\n", pstTS_SDT->uiCurrent_next_indicator);
-	printf("SDT.Section_number: 0x%02x\n", pstTS_SDT->uiSection_number);
-	printf("SDT.Last_section_number: 0x%02x\n", pstTS_SDT->uiLast_section_number);
-	printf("SDT.Original_network_id: 0x%02x\n", pstTS_SDT->uiOriginal_network_id);
-	printf("SDT.Reserved_future_use_second: 0x%02x\n", pstTS_SDT->uiReserved_future_use_second);
-	printf("SDT.CRC_32: 0x%02x\n", pstTS_SDT->uiCRC_32);
+	DUBUGPRINTF("SDT.Table_id: 0x%02x\n", pstTS_SDT->uiTable_id);
+	DUBUGPRINTF("SDT.Section_syntax_indicator: 0x%02x\n", pstTS_SDT->uiSection_syntax_indicator);
+	DUBUGPRINTF("SDT.Reserved_future_use_first: 0x%02x\n", pstTS_SDT->uiReserved_future_use_first);
+	DUBUGPRINTF("SDT.Reserved_first: 0x%02x\n", pstTS_SDT->uiReserved_first);
+	DUBUGPRINTF("SDT.Section_length: 0x%02x\n", pstTS_SDT->uiSection_length);
+	DUBUGPRINTF("SDT.Transport_stream_id: 0x%02x\n", pstTS_SDT->uiTransport_stream_id);
+	DUBUGPRINTF("SDT.Reserved_second: 0x%02x\n", pstTS_SDT->uiReserved_second);
+	DUBUGPRINTF("SDT.Version_number: 0x%02x\n", pstTS_SDT->uiVersion_number);
+	DUBUGPRINTF("SDT.Current_next_indicator: 0x%02x\n", pstTS_SDT->uiCurrent_next_indicator);
+	DUBUGPRINTF("SDT.Section_number: 0x%02x\n", pstTS_SDT->uiSection_number);
+	DUBUGPRINTF("SDT.Last_section_number: 0x%02x\n", pstTS_SDT->uiLast_section_number);
+	DUBUGPRINTF("SDT.Original_network_id: 0x%02x\n", pstTS_SDT->uiOriginal_network_id);
+	DUBUGPRINTF("SDT.Reserved_future_use_second: 0x%02x\n", pstTS_SDT->uiReserved_future_use_second);
+	DUBUGPRINTF("SDT.CRC_32: 0x%02x\n", pstTS_SDT->uiCRC_32);
 	
 	for (iServiceLoopTime = 0; iServiceLoopTime < iServiceCount; iServiceLoopTime++)
 	{
-		printf("SDT.SDT_info[%d].Service_id: 0x%02x\n", iServiceLoopTime, pstTS_SDT->stSDT_info[iServiceLoopTime].uiService_id);
-		printf("SDT.SDT_info[%d].Reserved_future_use_third: 0x%02x\n", iServiceLoopTime, pstTS_SDT->stSDT_info[iServiceLoopTime].uiReserved_future_use_third);
-		printf("SDT.SDT_info[%d].EIT_schedule_flag: 0x%02x\n", iServiceLoopTime, pstTS_SDT->stSDT_info[iServiceLoopTime].uiEIT_schedule_flag);
-		printf("SDT.SDT_info[%d].EIT_present_following_flag: 0x%02x\n", iServiceLoopTime, pstTS_SDT->stSDT_info[iServiceLoopTime].uiEIT_present_following_flag);
-		printf("SDT.SDT_info[%d].Running_status: 0x%02x\n", iServiceLoopTime, pstTS_SDT->stSDT_info[iServiceLoopTime].uiRunning_status);
-		printf("SDT.SDT_info[%d].Free_CA_mode: 0x%02x\n", iServiceLoopTime, pstTS_SDT->stSDT_info[iServiceLoopTime].uiFree_CA_mode);
-		printf("SDT.SDT_info[%d].Descriptor_loop_length: 0x%02x\n", iServiceLoopTime, pstTS_SDT->stSDT_info[iServiceLoopTime].uiDescriptor_loop_length);
+		DUBUGPRINTF("SDT.SDT_info[%d].Service_id: 0x%02x\n", iServiceLoopTime, pstTS_SDT->stSDT_info[iServiceLoopTime].uiService_id);
+		DUBUGPRINTF("SDT.SDT_info[%d].Reserved_future_use_third: 0x%02x\n", iServiceLoopTime, pstTS_SDT->stSDT_info[iServiceLoopTime].uiReserved_future_use_third);
+		DUBUGPRINTF("SDT.SDT_info[%d].EIT_schedule_flag: 0x%02x\n", iServiceLoopTime, pstTS_SDT->stSDT_info[iServiceLoopTime].uiEIT_schedule_flag);
+		DUBUGPRINTF("SDT.SDT_info[%d].EIT_present_following_flag: 0x%02x\n", iServiceLoopTime, pstTS_SDT->stSDT_info[iServiceLoopTime].uiEIT_present_following_flag);
+		DUBUGPRINTF("SDT.SDT_info[%d].Running_status: 0x%02x\n", iServiceLoopTime, pstTS_SDT->stSDT_info[iServiceLoopTime].uiRunning_status);
+		DUBUGPRINTF("SDT.SDT_info[%d].Free_CA_mode: 0x%02x\n", iServiceLoopTime, pstTS_SDT->stSDT_info[iServiceLoopTime].uiFree_CA_mode);
+		DUBUGPRINTF("SDT.SDT_info[%d].Descriptor_loop_length: 0x%02x\n", iServiceLoopTime, pstTS_SDT->stSDT_info[iServiceLoopTime].uiDescriptor_loop_length);
 
 		if (pstTS_SDT->stSDT_info[iServiceLoopTime].uiDescriptor_loop_length > 0)
 		{
@@ -163,7 +164,7 @@ int IsSDTSectionGetBefore(unsigned char *pucSectionBuffer, SDT_IDENTIFICATION_IN
  ******************************************/
 int ParseSDT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength)
 {
-	printf("\n\n=================================ParseSDT_Table Start================================= \n");
+	DUBUGPRINTF("\n\n=================================ParseSDT_Table Start================================= \n");
 	TS_SDT_T stTS_SDT = { 0 };
 	int iTemp = 0;
 	int iServiceCount = 0;
@@ -174,7 +175,7 @@ int ParseSDT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength)
 
 	if (-1 == fseek(pfTsFile, iTsPosition, SEEK_SET))
 	{
-		printf("ParseSDT_Table error when fseek(pfTsFile, iTsPosition, SEEK_SET)\n");
+		DUBUGPRINTF("ParseSDT_Table error when fseek(pfTsFile, iTsPosition, SEEK_SET)\n");
 		return -1;
 	}
 
@@ -201,7 +202,7 @@ int ParseSDT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength)
 		}
 		
 	}
-	printf("\n\n=================================ParseSDT_Table end================================= \n");
+	DUBUGPRINTF("\n\n=================================ParseSDT_Table end================================= \n");
 	return 0;
 }
 

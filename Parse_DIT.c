@@ -2,6 +2,8 @@
 #include <string.h>
 
 #include "Parse_DIT.h"
+#include "TsParser.h"
+#include "Get_Section.h"
 
 #define DIT_PID 0x001E
 #define DIT_TABLE_ID 0x7E
@@ -33,16 +35,16 @@ void ParseDIT_Section(TS_DIT_T *pstTS_DIT, unsigned char *pucSectionBuffer)
  ******************************************/
 void PrintDIT(TS_DIT_T *pstTS_DIT)
 {
-	printf("\n-------------DIT info DITart-------------\n");
+	DUBUGPRINTF("\n-------------DIT info DITart-------------\n");
 
-	printf("DIT->table_id: %02x\n", pstTS_DIT->uitable_id);
-	printf("DIT->Section_syntax_indicator: %02x\n", pstTS_DIT->uiSection_syntax_indicator);
-	printf("DIT->Reserved_future_use_first: %02x\n", pstTS_DIT->uiReserved_future_use_first);
-	printf("DIT->Reserved: %02x\n", pstTS_DIT->uiReserved);
-	printf("DIT->Section_length: %02x\n", pstTS_DIT->uiSection_length);
-	printf("DIT->Transition_flag: %02x\n", pstTS_DIT->uiTransition_flag);
-	printf("DIT->Reserved_future_use_second: %02x\n", pstTS_DIT->uiReserved_future_use_second);
-	printf("\n-------------DIT info end-------------\n");
+	DUBUGPRINTF("DIT->table_id: %02x\n", pstTS_DIT->uitable_id);
+	DUBUGPRINTF("DIT->Section_syntax_indicator: %02x\n", pstTS_DIT->uiSection_syntax_indicator);
+	DUBUGPRINTF("DIT->Reserved_future_use_first: %02x\n", pstTS_DIT->uiReserved_future_use_first);
+	DUBUGPRINTF("DIT->Reserved: %02x\n", pstTS_DIT->uiReserved);
+	DUBUGPRINTF("DIT->Section_length: %02x\n", pstTS_DIT->uiSection_length);
+	DUBUGPRINTF("DIT->Transition_flag: %02x\n", pstTS_DIT->uiTransition_flag);
+	DUBUGPRINTF("DIT->Reserved_future_use_second: %02x\n", pstTS_DIT->uiReserved_future_use_second);
+	DUBUGPRINTF("\n-------------DIT info end-------------\n");
 }
 
 /******************************************
@@ -52,9 +54,8 @@ void PrintDIT(TS_DIT_T *pstTS_DIT)
  ******************************************/
 int ParseDIT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength)
 {
-	printf("\n\n=================================ParseDIT_Table DITart================================= \n");
+	DUBUGPRINTF("\n\n=================================ParseDIT_Table DITart================================= \n");
 	int iTemp = 0;
-	int iDIT_LoopCount = 0;
 	TS_DIT_T stTS_DIT = { 0 };
 	unsigned int uiVersion = INITIAL_VERSION;
 	unsigned char ucSectionBuffer[SECTION_MAX_LENGTH_4096] = { 0 };
@@ -62,7 +63,7 @@ int ParseDIT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength)
 
 	if (-1 == fseek(pfTsFile, iTsPosition, SEEK_SET))
 	{
-		printf("Parse DIT error\n");
+		DUBUGPRINTF("Parse DIT error\n");
 		return -1;
 	}
 	
@@ -86,19 +87,19 @@ int ParseDIT_Table(FILE *pfTsFile, int iTsPosition, int iTsLength)
 			}
 			if (1 == IsAllSectionOver(ucSectionBuffer, uiRecordGetSection))
 			{
-				printf("\n=================================ParseDIT_Table END=================================== \n\n");
+				DUBUGPRINTF("\n=================================ParseDIT_Table END=================================== \n\n");
 				return 1;
 			}
 		}
 		
 		if (-1 == iTemp)
 		{
-			printf("\n\n=================================ParseDIT_Table End================================= \n");
+			DUBUGPRINTF("\n\n=================================ParseDIT_Table End================================= \n");
 			return 1;
 		}
 	}
 
-	printf("\n\n=================================ParseDIT_Table End================================= \n");
+	DUBUGPRINTF("\n\n=================================ParseDIT_Table End================================= \n");
 	return -1;
 }
 
