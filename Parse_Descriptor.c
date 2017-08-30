@@ -28,29 +28,6 @@
 
 /******************************************
  *
- * 解析描述符的tag位置
- *
- ******************************************/
-int GetDescriptorTagPosition(int iDescriptorPosition, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iTagValue)
-{
-	int iDescriptorLength = 0;
-	while (iDescriptorPosition < iDescriptorBufferLength)
-	{
-		if (pucDescriptorBuffer[iDescriptorPosition] == iTagValue)
-		{
-			return iDescriptorPosition;
-		}
-		else
-		{
-			iDescriptorLength = pucDescriptorBuffer[1 + iDescriptorPosition];
-			iDescriptorPosition += 2 + iDescriptorLength;
-		}
-	}
-	return -1;
-}
-
-/******************************************
- *
  * 解析Network Name Descriptor描述子信息
  *
  ******************************************/

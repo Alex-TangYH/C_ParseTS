@@ -153,6 +153,11 @@ int ParseDescriptor(unsigned char *pucDescriptorBuffer, int iDescriptorBufferLen
 	return 1;
 }
 
+/******************************************
+ *
+ * 解析标准描述流中描述符的tag值
+ *
+ ******************************************/
 int GetDescriptorTag(int *piTag, int iDescriptorPosition, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength)
 {
 	if (iDescriptorPosition < iDescriptorBufferLength)
@@ -164,4 +169,27 @@ int GetDescriptorTag(int *piTag, int iDescriptorPosition, unsigned char *pucDesc
 	{
 		return -1;
 	}
+}
+
+/******************************************
+ *
+ * 解析指定描述符的tag位置
+ *
+ ******************************************/
+int GetDescriptorTagPosition(int *piDescriptorPosition, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iTagValue)
+{
+	int iDescriptorLength = 0;
+	while ((*piDescriptorPosition) < iDescriptorBufferLength)
+	{
+		if (pucDescriptorBuffer[(*piDescriptorPosition)] == iTagValue)
+		{
+			return (*piDescriptorPosition);
+		}
+		else
+		{
+			iDescriptorLength = pucDescriptorBuffer[1 + (*piDescriptorPosition)];
+			(*piDescriptorPosition) += 2 + iDescriptorLength;
+		}
+	}
+	return -1;
 }
