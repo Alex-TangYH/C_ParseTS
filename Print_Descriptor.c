@@ -476,12 +476,13 @@ void Print_SystemClockDescriptor(SYSTEM_CLOCK_DESCRIPTOR_T *pstSystemClockDescri
 void Print_TeletextDescriptor(TELETEXT_DESCRIPTOR_T *pstTeletextDescriptor, char *pacOutputPrefix)
 {
 	int iLoopCount = 0;
+	int iLoopInfoLength = 5;
 	DUBUGPRINTF("%sTeletextDescriptor:\n", pacOutputPrefix);
 	DUBUGPRINTF("%s©À©¤TeletextDescriptor.Descriptor_tag: 0x%02x\n", pacOutputPrefix, pstTeletextDescriptor->uiDescriptor_tag);
 	if (pstTeletextDescriptor->uiDescriptor_length > 0)
 	{
 		DUBUGPRINTF("%s©À©¤TeletextDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstTeletextDescriptor->uiDescriptor_length);
-		for (iLoopCount = 0; iLoopCount * 5 < pstTeletextDescriptor->uiDescriptor_length; iLoopCount++)
+		for (iLoopCount = 0; iLoopCount * iLoopInfoLength < pstTeletextDescriptor->uiDescriptor_length; iLoopCount++)
 		{
 			DUBUGPRINTF("%s©À©¤TeletextDescriptor.Teletext[%d].ISO_639_Language_code: %s\n", pacOutputPrefix, iLoopCount, pstTeletextDescriptor->astTeletext_Info[iLoopCount].stISO_639_Language_code.aucPrivate_data_byte);
 			DUBUGPRINTF("%s©À©¤TeletextDescriptor.Teletext[%d].Teletext_type: 0x%02x\n", pacOutputPrefix, iLoopCount, pstTeletextDescriptor->astTeletext_Info[iLoopCount].uiTeletext_type);
@@ -537,12 +538,13 @@ void Print_LocalTimeOffsetDescriptor(LOCAL_TIME_OFFSET_DESCRIPTOR_T *pstLocalTim
 void Print_SubtitlingDescriptor(SUBTITLING_DESCRIPTOR_T *pstSubtitlingDescriptor, char *pacOutputPrefix)
 {
 	int iLoopCount = 0;
+	int iLoopInfoLength = 8;
 	DUBUGPRINTF("%sSubtitlingDescriptor:\n", pacOutputPrefix);
 	DUBUGPRINTF("%s©À©¤SubtitlingDescriptor.Descriptor_tag: 0x%02x\n", pacOutputPrefix, pstSubtitlingDescriptor->uiDescriptor_tag);
 	if (pstSubtitlingDescriptor->uiDescriptor_length > 0)
 	{
 		DUBUGPRINTF("%s©À©¤SubtitlingDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstSubtitlingDescriptor->uiDescriptor_length);
-		for (iLoopCount = 0; iLoopCount * 8 < pstSubtitlingDescriptor->uiDescriptor_length; iLoopCount++)
+		for (iLoopCount = 0; iLoopCount * iLoopInfoLength < pstSubtitlingDescriptor->uiDescriptor_length; iLoopCount++)
 		{
 			DUBUGPRINTF("%s©À©¤SubtitlingDescriptor.Subtitling[%d].ISO_639_Language_code: %s\n", pacOutputPrefix, iLoopCount, pstSubtitlingDescriptor->astSubtitling_Info[iLoopCount].stISO_639_Language_code.aucPrivate_data_byte);
 			DUBUGPRINTF("%s©À©¤SubtitlingDescriptor.Subtitling[%d].Subtitling_type: 0x%02x\n", pacOutputPrefix, iLoopCount, pstSubtitlingDescriptor->astSubtitling_Info[iLoopCount].uiSubtitling_type);
@@ -658,6 +660,7 @@ void Print_ExtendedEventDescriptor(EXTENDED_EVENT_DESCRIPTOR_T *pstExtendedEvent
 void Print_FrequencyListDescriptor(FREQUENCY_LIST_DESCRIPTOR_T *pstFrequencyListDescriptor, char *pacOutputPrefix)
 {
 	int iLoopCount = 0;
+	int iLoopInfoLength = 4;
 	DUBUGPRINTF("%sFrequencyListDescriptor:\n", pacOutputPrefix);
 	DUBUGPRINTF("%s©À©¤FrequencyListDescriptor.Descriptor_tag: 0x%02x\n", pacOutputPrefix, pstFrequencyListDescriptor->uiDescriptor_tag);
 	
@@ -668,7 +671,7 @@ void Print_FrequencyListDescriptor(FREQUENCY_LIST_DESCRIPTOR_T *pstFrequencyList
 		DUBUGPRINTF("%s©À©¤FrequencyListDescriptor.Coding_type: 0x%02x\n", pacOutputPrefix, pstFrequencyListDescriptor->uiCoding_type);
 		if (pstFrequencyListDescriptor->uiDescriptor_length - 1 > 0)
 		{
-			for (iLoopCount = 0; iLoopCount * 4 < pstFrequencyListDescriptor->uiDescriptor_length - 1; iLoopCount++)
+			for (iLoopCount = 0; iLoopCount * iLoopInfoLength < pstFrequencyListDescriptor->uiDescriptor_length - 1; iLoopCount++)
 			{
 				DUBUGPRINTF("%s©À©¤FrequencyListDescriptor.Centre_frequency[%d]: 0x%08x\n", pacOutputPrefix, iLoopCount, pstFrequencyListDescriptor->astCentre_frequency[iLoopCount].uiCentre_frequency);
 			}

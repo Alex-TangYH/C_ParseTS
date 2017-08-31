@@ -319,17 +319,18 @@ int GetLocalTimeOffsetDescriptor(LOCAL_TIME_OFFSET_DESCRIPTOR_T *pstLocalTimeOff
 int GetSubtitlingDescriptor(SUBTITLING_DESCRIPTOR_T *pstSubtitlingDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition)
 {
 	int iLoopCount = 0;
+	int iOneInfoLength = 8;
 	memset(pstSubtitlingDescriptor, 0, sizeof(SUBTITLING_DESCRIPTOR_T));
 	pstSubtitlingDescriptor->uiDescriptor_tag = pucDescriptorBuffer[iDescriptorPosition];
 	pstSubtitlingDescriptor->uiDescriptor_length = pucDescriptorBuffer[1 + iDescriptorPosition];
-	for (iLoopCount = 0; iLoopCount * 8 < pstSubtitlingDescriptor->uiDescriptor_length; iLoopCount++)
+	for (iLoopCount = 0; iLoopCount * iOneInfoLength < pstSubtitlingDescriptor->uiDescriptor_length; iLoopCount++)
 	{
-		pstSubtitlingDescriptor->astSubtitling_Info[iLoopCount].stISO_639_Language_code.aucPrivate_data_byte[0] = pucDescriptorBuffer[2 + iDescriptorPosition + iLoopCount * 8];
-		pstSubtitlingDescriptor->astSubtitling_Info[iLoopCount].stISO_639_Language_code.aucPrivate_data_byte[1] = pucDescriptorBuffer[3 + iDescriptorPosition + iLoopCount * 8];
-		pstSubtitlingDescriptor->astSubtitling_Info[iLoopCount].stISO_639_Language_code.aucPrivate_data_byte[2] = pucDescriptorBuffer[4 + iDescriptorPosition + iLoopCount * 8];
-		pstSubtitlingDescriptor->astSubtitling_Info[iLoopCount].uiSubtitling_type = pucDescriptorBuffer[5 + iDescriptorPosition + iLoopCount * 8];
-		pstSubtitlingDescriptor->astSubtitling_Info[iLoopCount].uiComposition_page_id = (pucDescriptorBuffer[6 + iDescriptorPosition + iLoopCount * 8] << 8) | pucDescriptorBuffer[7 + iDescriptorPosition + iLoopCount * 8];
-		pstSubtitlingDescriptor->astSubtitling_Info[iLoopCount].uiAncillary_page_id = (pucDescriptorBuffer[8 + iDescriptorPosition + iLoopCount * 8] << 8) | pucDescriptorBuffer[9 + iDescriptorPosition + iLoopCount * 8];
+		pstSubtitlingDescriptor->astSubtitling_Info[iLoopCount].stISO_639_Language_code.aucPrivate_data_byte[0] = pucDescriptorBuffer[2 + iDescriptorPosition + iLoopCount * iOneInfoLength];
+		pstSubtitlingDescriptor->astSubtitling_Info[iLoopCount].stISO_639_Language_code.aucPrivate_data_byte[1] = pucDescriptorBuffer[3 + iDescriptorPosition + iLoopCount * iOneInfoLength];
+		pstSubtitlingDescriptor->astSubtitling_Info[iLoopCount].stISO_639_Language_code.aucPrivate_data_byte[2] = pucDescriptorBuffer[4 + iDescriptorPosition + iLoopCount * iOneInfoLength];
+		pstSubtitlingDescriptor->astSubtitling_Info[iLoopCount].uiSubtitling_type = pucDescriptorBuffer[5 + iDescriptorPosition + iLoopCount * iOneInfoLength];
+		pstSubtitlingDescriptor->astSubtitling_Info[iLoopCount].uiComposition_page_id = (pucDescriptorBuffer[6 + iDescriptorPosition + iLoopCount * iOneInfoLength] << 8) | pucDescriptorBuffer[7 + iDescriptorPosition + iLoopCount * iOneInfoLength];
+		pstSubtitlingDescriptor->astSubtitling_Info[iLoopCount].uiAncillary_page_id = (pucDescriptorBuffer[8 + iDescriptorPosition + iLoopCount * iOneInfoLength] << 8) | pucDescriptorBuffer[9 + iDescriptorPosition + iLoopCount * iOneInfoLength];
 	}
 	return iDescriptorPosition;
 }
@@ -467,15 +468,17 @@ int GetExtendedEventDescriptor(EXTENDED_EVENT_DESCRIPTOR_T *pstExtendedEventDesc
 int GetFrequencyListDescriptor(FREQUENCY_LIST_DESCRIPTOR_T *pstFrequencyListDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition)
 {
 	int iLoopCount = 0;
+	int iLoopInfoLength = 4;
 	memset(pstFrequencyListDescriptor, 0, sizeof(FREQUENCY_LIST_DESCRIPTOR_T));
 	pstFrequencyListDescriptor->uiDescriptor_tag = pucDescriptorBuffer[iDescriptorPosition];
 	pstFrequencyListDescriptor->uiDescriptor_length = pucDescriptorBuffer[1 + iDescriptorPosition];
 	pstFrequencyListDescriptor->uiReserved_future_use = pucDescriptorBuffer[2 + iDescriptorPosition] >> 2;
 	pstFrequencyListDescriptor->uiCoding_type = pucDescriptorBuffer[2 + iDescriptorPosition] & 0x03;
-	for (iLoopCount = 0; iLoopCount * 4 < pstFrequencyListDescriptor->uiDescriptor_length - 1; iLoopCount++)
+	for (iLoopCount = 0; iLoopCount * iLoopInfoLength < pstFrequencyListDescriptor->uiDescriptor_length - 1; iLoopCount++)
 	{
-		pstFrequencyListDescriptor->astCentre_frequency[iLoopCount].uiCentre_frequency = (pucDescriptorBuffer[3 + iDescriptorPosition + iLoopCount * 4] << 24) | (pucDescriptorBuffer[4 + iDescriptorPosition + iLoopCount * 4] << 16)
-				| (pucDescriptorBuffer[5 + iDescriptorPosition + iLoopCount * 4] << 8) | (pucDescriptorBuffer[6 + iDescriptorPosition + iLoopCount * 4]);
+		pstFrequencyListDescriptor->astCentre_frequency[iLoopCount].uiCentre_frequency = (pucDescriptorBuffer[3 + iDescriptorPosition + iLoopCount * iLoopInfoLength] << 24)
+				| (pucDescriptorBuffer[4 + iDescriptorPosition + iLoopCount * iLoopInfoLength] << 16) | (pucDescriptorBuffer[5 + iDescriptorPosition + iLoopCount * iLoopInfoLength] << 8)
+				| (pucDescriptorBuffer[6 + iDescriptorPosition + iLoopCount * iLoopInfoLength]);
 	}
 	return iDescriptorPosition;
 }
