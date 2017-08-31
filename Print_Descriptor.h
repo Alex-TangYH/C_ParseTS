@@ -24,6 +24,7 @@ void Print_VideoStreamDescriptor(VIDEO_STREAM_DESCRIPTOR_T *pstVideoStreamDescri
 void Print_DataStreamAlignmentDescriptor(DATA_STREAM_ALIGNMENT_DESCRIPTOR_T *pstDataStreamAlignmentDescriptor, char *pacOutputPrefix);
 void Print_ISO_639_LANGUAGE_DESCRIPTOR(ISO_639_LANGUAGE_DESCRIPTOR_T *pstISO_639_LanguageDescriptor, char *pacOutputPrefix);
 void Print_TeletextDescriptor(TELETEXT_DESCRIPTOR_T *pstTeletextDescriptor, char *pacOutputPrefix);
+void Print_LocalTimeOffsetDescriptor(LOCAL_TIME_OFFSET_DESCRIPTOR_T *pstLocalTimeOffsetDescriptor, char *pacOutputPrefix);
 void Print_SubtitlingDescriptor(SUBTITLING_DESCRIPTOR_T *pstSubtitlingDescriptor, char *pacOutputPrefix);
 void Print_AudioStreamDescriptor(AUDIO_STREAM_DESCRIPTOR_T *pstAudioStreamDescriptor, char *pacOutputPrefix);
 void Print_TerrestrialDeliverySystemDescriptor(TERRESTRIAL_DELIVERY_SYSTEM_DESCRIPTOR_T *pstTerrestrialDeliverySystemDescriptor, char *pacOutputPrefix);

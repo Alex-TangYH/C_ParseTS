@@ -9,6 +9,7 @@
 #define LINKAGE_DESCRIPTOR_INFO_MAX 256
 #define ISO_639_LANGUAGE_CODE_MAX 85
 #define TELETEXT_INFO_MAX 86
+#define LOCAL_TIME_OFFSET_INFO_MAX 14
 #define SUBTITLING_INFO_MAX 32
 #define SHORT_EVENT_INFO_MAX 256
 #define EXTENDED_EVENT_DESCRIPTOR_INFO_MAX 128
@@ -244,6 +245,24 @@ typedef struct TELETEXT_DESCRIPTOR_T
 	TELETEXT_INFO_T astTeletext_Info[TELETEXT_INFO_MAX];
 } TELETEXT_DESCRIPTOR_T;
 
+typedef struct LOCAL_TIME_OFFSET_INFO_T
+{
+	unsigned char uiCountry_code[3];
+	unsigned int uiCountry_region_id :6;
+	unsigned int uiReserved :1;
+	unsigned int uiLocal_time_offset_polarity :1;
+	unsigned int uiLocal_time_offset :16;
+	unsigned int uiTime_of_change[5];
+	unsigned int uiNext_time_offset :16;
+} LOCAL_TIME_OFFSET_INFO_T;
+
+typedef struct LOCAL_TIME_OFFSET_DESCRIPTOR_T
+{
+	unsigned int uiDescriptor_tag :8;
+	unsigned int uiDescriptor_length :8;
+	LOCAL_TIME_OFFSET_INFO_T astLocalTimeOffset_Info[LOCAL_TIME_OFFSET_INFO_MAX];
+} LOCAL_TIME_OFFSET_DESCRIPTOR_T;
+
 typedef struct SUBTITLING_INFO_T
 {
 	ISO_639_LANGUAGE_CODE_T stISO_639_Language_code;
@@ -324,6 +343,7 @@ int GetVideoStreamDescriptor(VIDEO_STREAM_DESCRIPTOR_T *pstVideoStreamDescriptor
 int GetDataStreamAlignmentDescriptor(DATA_STREAM_ALIGNMENT_DESCRIPTOR_T *pstDataStreamAlignmentDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition);
 int GetISO_639_Language_Descriptor(ISO_639_LANGUAGE_DESCRIPTOR_T *pstISO_639_LanguageDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition);
 int GetTeletextDescriptor(TELETEXT_DESCRIPTOR_T *pstTeletextDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition);
+int GetLocalTimeOffsetDescriptor(LOCAL_TIME_OFFSET_DESCRIPTOR_T *pstLocalTimeOffsetDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition);
 int GetSubtitlingDescriptor(SUBTITLING_DESCRIPTOR_T *pstSubtitlingDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition);
 int GetAudioStreamDescriptor(AUDIO_STREAM_DESCRIPTOR_T *pstAudioStreamDescriptor, unsigned char *pucDescriptorBuffer, int iDescriptorBufferLength, int iDescriptorPosition);
 #endif

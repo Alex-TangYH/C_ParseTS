@@ -26,6 +26,7 @@
 #define EXTENDED_EVENT_DESCRIPTOR_TAG 0x4e
 #define STREAM_IDENTIFIER_DESCRIPTOR_TAG 0x52
 #define TELETEXT_DESCRIPTOR_TAG 0x56
+#define LOCAL_TIME_OFFSET_DESCRIPTOR_TAG 0x58
 #define SUBTITLING_DESCRIPTOR_TAG 0x59
 #define TERRESTRIAL_DELIVERY_SYSTEM_DESCRIPTOR_TAG 0x5a
 #define FREQUENCY_LIST_DESCRIPTOR_TAG 0x62
@@ -56,6 +57,7 @@ void ParseDescriptorByTag(int iTag, int iDescriptorPosition, unsigned char *pucD
 	STREAM_IDENTIFIER_DESCRIPTOR_T stStreamIndentifierDescriptor = { 0 };
 	TELETEXT_DESCRIPTOR_T stTeletextDescriptor = { 0 };
 	SUBTITLING_DESCRIPTOR_T stSubtitlingDescriptor = { 0 };
+	LOCAL_TIME_OFFSET_DESCRIPTOR_T stLocalTimeOffsetDescriptor = { 0 };
 	TERRESTRIAL_DELIVERY_SYSTEM_DESCRIPTOR_T stTerrestrialDeliverySystemDescriptor = { 0 };
 	FREQUENCY_LIST_DESCRIPTOR_T stFrequencyListDescriptor = { 0 };
 	
@@ -133,6 +135,10 @@ void ParseDescriptorByTag(int iTag, int iDescriptorPosition, unsigned char *pucD
 			GetTeletextDescriptor(&stTeletextDescriptor, pucDescriptorBuffer, iDescriptorBufferLength, iDescriptorPosition);
 			Print_TeletextDescriptor(&stTeletextDescriptor, pacOutputPrefix);
 			break;
+		case LOCAL_TIME_OFFSET_DESCRIPTOR_TAG:
+			GetLocalTimeOffsetDescriptor(&stLocalTimeOffsetDescriptor, pucDescriptorBuffer, iDescriptorBufferLength, iDescriptorPosition);
+			Print_LocalTimeOffsetDescriptor(&stLocalTimeOffsetDescriptor, pacOutputPrefix);
+			break;
 		case SUBTITLING_DESCRIPTOR_TAG:
 			GetSubtitlingDescriptor(&stSubtitlingDescriptor, pucDescriptorBuffer, iDescriptorBufferLength, iDescriptorPosition);
 			Print_SubtitlingDescriptor(&stSubtitlingDescriptor, pacOutputPrefix);
@@ -146,7 +152,7 @@ void ParseDescriptorByTag(int iTag, int iDescriptorPosition, unsigned char *pucD
 			Print_FrequencyListDescriptor(&stFrequencyListDescriptor, pacOutputPrefix);
 			break;
 		default:
-			DUBUGPRINTF("unKnownTag: %d; iDescriptorPosition: %d\n", iTag, iDescriptorPosition);
+			LOG("unKnownTag: %d; iDescriptorPosition: %d\n", iTag, iDescriptorPosition);
 			break;
 	}
 }

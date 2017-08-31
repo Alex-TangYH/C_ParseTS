@@ -3,6 +3,7 @@
 #include "Parse_Descriptor.h"
 #include "Print_Descriptor.h"
 #include "TsParser.h"
+#include "FormatUtils.h"
 
 /*****************************************************************
  *
@@ -497,6 +498,39 @@ void Print_TeletextDescriptor(TELETEXT_DESCRIPTOR_T *pstTeletextDescriptor, char
 
 /*****************************************************************
  *
+ * 打印Local Time Offset Descriptor描述子
+ *
+ *****************************************************************/
+void Print_LocalTimeOffsetDescriptor(LOCAL_TIME_OFFSET_DESCRIPTOR_T *pstLocalTimeOffsetDescriptor, char *pacOutputPrefix)
+{
+	int iLoopCount = 0;
+	int iOneInfoLength = 3 + 1 + 2 + 5 + 2;
+	DUBUGPRINTF("%sLocalTimeOffsetDescriptor:\n", pacOutputPrefix);
+	DUBUGPRINTF("%s├─LocalTimeOffsetDescriptor.Descriptor_tag: 0x%02x\n", pacOutputPrefix, pstLocalTimeOffsetDescriptor->uiDescriptor_tag);
+	if (pstLocalTimeOffsetDescriptor->uiDescriptor_length > 0)
+	{
+		DUBUGPRINTF("%s├─LocalTimeOffsetDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstLocalTimeOffsetDescriptor->uiDescriptor_length);
+		for (iLoopCount = 0; iLoopCount * iOneInfoLength < pstLocalTimeOffsetDescriptor->uiDescriptor_length; iLoopCount++)
+		{
+			DUBUGPRINTF("%s├─LocalTimeOffsetDescriptor.Subtitling[%d].Country_code: %s\n", pacOutputPrefix, iLoopCount, pstLocalTimeOffsetDescriptor->astLocalTimeOffset_Info[iLoopCount].uiCountry_code);
+			DUBUGPRINTF("%s├─LocalTimeOffsetDescriptor.Subtitling[%d].uiCountry_region_id: 0x%02x\n", pacOutputPrefix, iLoopCount, pstLocalTimeOffsetDescriptor->astLocalTimeOffset_Info[iLoopCount].uiCountry_region_id);
+			DUBUGPRINTF("%s├─LocalTimeOffsetDescriptor.Subtitling[%d].uiReserved: 0x%02x\n", pacOutputPrefix, iLoopCount, pstLocalTimeOffsetDescriptor->astLocalTimeOffset_Info[iLoopCount].uiReserved);
+			DUBUGPRINTF("%s├─LocalTimeOffsetDescriptor.Subtitling[%d].uiLocal_time_offset_polarity: 0x%02x\n", pacOutputPrefix, iLoopCount, pstLocalTimeOffsetDescriptor->astLocalTimeOffset_Info[iLoopCount].uiLocal_time_offset_polarity);
+			DUBUGPRINTF("%s├─LocalTimeOffsetDescriptor.Subtitling[%d].uiLocal_time_offset: 0x%02x\n", pacOutputPrefix, iLoopCount, pstLocalTimeOffsetDescriptor->astLocalTimeOffset_Info[iLoopCount].uiLocal_time_offset);
+			char acUTC_time[50] = { 0 };
+			FormatUTC_TimeFormMJD(acUTC_time, pstLocalTimeOffsetDescriptor->astLocalTimeOffset_Info[iLoopCount].uiTime_of_change);
+			DUBUGPRINTF("%s├─LocalTimeOffsetDescriptor.Subtitling[%d].uiTime_of_change: %s\n", pacOutputPrefix, iLoopCount, acUTC_time);
+			DUBUGPRINTF("%s└─LocalTimeOffsetDescriptor.Subtitling[%d].uiNext_time_offset: 0x%02x\n", pacOutputPrefix, iLoopCount, pstLocalTimeOffsetDescriptor->astLocalTimeOffset_Info[iLoopCount].uiNext_time_offset);
+		}
+	}
+	else
+	{
+		DUBUGPRINTF("%s└─LocalTimeOffsetDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstLocalTimeOffsetDescriptor->uiDescriptor_length);
+	}
+}
+
+/*****************************************************************
+ *
  * 打印Subtitling Descriptor描述子
  *
  *****************************************************************/
@@ -520,7 +554,6 @@ void Print_SubtitlingDescriptor(SUBTITLING_DESCRIPTOR_T *pstSubtitlingDescriptor
 	{
 		DUBUGPRINTF("%s└─SubtitlingDescriptor.Descriptor_length: 0x%02x\n", pacOutputPrefix, pstSubtitlingDescriptor->uiDescriptor_length);
 	}
-
 }
 
 /*****************************************************************
