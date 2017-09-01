@@ -2,7 +2,7 @@
 #define _PARSE_BAT_H_
 
 #define BAT_INFO_MAX 252
-#define BAT_DESCRIPTOR_MAX 1024 * 4
+#define BAT_DESCRIPTOR_MAX 1024
 
 typedef struct BAT_INFO_T
 {
