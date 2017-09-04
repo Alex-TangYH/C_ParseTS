@@ -202,19 +202,19 @@ int ParseTransportStream(FILE *pfTsFile)
 }
 
 /****************************************************************
- * funtion: main()
+ * funtion: parseStream()
  * param:
  * feature: Parse transport stream
  *
  ****************************************************************/
-int main()
+int parseStream(char *pcFilePath)
 {
 	FILE *pfTsFile = NULL;
 
-	pfTsFile = fopen("test_ca.ts", "rb");
+	pfTsFile = fopen(pcFilePath, "rb");
 	if (NULL == pfTsFile)
 	{
-		pfTsFile = fopen("test_ca.TS", "rb");
+		pfTsFile = fopen(pcFilePath, "rb");
 		if (NULL == pfTsFile)
 		{
 			DUBUGPRINTF("file does not exist \n");
@@ -225,7 +225,19 @@ int main()
 	ParseTransportStream(pfTsFile);
 	DUBUGPRINTF("Íê³É\n");
 	fclose(pfTsFile);
+	return 1;
+}
 
+/****************************************************************
+ * funtion: main()
+ * param:
+ * feature: Parse transport stream
+ *
+ ****************************************************************/
+int main()
+{
+	char cTestFilePath[] = "D:\\test\\test.ts";
+	parseStream(cTestFilePath);
 	Test();
 	return 1;
 }

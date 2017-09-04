@@ -24,5 +24,5 @@
 #endif
 
 
-
+int parseStream();
 #endif /* _TSPARSER_H_ */
